@@ -1,11 +1,14 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import joblib
+from scipy.stats import poisson
 
 # 1. Load Data and Models
 @st.cache_resource
 def load_assets():
     model = joblib.load('models/calibrated_xgb_outcome.pkl')
+    dc_params = joblib.load('models/dc_mle_params.pkl')
     features = pd.read_csv('data/processed/epl_model_features.csv')
     
     # Derive differential and engineered features
@@ -26,9 +29,9 @@ def load_assets():
     features['Bookie_Prob_D'] = (1 / features['B365D']) / raw_margin
     features['Bookie_Prob_A'] = (1 / features['B365A']) / raw_margin
 
-    return model, features
+    return model, dc_params, features
 
-xgb_model, df_features = load_assets()
+xgb_model, dc_params, df_features = load_assets()
 
 # Define the exact feature columns used during model training
 feature_cols = [
@@ -42,9 +45,34 @@ feature_cols = [
     'Bookie_Prob_H', 'Bookie_Prob_D', 'Bookie_Prob_A'
 ]
 
+def get_top_scorelines(home_team, away_team, dc_params, max_goals=6, top_n=5):
+    alpha_h = dc_params['attack'].get(home_team, 1.0)
+    beta_h  = dc_params['defense'].get(home_team, 1.0)
+    alpha_a = dc_params['attack'].get(away_team, 1.0)
+    beta_a  = dc_params['defense'].get(away_team, 1.0)
+    gamma   = dc_params['home_adv']
+
+    home_xg = alpha_h * beta_a * gamma
+    away_xg = alpha_a * beta_h
+
+    home_probs = poisson.pmf(np.arange(max_goals), home_xg)
+    away_probs = poisson.pmf(np.arange(max_goals), away_xg)
+    grid = np.outer(home_probs, away_probs)
+
+    scorelines = []
+    for h in range(max_goals):
+        for a in range(max_goals):
+            scorelines.append({
+                'Scoreline': f"{h} - {a}",
+                'Probability': grid[h][a]
+            })
+
+    df_scores = pd.DataFrame(scorelines).sort_values(by='Probability', ascending=False).head(top_n).reset_index(drop=True)
+    return home_xg, away_xg, df_scores
+
 # 2. Build the UI
 st.title("Premier League Predictive Engine")
-st.markdown("Weekend Forecasts & Win Probabilities")
+st.markdown("Weekend Forecasts & Scoreline Predictions")
 
 # 3. User Input
 teams = sorted(df_features['HomeTeam'].unique())
@@ -68,11 +96,21 @@ if st.button("Generate Forecast"):
         # Filter down strictly to the numeric feature columns
         X_live = match_vector[feature_cols]
         
-        # Execute prediction
+        # Execute win probability prediction (XGBoost)
         probs = xgb_model.predict_proba(X_live)[0]
         
-        st.success(
-            f"**{home_team} Win:** {probs[2]:.1%} | "
-            f"**Draw:** {probs[1]:.1%} | "
-            f"**{away_team} Win:** {probs[0]:.1%}"
-        )
+        # Execute Dixon-Coles exact scoreline prediction
+        home_xg, away_xg, top_scores = get_top_scorelines(home_team, away_team, dc_params)
+
+        st.subheader("Match Outcome Probabilities")
+        mcol1, mcol2, mcol3 = st.columns(3)
+        mcol1.metric(f"{home_team} Win", f"{probs[2]:.1%}")
+        mcol2.metric("Draw", f"{probs[1]:.1%}")
+        mcol3.metric(f"{away_team} Win", f"{probs[0]:.1%}")
+
+        st.subheader("Projected Goals (xG)")
+        st.write(f"**{home_team}:** `{home_xg:.2f}` goals | **{away_team}:** `{away_xg:.2f}` goals")
+
+        st.subheader("Top 5 Predicted Scorelines")
+        top_scores['Probability'] = top_scores['Probability'].map(lambda p: f"{p:.1%}")
+        st.table(top_scores)
