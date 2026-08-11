@@ -7,6 +7,25 @@ import joblib
 def load_assets():
     model = joblib.load('models/calibrated_xgb_outcome.pkl')
     features = pd.read_csv('data/processed/epl_model_features.csv')
+    
+    # Derive differential and engineered features
+    features['Elo_Diff'] = features['Home_Elo'] - features['Away_Elo']
+    for w in [3, 5, 10]:
+        features[f'xG_Attack_Diff_roll{w}'] = features[f'Home_xG_Created_roll{w}'] - features[f'Away_xG_Conceded_roll{w}']
+        features[f'xG_Defense_Diff_roll{w}'] = features[f'Away_xG_Created_roll{w}'] - features[f'Home_xG_Conceded_roll{w}']
+        features[f'Corner_Diff_roll{w}'] = features[f'Home_Corners_roll{w}'] - features[f'Away_Corners_roll{w}']
+        features[f'Foul_Diff_roll{w}'] = features[f'Home_Fouls_roll{w}'] - features[f'Away_Fouls_roll{w}']
+
+    features['Venue_xG_Attack_Diff'] = features['Home_xG_Created_Venue_roll5'] - features['Away_xG_Conceded_Venue_roll5']
+    features['Expected_Match_xG'] = features['Home_xG_Created_roll5'] + features['Away_xG_Created_roll5']
+    features['Rest_Diff'] = features['Home_Rest_Days'] - features['Away_Rest_Days']
+    features['Congestion_Diff'] = features['Home_Congestion_Flag'] - features['Away_Congestion_Flag']
+
+    raw_margin = (1 / features['B365H']) + (1 / features['B365D']) + (1 / features['B365A'])
+    features['Bookie_Prob_H'] = (1 / features['B365H']) / raw_margin
+    features['Bookie_Prob_D'] = (1 / features['B365D']) / raw_margin
+    features['Bookie_Prob_A'] = (1 / features['B365A']) / raw_margin
+
     return model, features
 
 xgb_model, df_features = load_assets()
