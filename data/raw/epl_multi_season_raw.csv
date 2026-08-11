@@ -1,0 +1,1483 @@
+Date,HomeTeam,AwayTeam,FTHG,FTAG,Referee,HY,AY,HR,AR,HC,AC,HF,AF,B365H,B365D,B365A,Understat_Match_ID,Date_xG,HomeTeam_xG,AwayTeam_xG,Home_xG,Away_xG,Season
+2022-08-05,Crystal Palace,Arsenal,0,2,A Taylor,1,2,0,0,3,5,16,11,4.2,3.6,1.85,18202,2022-08-05,Crystal Palace,Arsenal,1.20637,1.43601,2022
+2022-08-06,Fulham,Liverpool,2,2,A Madley,2,0,0,0,4,4,7,9,11.0,6.0,1.25,18203,2022-08-06,Fulham,Liverpool,1.26822,2.34111,2022
+2022-08-06,Bournemouth,Aston Villa,2,0,P Bankes,3,3,0,0,5,5,18,16,3.75,3.5,2.0,18204,2022-08-06,Bournemouth,Aston Villa,0.588341,0.488895,2022
+2022-08-06,Leeds,Wolves,2,1,R Jones,2,0,0,0,6,4,13,9,2.25,3.4,3.2,18205,2022-08-06,Leeds,Wolves,0.88917,1.10119,2022
+2022-08-06,Newcastle,Nott'm Forest,2,0,S Hooper,0,3,0,0,11,1,9,14,1.66,3.8,5.25,18206,2022-08-06,Newcastle,Nott'm Forest,1.8591,0.235825,2022
+2022-08-06,Tottenham,Southampton,4,1,A Marriner,3,0,0,0,10,2,11,6,1.33,5.5,8.5,18207,2022-08-06,Tottenham,Southampton,1.6172,0.386546,2022
+2022-08-06,Everton,Chelsea,0,1,C Pawson,3,2,0,0,4,16,14,11,5.5,4.0,1.61,18208,2022-08-06,Everton,Chelsea,0.541983,1.92315,2022
+2022-08-07,Leicester,Brentford,2,2,J Gillett,0,0,0,0,5,6,6,5,2.0,3.75,3.5,18210,2022-08-07,Leicester,Brentford,0.455695,0.931067,2022
+2022-08-07,Man United,Brighton,1,2,P Tierney,4,1,0,0,6,2,7,12,1.6,4.2,5.25,18209,2022-08-07,Man United,Brighton,1.42103,1.7289,2022
+2022-08-07,West Ham,Man City,0,2,M Oliver,0,1,0,0,1,4,8,4,8.0,5.0,1.36,18211,2022-08-07,West Ham,Man City,0.246188,2.58739,2022
+2022-08-13,Brentford,Man United,4,0,S Attwell,0,4,0,0,8,2,6,15,3.75,3.5,2.0,18218,2022-08-13,Brentford,Man United,1.38785,0.896038,2022
+2022-08-13,Wolves,Fulham,0,0,J Brooks,3,3,0,0,5,3,7,14,2.3,3.3,3.2,18216,2022-08-13,Wolves,Fulham,0.975375,1.08813,2022
+2022-08-13,Southampton,Leeds,2,2,T Harrington,1,3,0,0,2,5,10,12,2.25,3.5,3.1,18215,2022-08-13,Southampton,Leeds,1.40906,1.99694,2022
+2022-08-13,Arsenal,Leicester,4,2,D England,1,1,0,0,6,2,15,9,1.53,4.33,5.75,18217,2022-08-13,Arsenal,Leicester,3.0107,0.690679,2022
+2022-08-13,Brighton,Newcastle,0,0,G Scott,2,3,0,0,7,3,8,6,2.45,3.2,3.0,18213,2022-08-13,Brighton,Newcastle,1.60835,0.183952,2022
+2022-08-13,Aston Villa,Everton,2,1,M Oliver,4,1,0,0,5,8,9,7,1.8,3.5,4.75,18212,2022-08-13,Aston Villa,Everton,2.66696,1.37507,2022
+2022-08-13,Man City,Bournemouth,4,0,D Coote,0,3,0,0,11,1,9,9,1.06,13.0,29.0,18214,2022-08-13,Man City,Bournemouth,1.69064,0.123946,2022
+2022-08-14,Nott'm Forest,West Ham,1,0,R Jones,4,1,0,0,6,7,10,11,4.2,3.6,1.85,18219,2022-08-14,Nott'm Forest,West Ham,1.9717,2.08634,2022
+2022-08-14,Chelsea,Tottenham,2,2,A Taylor,3,0,0,0,8,5,9,9,2.25,3.4,3.2,18220,2022-08-14,Chelsea,Tottenham,1.83945,1.58708,2022
+2022-08-15,Liverpool,Crystal Palace,1,1,P Tierney,2,4,1,0,4,2,7,8,1.18,6.75,16.0,18221,2022-08-15,Liverpool,Crystal Palace,2.23596,1.64468,2022
+2022-08-20,Leicester,Southampton,1,2,M Salisbury,2,3,0,0,2,5,11,15,1.83,4.0,4.0,18226,2022-08-20,Leicester,Southampton,0.242948,1.24155,2022
+2022-08-20,Bournemouth,Arsenal,0,3,C Pawson,2,1,0,0,3,4,12,10,8.0,4.75,1.4,18227,2022-08-20,Bournemouth,Arsenal,0.211335,1.71081,2022
+2022-08-20,Fulham,Brentford,3,2,P Bankes,3,2,0,0,6,3,13,7,2.45,3.4,2.9,18225,2022-08-20,Fulham,Brentford,2.89934,1.59352,2022
+2022-08-20,Everton,Nott'm Forest,1,1,A Marriner,3,2,0,0,6,2,6,9,1.9,3.6,4.0,18224,2022-08-20,Everton,Nott'm Forest,1.43408,0.918315,2022
+2022-08-20,Crystal Palace,Aston Villa,3,1,A Madley,2,1,0,0,4,2,16,14,2.5,3.25,2.9,18223,2022-08-20,Crystal Palace,Aston Villa,2.91137,0.803828,2022
+2022-08-20,Tottenham,Wolves,1,0,S Hooper,2,2,0,0,8,6,10,8,1.4,4.75,7.5,18222,2022-08-20,Tottenham,Wolves,1.46608,0.686123,2022
+2022-08-21,Leeds,Chelsea,3,0,S Attwell,0,1,0,1,4,6,16,15,5.75,4.5,1.53,18228,2022-08-21,Leeds,Chelsea,2.20971,0.692492,2022
+2022-08-21,West Ham,Brighton,0,2,A Taylor,2,0,0,0,5,4,10,7,2.3,3.4,3.1,18229,2022-08-21,West Ham,Brighton,0.768634,1.82645,2022
+2022-08-21,Newcastle,Man City,3,3,J Gillett,4,2,0,0,5,5,14,7,7.5,5.0,1.36,18230,2022-08-21,Newcastle,Man City,2.2127,3.67382,2022
+2022-08-22,Man United,Liverpool,2,1,M Oliver,3,1,0,0,6,8,11,7,5.25,4.33,1.6,18231,2022-08-22,Man United,Liverpool,2.01764,1.52301,2022
+2022-08-27,Arsenal,Fulham,2,1,J Gillett,2,3,0,0,9,2,6,12,1.3,5.75,9.0,18238,2022-08-27,Arsenal,Fulham,2.47427,0.926007,2022
+2022-08-27,Man City,Crystal Palace,4,2,D England,1,2,0,0,6,1,14,8,1.18,7.5,13.0,18237,2022-08-27,Man City,Crystal Palace,2.3853,0.091976,2022
+2022-08-27,Chelsea,Leicester,2,1,P Tierney,1,2,1,0,3,11,10,7,1.4,5.0,7.0,18235,2022-08-27,Chelsea,Leicester,1.74916,1.96023,2022
+2022-08-27,Liverpool,Bournemouth,9,0,S Attwell,0,1,0,0,8,1,6,5,1.1,10.0,26.0,18236,2022-08-27,Liverpool,Bournemouth,4.86035,0.180991,2022
+2022-08-27,Brentford,Everton,1,1,J Brooks,2,2,0,0,8,5,8,8,2.0,3.5,3.75,18233,2022-08-27,Brentford,Everton,2.28391,1.65465,2022
+2022-08-27,Southampton,Man United,0,1,A Madley,0,3,0,0,5,3,4,14,4.2,4.0,1.8,18232,2022-08-27,Southampton,Man United,1.35887,1.34359,2022
+2022-08-27,Brighton,Leeds,1,0,M Salisbury,2,3,0,0,5,3,10,14,1.9,3.8,3.8,18234,2022-08-27,Brighton,Leeds,1.60986,1.14874,2022
+2022-08-28,Aston Villa,West Ham,0,1,D Coote,2,0,0,0,3,2,10,10,2.3,3.4,3.1,18239,2022-08-28,Aston Villa,West Ham,0.304555,0.334589,2022
+2022-08-28,Wolves,Newcastle,1,1,P Bankes,2,1,0,0,4,13,10,11,2.7,3.3,2.7,18240,2022-08-28,Wolves,Newcastle,1.13248,1.93362,2022
+2022-08-28,Nott'm Forest,Tottenham,0,2,C Pawson,6,1,0,0,6,1,11,13,7.0,4.6,1.44,18241,2022-08-28,Nott'm Forest,Tottenham,0.801369,2.44473,2022
+2022-08-30,Crystal Palace,Brentford,1,1,S Hooper,1,2,0,0,4,6,11,8,2.05,3.4,3.6,18243,2022-08-30,Crystal Palace,Brentford,0.777363,1.61808,2022
+2022-08-30,Fulham,Brighton,2,1,T Bramall,2,1,0,0,3,3,9,11,3.1,3.3,2.3,18242,2022-08-30,Fulham,Brighton,1.07093,1.75359,2022
+2022-08-30,Southampton,Chelsea,2,1,M Oliver,2,1,0,0,5,3,15,10,5.25,4.0,1.61,18244,2022-08-30,Southampton,Chelsea,1.44086,1.5047,2022
+2022-08-30,Leeds,Everton,1,1,D England,3,3,0,0,10,2,10,9,2.15,3.5,3.3,18245,2022-08-30,Leeds,Everton,1.04551,1.17189,2022
+2022-08-31,Liverpool,Newcastle,2,1,A Marriner,0,2,0,0,13,0,9,10,1.33,5.25,9.0,18250,2022-08-31,Liverpool,Newcastle,1.76119,0.643546,2022
+2022-08-31,West Ham,Tottenham,1,1,P Bankes,2,5,0,0,3,4,10,9,3.6,3.8,1.95,18249,2022-08-31,West Ham,Tottenham,1.52267,0.723285,2022
+2022-08-31,Man City,Nott'm Forest,6,0,P Tierney,0,1,0,0,10,1,9,7,1.06,13.0,29.0,18246,2022-08-31,Man City,Nott'm Forest,3.83759,0.729752,2022
+2022-08-31,Bournemouth,Wolves,0,0,A Taylor,2,1,0,0,2,5,12,12,3.5,3.3,2.15,18248,2022-08-31,Bournemouth,Wolves,0.362035,1.53246,2022
+2022-08-31,Arsenal,Aston Villa,2,1,R Jones,2,3,0,0,10,3,10,14,1.45,4.5,6.0,18247,2022-08-31,Arsenal,Aston Villa,2.79971,0.297168,2022
+2022-09-01,Leicester,Man United,0,1,C Pawson,1,3,0,0,1,3,7,15,3.4,3.75,2.05,18251,2022-09-01,Leicester,Man United,0.615266,1.09969,2022
+2022-09-03,Everton,Liverpool,0,0,A Taylor,2,2,0,0,7,9,7,11,7.0,4.75,1.4,18252,2022-09-03,Everton,Liverpool,1.39169,1.38617,2022
+2022-09-03,Brentford,Leeds,5,2,R Jones,2,2,0,0,2,6,8,9,2.1,3.5,3.4,18257,2022-09-03,Brentford,Leeds,2.7485,1.796,2022
+2022-09-03,Chelsea,West Ham,2,1,A Madley,4,2,0,0,10,3,6,11,1.55,4.5,5.5,18260,2022-09-03,Chelsea,West Ham,0.707333,1.4196,2022
+2022-09-03,Newcastle,Crystal Palace,0,0,M Salisbury,2,1,0,0,13,5,19,12,2.0,3.5,3.75,18253,2022-09-03,Newcastle,Crystal Palace,2.90672,0.920595,2022
+2022-09-03,Nott'm Forest,Bournemouth,2,3,M Oliver,2,1,0,0,4,6,13,10,1.95,3.5,3.8,18254,2022-09-03,Nott'm Forest,Bournemouth,1.32895,0.905041,2022
+2022-09-03,Tottenham,Fulham,2,1,S Attwell,3,4,0,0,10,3,9,6,1.5,4.5,6.5,18255,2022-09-03,Tottenham,Fulham,2.67823,0.381556,2022
+2022-09-03,Wolves,Southampton,1,0,J Brooks,4,2,0,0,5,6,10,14,2.2,3.4,3.25,18256,2022-09-03,Wolves,Southampton,1.10039,1.20838,2022
+2022-09-03,Aston Villa,Man City,1,1,S Hooper,2,0,0,0,1,4,7,6,8.0,5.5,1.33,18258,2022-09-03,Aston Villa,Man City,0.279392,1.92143,2022
+2022-09-04,Man United,Arsenal,3,1,P Tierney,3,3,0,0,2,5,13,9,2.5,3.5,2.7,18261,2022-09-04,Man United,Arsenal,2.02904,1.42238,2022
+2022-09-04,Brighton,Leicester,5,2,T Harrington,1,1,0,0,10,1,6,8,1.83,3.5,4.5,18259,2022-09-04,Brighton,Leicester,2.73166,1.06549,2022
+2022-09-16,Aston Villa,Southampton,1,0,T Harrington,3,1,0,0,6,3,13,13,2.1,3.5,3.5,18272,2022-09-16,Aston Villa,Southampton,1.34365,0.218302,2022
+2022-09-16,Nott'm Forest,Fulham,2,3,J Gillett,2,4,0,0,2,10,11,10,2.75,3.3,2.62,18273,2022-09-16,Nott'm Forest,Fulham,1.41541,1.3496,2022
+2022-09-17,Wolves,Man City,0,3,A Taylor,2,1,1,0,5,7,7,9,9.5,5.0,1.33,18274,2022-09-17,Wolves,Man City,0.310995,1.4242,2022
+2022-09-17,Newcastle,Bournemouth,1,1,C Pawson,2,2,0,0,8,1,10,11,1.44,4.4,7.5,18275,2022-09-17,Newcastle,Bournemouth,1.54758,0.976948,2022
+2022-09-17,Tottenham,Leicester,6,2,S Hooper,1,2,0,0,6,1,9,9,1.45,4.5,7.0,18278,2022-09-17,Tottenham,Leicester,1.98619,1.59449,2022
+2022-09-18,Brentford,Arsenal,0,3,D Coote,0,2,0,0,3,3,10,10,4.2,3.8,1.8,18280,2022-09-18,Brentford,Arsenal,0.54011,1.32021,2022
+2022-09-18,Everton,West Ham,1,0,M Oliver,3,1,0,0,5,14,8,11,2.9,3.25,2.5,18277,2022-09-18,Everton,West Ham,0.39773,0.655351,2022
+2022-10-01,West Ham,Wolves,2,0,P Tierney,2,2,0,0,1,6,8,6,1.95,3.5,4.2,18291,2022-10-01,West Ham,Wolves,1.03934,0.575988,2022
+2022-10-01,Southampton,Everton,1,2,A Marriner,2,2,0,0,7,6,11,10,2.15,3.4,3.4,18290,2022-10-01,Southampton,Everton,1.95961,1.99979,2022
+2022-10-01,Liverpool,Brighton,3,3,A Madley,1,1,0,0,9,2,9,13,1.33,5.25,8.5,18288,2022-10-01,Liverpool,Brighton,2.1515,2.36567,2022
+2022-10-01,Fulham,Newcastle,1,4,D England,2,0,1,0,1,8,9,10,3.0,3.4,2.37,18285,2022-10-01,Fulham,Newcastle,0.683701,4.67198,2022
+2022-10-01,Crystal Palace,Chelsea,1,2,C Kavanagh,1,3,0,0,5,2,11,13,4.2,3.6,1.85,18284,2022-10-01,Crystal Palace,Chelsea,0.70987,1.25506,2022
+2022-10-01,Bournemouth,Brentford,0,0,T Bramall,1,2,0,0,7,8,11,10,3.3,3.4,2.2,18283,2022-10-01,Bournemouth,Brentford,0.758128,1.046,2022
+2022-10-01,Arsenal,Tottenham,3,1,A Taylor,2,1,0,1,5,2,10,10,2.05,3.75,3.3,18282,2022-10-01,Arsenal,Tottenham,2.48403,1.5027,2022
+2022-10-02,Man City,Man United,6,3,M Oliver,0,3,0,0,5,1,3,9,1.33,5.75,7.5,18289,2022-10-02,Man City,Man United,3.01103,1.71335,2022
+2022-10-02,Leeds,Aston Villa,0,0,S Attwell,3,2,1,0,2,9,23,12,2.35,3.4,3.0,18286,2022-10-02,Leeds,Aston Villa,0.298626,1.89645,2022
+2022-10-03,Leicester,Nott'm Forest,4,0,R Jones,2,4,0,0,6,6,13,12,1.75,4.0,4.33,18287,2022-10-03,Leicester,Nott'm Forest,1.2497,1.22169,2022
+2022-10-08,Bournemouth,Leicester,2,1,M Salisbury,1,2,0,0,7,2,8,16,3.6,3.4,2.05,18293,2022-10-08,Bournemouth,Leicester,1.14891,1.18125,2022
+2022-10-08,Chelsea,Wolves,3,0,S Hooper,2,0,0,0,4,2,8,8,1.4,4.5,8.0,18295,2022-10-08,Chelsea,Wolves,2.43092,0.748449,2022
+2022-10-08,Man City,Southampton,4,0,A Madley,0,1,0,0,9,1,4,8,1.11,10.0,17.0,18298,2022-10-08,Man City,Southampton,2.73536,0.101148,2022
+2022-10-08,Newcastle,Brentford,5,1,J Brooks,0,1,0,0,9,5,14,9,1.83,3.8,4.2,18299,2022-10-08,Newcastle,Brentford,2.44631,1.13466,2022
+2022-10-08,Brighton,Tottenham,0,1,T Harrington,1,2,0,0,6,2,9,14,2.8,3.4,2.5,18294,2022-10-08,Brighton,Tottenham,0.899735,0.771641,2022
+2022-10-09,Everton,Man United,1,2,D Coote,2,1,0,0,5,4,7,13,3.6,3.5,2.05,18297,2022-10-09,Everton,Man United,0.365844,1.82612,2022
+2022-10-09,Arsenal,Liverpool,3,2,M Oliver,1,2,0,0,4,3,11,11,2.5,3.6,2.62,18292,2022-10-09,Arsenal,Liverpool,2.81968,0.765151,2022
+2022-10-09,Crystal Palace,Leeds,2,1,P Tierney,3,3,0,0,5,3,13,23,2.05,3.5,3.6,18296,2022-10-09,Crystal Palace,Leeds,1.65194,1.06564,2022
+2022-10-09,West Ham,Fulham,3,1,C Kavanagh,1,3,0,0,4,2,9,7,1.72,3.8,4.75,18301,2022-10-09,West Ham,Fulham,3.43676,0.549848,2022
+2022-10-10,Nott'm Forest,Aston Villa,1,1,A Taylor,3,3,0,0,1,4,13,19,3.3,3.4,2.2,18300,2022-10-10,Nott'm Forest,Aston Villa,0.221346,0.657187,2022
+2022-10-14,Brentford,Brighton,2,0,M Salisbury,3,1,0,0,2,11,12,15,3.1,3.4,2.3,18303,2022-10-14,Brentford,Brighton,1.90636,2.15668,2022
+2022-10-15,Leicester,Crystal Palace,0,0,A Madley,2,2,0,0,9,2,18,13,2.3,3.4,3.1,18306,2022-10-15,Leicester,Crystal Palace,0.973426,0.346808,2022
+2022-10-15,Fulham,Bournemouth,2,2,G Scott,2,0,0,0,5,6,9,11,1.85,3.75,4.0,18304,2022-10-15,Fulham,Bournemouth,1.61738,1.62829,2022
+2022-10-15,Wolves,Nott'm Forest,1,0,T Bramall,2,2,0,0,4,5,17,13,1.7,3.75,5.0,18311,2022-10-15,Wolves,Nott'm Forest,1.22368,1.24761,2022
+2022-10-15,Tottenham,Everton,2,0,P Tierney,1,4,0,0,7,1,12,13,1.5,4.5,6.5,18310,2022-10-15,Tottenham,Everton,2.49409,0.560039,2022
+2022-10-16,Liverpool,Man City,1,0,A Taylor,3,1,0,0,5,6,10,7,3.6,4.0,1.9,18307,2022-10-16,Liverpool,Man City,1.9992,0.911493,2022
+2022-10-16,Southampton,West Ham,1,1,P Bankes,1,1,0,0,4,14,7,3,2.9,3.4,2.4,18309,2022-10-16,Southampton,West Ham,0.524479,1.70727,2022
+2022-10-16,Aston Villa,Chelsea,0,2,R Jones,0,3,0,0,7,1,12,11,4.33,3.75,1.8,18302,2022-10-16,Aston Villa,Chelsea,2.44542,1.23643,2022
+2022-10-16,Leeds,Arsenal,0,1,C Kavanagh,0,2,0,0,6,3,10,11,6.0,4.2,1.55,18305,2022-10-16,Leeds,Arsenal,2.02232,0.821757,2022
+2022-10-16,Man United,Newcastle,0,0,C Pawson,3,1,0,0,4,4,13,11,1.95,3.8,3.5,18308,2022-10-16,Man United,Newcastle,1.41606,0.78815,2022
+2022-10-18,Brighton,Nott'm Forest,0,0,D England,3,1,0,0,9,1,10,14,1.4,4.75,7.0,18315,2022-10-18,Brighton,Nott'm Forest,2.10188,0.195003,2022
+2022-10-18,Crystal Palace,Wolves,2,1,D Coote,3,1,0,0,4,3,14,18,2.25,3.1,3.4,18318,2022-10-18,Crystal Palace,Wolves,1.25617,0.857837,2022
+2022-10-19,Bournemouth,Southampton,0,1,J Brooks,1,3,0,0,7,3,8,13,2.62,3.3,2.62,18313,2022-10-19,Bournemouth,Southampton,0.810452,1.23878,2022
+2022-10-19,Brentford,Chelsea,0,0,J Gillett,0,0,0,0,6,2,7,7,4.75,3.8,1.72,18314,2022-10-19,Brentford,Chelsea,1.45228,0.557405,2022
+2022-10-19,Liverpool,West Ham,1,0,S Attwell,0,0,0,0,8,3,9,8,1.4,5.0,7.0,18320,2022-10-19,Liverpool,West Ham,2.24066,2.48649,2022
+2022-10-19,Newcastle,Everton,1,0,T Harrington,2,4,0,0,8,2,9,12,1.6,3.8,5.75,18319,2022-10-19,Newcastle,Everton,1.13393,0.0609567,2022
+2022-10-19,Man United,Tottenham,2,0,S Hooper,1,0,0,0,8,3,7,7,2.45,3.5,2.75,18321,2022-10-19,Man United,Tottenham,1.70973,0.658526,2022
+2022-10-20,Fulham,Aston Villa,3,0,M Oliver,0,2,0,1,9,7,11,11,2.9,3.3,2.5,18316,2022-10-20,Fulham,Aston Villa,2.892,0.711487,2022
+2022-10-20,Leicester,Leeds,2,0,P Bankes,2,1,0,0,2,9,15,11,2.25,3.6,3.0,18317,2022-10-20,Leicester,Leeds,0.655249,1.19464,2022
+2022-10-22,Chelsea,Man United,1,1,S Attwell,1,4,0,0,6,4,8,10,2.05,3.5,3.5,18323,2022-10-22,Chelsea,Man United,1.20238,0.730935,2022
+2022-10-22,Man City,Brighton,3,1,C Pawson,1,3,0,0,7,3,11,12,1.2,7.0,13.0,18326,2022-10-22,Man City,Brighton,1.86239,0.52863,2022
+2022-10-22,Nott'm Forest,Liverpool,1,0,P Tierney,2,1,0,0,2,11,14,8,11.0,6.0,1.25,18327,2022-10-22,Nott'm Forest,Liverpool,2.50163,2.19752,2022
+2022-10-22,Everton,Crystal Palace,3,0,S Hooper,3,4,0,0,3,4,16,14,2.6,3.2,2.87,18324,2022-10-22,Everton,Crystal Palace,1.93396,0.597167,2022
+2022-10-23,Aston Villa,Brentford,4,0,D England,1,0,0,0,7,6,14,11,2.1,3.5,3.5,18322,2022-10-23,Aston Villa,Brentford,3.45617,1.00462,2022
+2022-10-23,Leeds,Fulham,2,3,A Taylor,1,1,0,0,3,6,12,8,2.05,3.5,3.6,18325,2022-10-23,Leeds,Fulham,1.96384,2.47512,2022
+2022-10-23,Southampton,Arsenal,1,1,R Jones,2,1,0,0,9,4,11,8,6.0,4.0,1.57,18328,2022-10-23,Southampton,Arsenal,0.622653,1.57897,2022
+2022-10-23,Wolves,Leicester,0,4,M Oliver,2,1,0,0,9,2,10,13,2.25,3.25,3.25,18331,2022-10-23,Wolves,Leicester,1.61785,0.989075,2022
+2022-10-23,Tottenham,Newcastle,1,2,J Gillett,4,2,0,0,6,7,12,6,2.05,3.5,3.5,18329,2022-10-23,Tottenham,Newcastle,1.56513,1.1294,2022
+2022-10-24,West Ham,Bournemouth,2,0,D Coote,0,2,0,0,5,0,9,11,1.55,4.0,6.0,18330,2022-10-24,West Ham,Bournemouth,1.97715,0.730443,2022
+2022-10-29,Newcastle,Aston Villa,4,0,P Tierney,1,1,0,0,3,0,11,11,1.8,3.75,4.5,18341,2022-10-29,Newcastle,Aston Villa,4.18808,0.270814,2022
+2022-10-29,Liverpool,Leeds,1,2,M Oliver,0,1,0,0,14,5,9,3,1.3,6.0,9.0,18339,2022-10-29,Liverpool,Leeds,1.90889,1.61271,2022
+2022-10-29,Fulham,Everton,0,0,J Brooks,2,1,0,0,13,4,10,8,2.37,3.4,3.0,18337,2022-10-29,Fulham,Everton,1.76438,1.19166,2022
+2022-10-29,Crystal Palace,Southampton,1,0,M Salisbury,3,3,0,0,8,4,13,12,1.9,3.6,4.0,18336,2022-10-29,Crystal Palace,Southampton,1.00384,1.35803,2022
+2022-10-29,Brentford,Wolves,1,1,R Madley,3,3,0,1,3,6,10,17,2.2,3.4,3.3,18334,2022-10-29,Brentford,Wolves,1.29257,0.557605,2022
+2022-10-29,Bournemouth,Tottenham,2,3,A Taylor,1,2,0,0,2,19,10,5,5.0,3.8,1.7,18333,2022-10-29,Bournemouth,Tottenham,0.887533,2.1946,2022
+2022-10-29,Brighton,Chelsea,4,1,A Madley,1,2,0,0,8,7,16,6,3.0,3.3,2.4,18335,2022-10-29,Brighton,Chelsea,2.881,1.07554,2022
+2022-10-29,Leicester,Man City,0,1,R Jones,0,0,0,0,3,10,5,10,10.0,6.5,1.25,18338,2022-10-29,Leicester,Man City,0.693597,0.703827,2022
+2022-10-30,Arsenal,Nott'm Forest,5,0,S Hooper,0,1,0,0,9,4,9,8,1.2,7.0,12.0,18332,2022-10-30,Arsenal,Nott'm Forest,3.00699,0.206127,2022
+2022-10-30,Man United,West Ham,1,0,C Kavanagh,1,3,0,0,5,10,12,10,1.66,4.0,4.8,18340,2022-10-30,Man United,West Ham,1.7514,1.00033,2022
+2022-11-05,Wolves,Brighton,2,3,G Scott,2,0,1,0,4,9,15,11,3.3,3.3,2.25,18351,2022-11-05,Wolves,Brighton,1.29252,1.87375,2022
+2022-11-05,Nott'm Forest,Brentford,2,2,A Marriner,2,2,0,0,3,3,10,11,2.75,3.3,2.6,18347,2022-11-05,Nott'm Forest,Brentford,1.29696,1.2204,2022
+2022-11-05,Everton,Leicester,0,2,D Coote,0,0,0,0,8,3,9,5,2.4,3.3,3.0,18344,2022-11-05,Everton,Leicester,1.3729,2.2679,2022
+2022-11-05,Leeds,Bournemouth,4,3,T Harrington,2,2,0,0,13,3,16,10,1.72,3.8,4.75,18345,2022-11-05,Leeds,Bournemouth,2.22532,1.55594,2022
+2022-11-05,Man City,Fulham,2,1,D England,2,4,1,0,9,0,6,11,1.11,9.5,19.0,18346,2022-11-05,Man City,Fulham,2.39332,0.843884,2022
+2022-11-06,Chelsea,Arsenal,0,1,M Oliver,5,2,0,0,4,6,20,13,2.55,3.4,2.7,18343,2022-11-06,Chelsea,Arsenal,0.278815,2.37846,2022
+2022-11-06,Aston Villa,Man United,3,1,A Taylor,3,3,0,0,3,5,6,12,3.3,3.8,2.1,18342,2022-11-06,Aston Villa,Man United,0.578563,0.517189,2022
+2022-11-06,Southampton,Newcastle,1,4,S Attwell,1,0,0,0,8,2,7,10,4.0,3.6,1.9,18348,2022-11-06,Southampton,Newcastle,1.65228,1.42101,2022
+2022-11-06,West Ham,Crystal Palace,1,2,P Tierney,1,1,0,0,2,5,10,7,1.9,3.4,4.2,18350,2022-11-06,West Ham,Crystal Palace,0.192579,1.03344,2022
+2022-11-06,Tottenham,Liverpool,1,2,A Madley,0,0,0,0,5,3,10,8,3.3,3.6,2.1,18349,2022-11-06,Tottenham,Liverpool,1.81736,1.46548,2022
+2022-11-12,Tottenham,Leeds,4,3,M Salisbury,1,1,0,1,9,2,8,7,1.65,4.2,4.75,18359,2022-11-12,Tottenham,Leeds,2.58046,1.71731,2022
+2022-11-12,Newcastle,Chelsea,1,0,R Jones,3,2,0,0,5,3,14,11,2.35,3.4,3.0,18357,2022-11-12,Newcastle,Chelsea,1.3601,0.359105,2022
+2022-11-12,West Ham,Leicester,0,2,J Gillett,3,1,0,0,7,2,9,8,2.05,3.4,3.75,18360,2022-11-12,West Ham,Leicester,0.720721,1.60566,2022
+2022-11-12,Wolves,Arsenal,0,2,S Attwell,3,2,0,0,6,4,5,6,6.0,4.2,1.55,18361,2022-11-12,Wolves,Arsenal,0.512339,2.27996,2022
+2022-11-12,Nott'm Forest,Crystal Palace,1,0,J Brooks,1,4,0,0,1,5,11,13,3.1,3.1,2.45,18358,2022-11-12,Nott'm Forest,Crystal Palace,1.23752,1.14552,2022
+2022-11-12,Bournemouth,Everton,3,0,C Pawson,2,0,0,0,3,5,12,8,2.8,3.25,2.6,18352,2022-11-12,Bournemouth,Everton,2.45642,0.768756,2022
+2022-11-12,Man City,Brentford,1,2,P Bankes,2,2,0,0,10,2,9,7,1.14,8.0,17.0,18356,2022-11-12,Man City,Brentford,1.605,3.29012,2022
+2022-11-12,Liverpool,Southampton,3,1,S Hooper,0,2,0,0,6,0,8,8,1.25,6.5,11.0,18355,2022-11-12,Liverpool,Southampton,2.74418,1.43427,2022
+2022-11-13,Brighton,Aston Villa,1,2,C Kavanagh,2,7,0,0,11,4,14,11,1.83,3.75,4.2,18353,2022-11-13,Brighton,Aston Villa,0.829107,1.15437,2022
+2022-11-13,Fulham,Man United,1,2,P Tierney,1,1,0,0,10,3,9,10,3.8,3.8,1.9,18354,2022-11-13,Fulham,Man United,1.70218,3.37664,2022
+2022-12-26,Arsenal,West Ham,3,1,M Oliver,0,2,0,0,7,5,13,17,1.5,4.33,6.5,18362,2022-12-26,Arsenal,West Ham,1.88828,1.02652,2022
+2022-12-26,Aston Villa,Liverpool,1,3,P Tierney,0,0,0,0,0,6,7,12,4.75,4.0,1.7,18363,2022-12-26,Aston Villa,Liverpool,1.69155,3.50694,2022
+2022-12-26,Leicester,Newcastle,0,3,J Gillett,0,0,0,0,5,5,9,6,3.25,3.5,2.2,18369,2022-12-26,Leicester,Newcastle,0.31099,1.76382,2022
+2022-12-26,Southampton,Brighton,1,3,R Jones,1,2,0,0,4,2,9,10,3.3,3.5,2.15,18371,2022-12-26,Southampton,Brighton,1.70709,1.00714,2022
+2022-12-26,Crystal Palace,Fulham,0,3,A Madley,0,0,2,0,1,8,12,15,2.05,3.6,3.5,18366,2022-12-26,Crystal Palace,Fulham,0.421754,2.69927,2022
+2022-12-26,Brentford,Tottenham,2,2,D Coote,3,1,0,0,6,5,11,10,4.0,3.6,1.91,18364,2022-12-26,Brentford,Tottenham,2.25263,0.883787,2022
+2022-12-26,Everton,Wolves,1,2,C Pawson,1,6,0,0,2,2,9,22,2.3,3.25,3.2,18367,2022-12-26,Everton,Wolves,1.22653,1.22076,2022
+2022-12-27,Chelsea,Bournemouth,2,0,S Hooper,0,0,0,0,6,8,8,10,1.3,5.5,10.0,18365,2022-12-27,Chelsea,Bournemouth,1.91378,0.44307,2022
+2022-12-27,Man United,Nott'm Forest,3,0,A Taylor,3,1,0,0,9,9,13,4,1.29,5.5,11.0,18370,2022-12-27,Man United,Nott'm Forest,2.13668,0.477076,2022
+2022-12-28,Leeds,Man City,1,3,S Attwell,3,3,0,0,3,5,11,14,9.5,6.0,1.29,18368,2022-12-28,Leeds,Man City,0.603751,4.16249,2022
+2022-12-30,West Ham,Brentford,0,2,D England,1,0,0,0,8,1,9,5,2.0,3.6,3.6,18380,2022-12-30,West Ham,Brentford,1.13979,1.51436,2022
+2022-12-30,Liverpool,Leicester,2,1,C Pawson,0,1,0,0,4,5,8,15,1.29,6.0,9.5,18375,2022-12-30,Liverpool,Leicester,2.02463,0.863312,2022
+2022-12-31,Brighton,Arsenal,2,4,A Taylor,3,3,0,0,7,4,7,11,3.4,3.5,2.1,18373,2022-12-31,Brighton,Arsenal,1.15663,3.22106,2022
+2022-12-31,Man City,Everton,1,1,A Madley,3,4,0,0,7,1,13,14,1.13,9.0,19.0,18376,2022-12-31,Man City,Everton,2.36333,0.0760019,2022
+2022-12-31,Newcastle,Leeds,0,0,S Hooper,3,5,0,0,9,3,13,19,1.45,4.5,7.0,18377,2022-12-31,Newcastle,Leeds,2.78846,0.517099,2022
+2022-12-31,Bournemouth,Crystal Palace,0,2,A Marriner,4,1,0,0,2,7,17,11,2.8,3.3,2.5,18372,2022-12-31,Bournemouth,Crystal Palace,0.895819,1.75264,2022
+2022-12-31,Wolves,Man United,0,1,R Jones,1,3,0,0,7,5,11,11,4.0,3.6,1.91,18381,2022-12-31,Wolves,Man United,0.587672,2.44728,2022
+2022-12-31,Fulham,Southampton,2,1,G Scott,0,1,0,0,4,4,8,13,1.95,3.6,3.75,18374,2022-12-31,Fulham,Southampton,1.49305,0.698711,2022
+2023-01-01,Tottenham,Aston Villa,0,2,J Brooks,4,3,0,0,5,3,15,10,1.67,4.0,5.0,18379,2023-01-01,Tottenham,Aston Villa,0.569383,1.21733,2022
+2023-01-01,Nott'm Forest,Chelsea,1,1,P Bankes,2,2,0,0,1,2,16,14,5.0,3.8,1.7,18378,2023-01-01,Nott'm Forest,Chelsea,0.985219,1.37305,2022
+2023-01-02,Brentford,Liverpool,3,1,S Attwell,1,3,0,0,4,9,5,8,5.5,4.33,1.55,18384,2023-01-02,Brentford,Liverpool,2.0991,2.10461,2022
+2023-01-03,Arsenal,Newcastle,0,0,A Madley,4,4,0,0,5,5,10,16,1.8,3.8,4.33,18382,2023-01-03,Arsenal,Newcastle,0.970637,0.959523,2022
+2023-01-03,Everton,Brighton,1,4,A Marriner,3,1,0,0,5,2,8,10,3.5,3.5,2.1,18387,2023-01-03,Everton,Brighton,1.16896,2.50731,2022
+2023-01-03,Leicester,Fulham,0,1,D Bond,2,6,0,0,6,3,12,11,2.2,3.6,3.1,18389,2023-01-03,Leicester,Fulham,1.45221,1.33493,2022
+2023-01-03,Man United,Bournemouth,3,0,M Salisbury,0,3,0,0,6,5,13,7,1.29,5.5,11.0,18390,2023-01-03,Man United,Bournemouth,2.97383,0.679022,2022
+2023-01-04,Crystal Palace,Tottenham,0,4,M Oliver,1,2,0,0,10,4,11,8,3.4,3.5,2.15,18386,2023-01-04,Crystal Palace,Tottenham,0.787525,1.66514,2022
+2023-01-04,Aston Villa,Wolves,1,1,J Gillett,1,3,0,0,7,8,6,12,1.95,3.6,4.0,18383,2023-01-04,Aston Villa,Wolves,1.03226,0.832522,2022
+2023-01-04,Leeds,West Ham,2,2,D Coote,3,1,0,0,8,1,11,18,2.6,3.5,2.6,18388,2023-01-04,Leeds,West Ham,1.2577,1.29245,2022
+2023-01-04,Southampton,Nott'm Forest,0,1,T Bramall,2,2,0,0,6,2,14,17,2.0,3.5,3.8,18391,2023-01-04,Southampton,Nott'm Forest,0.62937,1.22324,2022
+2023-01-05,Chelsea,Man City,0,1,P Tierney,2,0,0,0,3,2,9,9,5.0,4.0,1.67,18385,2023-01-05,Chelsea,Man City,0.493576,1.71972,2022
+2023-01-12,Fulham,Chelsea,2,1,D Coote,4,3,0,1,5,7,12,16,3.3,3.5,2.15,18262,2023-01-12,Fulham,Chelsea,0.711266,2.39911,2022
+2023-01-13,Aston Villa,Leeds,2,1,M Oliver,2,2,0,0,0,11,12,8,1.91,3.6,4.0,18392,2023-01-13,Aston Villa,Leeds,1.64599,2.46295,2022
+2023-01-14,Brentford,Bournemouth,2,0,J Gillett,1,1,0,0,5,3,5,9,1.65,4.0,5.25,18393,2023-01-14,Brentford,Bournemouth,1.29815,0.269283,2022
+2023-01-14,Man United,Man City,2,1,S Attwell,3,0,0,0,1,2,15,5,4.2,3.6,1.85,18397,2023-01-14,Man United,Man City,1.98228,0.73695,2022
+2023-01-14,Brighton,Liverpool,3,0,D England,1,3,0,0,7,1,8,15,3.4,3.6,2.1,18394,2023-01-14,Brighton,Liverpool,2.40062,1.28853,2022
+2023-01-14,Everton,Southampton,1,2,J Brooks,0,3,0,0,6,4,7,19,2.25,3.25,3.3,18396,2023-01-14,Everton,Southampton,1.18191,1.08412,2022
+2023-01-14,Nott'm Forest,Leicester,2,0,P Tierney,1,2,0,0,3,5,11,12,2.7,3.3,2.63,18399,2023-01-14,Nott'm Forest,Leicester,1.75313,0.803421,2022
+2023-01-14,Wolves,West Ham,1,0,S Hooper,0,2,0,0,4,3,10,7,2.63,3.3,2.7,18401,2023-01-14,Wolves,West Ham,0.806232,0.735105,2022
+2023-01-15,Tottenham,Arsenal,0,2,C Pawson,4,2,0,0,4,3,16,15,3.1,3.6,2.2,18400,2023-01-15,Tottenham,Arsenal,1.71032,2.04232,2022
+2023-01-15,Chelsea,Crystal Palace,1,0,P Bankes,2,5,0,0,11,7,10,17,1.62,4.0,5.25,18395,2023-01-15,Chelsea,Crystal Palace,2.12987,0.837366,2022
+2023-01-15,Newcastle,Fulham,1,0,R Jones,1,3,0,0,10,5,6,14,1.5,4.33,6.5,18398,2023-01-15,Newcastle,Fulham,1.96256,0.989872,2022
+2023-01-18,Crystal Palace,Man United,1,1,R Jones,1,2,0,0,3,3,9,10,4.5,3.6,1.8,18270,2023-01-18,Crystal Palace,Man United,0.413339,1.39437,2022
+2023-01-19,Man City,Tottenham,4,2,S Hooper,1,2,0,0,8,3,10,14,1.36,5.0,8.5,18267,2023-01-19,Man City,Tottenham,2.34166,1.16499,2022
+2023-01-21,Liverpool,Chelsea,0,0,M Oliver,3,1,0,0,5,5,16,9,1.85,3.75,4.0,18408,2023-01-21,Liverpool,Chelsea,1.30125,1.84467,2022
+2023-01-21,Bournemouth,Nott'm Forest,1,1,A Madley,1,2,0,0,4,6,10,7,2.75,3.1,2.75,18403,2023-01-21,Bournemouth,Nott'm Forest,1.80549,1.57544,2022
+2023-01-21,Leicester,Brighton,2,2,T Bramall,0,1,0,0,5,6,9,9,3.6,3.5,2.05,18407,2023-01-21,Leicester,Brighton,1.35941,1.94491,2022
+2023-01-21,Southampton,Aston Villa,0,1,M Salisbury,1,2,0,0,2,2,19,9,2.88,3.25,2.55,18410,2023-01-21,Southampton,Aston Villa,0.672444,1.16432,2022
+2023-01-21,West Ham,Everton,2,0,S Attwell,1,1,0,0,4,9,9,6,1.8,3.75,4.75,18411,2023-01-21,West Ham,Everton,2.46879,0.286826,2022
+2023-01-21,Crystal Palace,Newcastle,0,0,C Pawson,4,2,0,0,3,15,13,7,4.4,3.5,1.85,18404,2023-01-21,Crystal Palace,Newcastle,0.333154,1.44384,2022
+2023-01-22,Arsenal,Man United,3,2,A Taylor,1,2,0,0,12,4,8,9,1.8,3.8,4.2,18402,2023-01-22,Arsenal,Man United,2.90273,0.272246,2022
+2023-01-22,Man City,Wolves,3,0,D Coote,1,2,0,0,5,7,10,10,1.2,8.0,11.0,18409,2023-01-22,Man City,Wolves,3.32757,0.469277,2022
+2023-01-22,Leeds,Brentford,0,0,P Bankes,2,2,0,0,2,3,10,18,2.38,3.6,2.88,18406,2023-01-22,Leeds,Brentford,0.374736,0.17114,2022
+2023-01-23,Fulham,Tottenham,0,1,P Tierney,1,3,0,0,3,8,10,10,3.3,3.6,2.1,18405,2023-01-23,Fulham,Tottenham,1.09339,0.993805,2022
+2023-02-03,Chelsea,Fulham,0,0,S Attwell,1,4,0,0,6,2,16,12,1.62,4.0,5.25,18415,2023-02-03,Chelsea,Fulham,1.41471,0.493341,2022
+2023-02-04,Everton,Arsenal,1,0,D Coote,4,1,0,0,7,5,13,8,8.5,4.5,1.4,18416,2023-02-04,Everton,Arsenal,2.09191,0.690102,2022
+2023-02-04,Aston Villa,Leicester,2,4,D England,0,2,0,0,11,3,10,10,1.95,3.6,3.8,18412,2023-02-04,Aston Villa,Leicester,1.4989,2.49784,2022
+2023-02-04,Brentford,Southampton,3,0,D Bond,1,2,0,0,4,4,10,9,1.85,3.6,4.2,18413,2023-02-04,Brentford,Southampton,2.36747,0.644385,2022
+2023-02-04,Brighton,Bournemouth,1,0,C Pawson,3,1,0,0,7,3,14,7,1.33,5.25,8.5,18414,2023-02-04,Brighton,Bournemouth,2.55696,0.908298,2022
+2023-02-04,Man United,Crystal Palace,2,1,A Marriner,1,2,1,0,5,5,9,9,1.4,4.75,8.0,18417,2023-02-04,Man United,Crystal Palace,2.07035,1.3798,2022
+2023-02-04,Wolves,Liverpool,3,0,P Tierney,1,1,0,0,2,7,9,7,4.0,3.8,1.85,18421,2023-02-04,Wolves,Liverpool,2.63328,1.30193,2022
+2023-02-04,Newcastle,West Ham,1,1,P Bankes,2,1,0,0,4,2,11,13,1.6,3.8,6.0,18418,2023-02-04,Newcastle,West Ham,1.22883,1.27831,2022
+2023-02-05,Tottenham,Man City,1,0,A Madley,2,3,1,0,4,6,19,14,4.33,4.2,1.73,18420,2023-02-05,Tottenham,Man City,1.42168,0.773747,2022
+2023-02-05,Nott'm Forest,Leeds,1,0,R Jones,4,2,0,0,0,2,15,14,2.63,3.3,2.7,18419,2023-02-05,Nott'm Forest,Leeds,0.3325,1.12331,2022
+2023-02-08,Man United,Leeds,2,2,S Hooper,1,3,0,0,6,5,7,11,1.45,5.0,6.0,18279,2023-02-08,Man United,Leeds,2.00007,0.554798,2022
+2023-02-11,West Ham,Chelsea,1,1,C Pawson,1,1,0,0,5,6,9,11,3.3,3.3,2.25,18431,2023-02-11,West Ham,Chelsea,1.07615,0.900465,2022
+2023-02-11,Arsenal,Brentford,1,1,P Bankes,0,2,0,0,7,4,9,9,1.44,4.75,7.0,18422,2023-02-11,Arsenal,Brentford,1.36738,2.17538,2022
+2023-02-11,Crystal Palace,Brighton,1,1,M Oliver,4,1,0,0,1,6,10,11,3.8,3.5,2.0,18424,2023-02-11,Crystal Palace,Brighton,0.928279,2.64981,2022
+2023-02-11,Fulham,Nott'm Forest,2,0,A Madley,0,1,0,0,5,4,9,11,1.91,3.5,4.33,18425,2023-02-11,Fulham,Nott'm Forest,1.69704,0.686824,2022
+2023-02-11,Leicester,Tottenham,4,1,M Salisbury,5,2,0,0,1,5,14,9,3.4,3.6,2.1,18427,2023-02-11,Leicester,Tottenham,1.41208,1.11709,2022
+2023-02-11,Southampton,Wolves,1,2,J Gillett,2,2,0,1,5,2,12,14,2.9,3.2,2.55,18430,2023-02-11,Southampton,Wolves,1.30203,0.615651,2022
+2023-02-11,Bournemouth,Newcastle,1,1,S Attwell,2,3,0,0,4,6,8,10,6.5,4.0,1.53,18423,2023-02-11,Bournemouth,Newcastle,1.54458,1.54853,2022
+2023-02-12,Man City,Aston Villa,3,1,R Jones,1,2,0,0,8,4,13,14,1.25,6.5,11.0,18429,2023-02-12,Man City,Aston Villa,3.60987,0.275348,2022
+2023-02-12,Leeds,Man United,0,2,P Tierney,2,1,0,0,7,3,10,13,3.75,3.8,1.91,18426,2023-02-12,Leeds,Man United,1.89163,1.30375,2022
+2023-02-13,Liverpool,Everton,2,0,S Hooper,1,3,0,0,3,3,8,16,1.5,4.33,6.5,18428,2023-02-13,Liverpool,Everton,2.23291,0.402331,2022
+2023-02-15,Arsenal,Man City,1,3,A Taylor,2,3,0,0,1,3,11,15,2.9,3.5,2.35,18312,2023-02-15,Arsenal,Man City,1.70139,2.00841,2022
+2023-02-18,Aston Villa,Arsenal,2,4,S Hooper,2,1,0,0,2,9,13,4,4.5,3.6,1.5,18432,2023-02-18,Aston Villa,Arsenal,0.335752,2.85981,2022
+2023-02-18,Brentford,Crystal Palace,1,1,P Tierney,2,2,0,0,2,6,10,8,1.83,3.5,4.5,18433,2023-02-18,Brentford,Crystal Palace,0.610105,1.12202,2022
+2023-02-18,Brighton,Fulham,0,1,D England,0,5,0,0,10,2,12,14,1.65,3.8,5.5,18434,2023-02-18,Brighton,Fulham,2.71375,0.224214,2022
+2023-02-18,Chelsea,Southampton,0,1,D Coote,3,6,0,0,8,2,16,24,1.4,4.75,8.5,18435,2023-02-18,Chelsea,Southampton,1.61723,0.619532,2022
+2023-02-18,Everton,Leeds,1,0,A Madley,2,3,0,0,6,4,8,6,2.4,3.3,3.0,18436,2023-02-18,Everton,Leeds,1.53811,0.597403,2022
+2023-02-18,Nott'm Forest,Man City,1,1,G Scott,1,0,0,0,0,10,8,6,8.5,5.5,1.3,18439,2023-02-18,Nott'm Forest,Man City,1.12735,2.80966,2022
+2023-02-18,Wolves,Bournemouth,0,1,M Salisbury,3,3,0,0,12,2,12,10,1.67,3.6,6.0,18441,2023-02-18,Wolves,Bournemouth,0.911415,1.15274,2022
+2023-02-18,Newcastle,Liverpool,0,2,A Taylor,1,1,1,0,6,7,3,8,2.5,3.5,2.7,18438,2023-02-18,Newcastle,Liverpool,1.74852,2.16549,2022
+2023-02-19,Man United,Leicester,3,0,S Attwell,0,2,0,0,6,6,9,9,1.62,4.33,5.25,18437,2023-02-19,Man United,Leicester,4.24663,1.39678,2022
+2023-02-19,Tottenham,West Ham,2,0,M Oliver,2,1,0,0,4,7,16,10,1.75,3.6,4.75,18440,2023-02-19,Tottenham,West Ham,1.43042,0.365173,2022
+2023-02-24,Fulham,Wolves,1,1,M Oliver,2,0,0,0,4,3,12,17,2.5,3.2,3.0,18445,2023-02-24,Fulham,Wolves,0.913133,0.997097,2022
+2023-02-25,Everton,Aston Villa,0,2,A Taylor,2,1,0,0,5,1,12,12,2.5,3.2,3.0,18444,2023-02-25,Everton,Aston Villa,1.54109,2.06037,2022
+2023-02-25,Leeds,Southampton,1,0,P Bankes,2,4,0,0,9,2,15,13,1.95,3.5,4.0,18446,2023-02-25,Leeds,Southampton,0.720048,0.391128,2022
+2023-02-25,Leicester,Arsenal,0,1,C Pawson,0,1,0,0,0,8,14,9,4.75,4.0,1.7,18447,2023-02-25,Leicester,Arsenal,0.0203463,0.722059,2022
+2023-02-25,West Ham,Nott'm Forest,4,0,J Gillett,0,0,0,0,12,3,8,5,1.75,3.6,5.0,18451,2023-02-25,West Ham,Nott'm Forest,3.05032,0.350849,2022
+2023-02-25,Bournemouth,Man City,1,4,P Tierney,2,2,0,0,4,6,10,9,10.0,5.75,1.29,18442,2023-02-25,Bournemouth,Man City,1.08527,2.98206,2022
+2023-02-25,Crystal Palace,Liverpool,0,0,D England,2,5,0,0,5,3,11,14,4.75,3.8,1.73,18443,2023-02-25,Crystal Palace,Liverpool,0.989086,1.35123,2022
+2023-02-26,Tottenham,Chelsea,2,0,S Attwell,2,3,0,0,4,4,10,10,2.55,3.25,2.9,18450,2023-02-26,Tottenham,Chelsea,0.926313,0.262281,2022
+2023-03-01,Arsenal,Everton,4,0,M Oliver,0,2,0,0,5,1,5,12,1.36,4.75,10.0,18269,2023-03-01,Arsenal,Everton,3.06919,1.604,2022
+2023-03-01,Liverpool,Wolves,2,0,P Tierney,2,3,0,0,5,2,13,14,1.5,4.75,6.0,18264,2023-03-01,Liverpool,Wolves,2.70191,0.78681,2022
+2023-03-04,Southampton,Leicester,1,0,R Jones,4,2,0,0,3,4,12,11,2.75,3.3,2.6,18460,2023-03-04,Southampton,Leicester,1.34332,1.67051,2022
+2023-03-04,Wolves,Tottenham,1,0,T Robinson,1,1,0,0,4,8,11,18,3.3,3.4,2.2,18461,2023-03-04,Wolves,Tottenham,0.562477,1.25588,2022
+2023-03-04,Chelsea,Leeds,1,0,M Oliver,2,0,0,0,5,7,10,7,1.62,4.0,5.5,18456,2023-03-04,Chelsea,Leeds,1.8678,0.633995,2022
+2023-03-04,Arsenal,Bournemouth,3,2,C Kavanagh,0,2,0,0,17,1,6,8,1.22,7.0,12.0,18452,2023-03-04,Arsenal,Bournemouth,2.46279,1.74267,2022
+2023-03-04,Aston Villa,Crystal Palace,1,0,C Pawson,2,3,0,1,2,4,14,17,2.05,3.3,3.8,18453,2023-03-04,Aston Villa,Crystal Palace,0.890605,0.152761,2022
+2023-03-04,Man City,Newcastle,2,0,S Hooper,2,4,0,0,8,4,8,13,1.45,4.5,7.0,18458,2023-03-04,Man City,Newcastle,1.34144,0.359809,2022
+2023-03-04,Brighton,West Ham,4,0,S Attwell,0,3,0,0,7,3,6,8,1.8,3.6,4.5,18455,2023-03-04,Brighton,West Ham,3.49993,0.250045,2022
+2023-03-05,Nott'm Forest,Everton,2,2,J Brooks,3,5,0,0,3,3,11,17,2.7,3.0,2.88,18459,2023-03-05,Nott'm Forest,Everton,0.799733,1.70877,2022
+2023-03-05,Liverpool,Man United,7,0,A Madley,2,3,0,0,4,3,13,14,2.38,3.6,2.88,18457,2023-03-05,Liverpool,Man United,3.44269,0.837542,2022
+2023-03-06,Brentford,Fulham,3,2,A Taylor,0,3,0,0,2,3,12,17,1.95,3.6,3.75,18454,2023-03-06,Brentford,Fulham,2.44358,1.67531,2022
+2023-03-11,Crystal Palace,Man City,0,1,R Jones,2,2,0,0,2,6,11,17,9.0,4.75,1.36,18463,2023-03-11,Crystal Palace,Man City,0.185498,2.1884,2022
+2023-03-11,Tottenham,Nott'm Forest,3,1,C Pawson,3,1,0,0,2,10,13,13,1.44,4.75,7.0,18470,2023-03-11,Tottenham,Nott'm Forest,1.73482,1.62805,2022
+2023-03-11,Leicester,Chelsea,1,3,A Marriner,1,2,1,0,2,5,10,11,3.75,3.5,1.95,18467,2023-03-11,Leicester,Chelsea,2.36139,1.49478,2022
+2023-03-11,Everton,Brentford,1,0,S Hooper,2,1,0,0,5,8,11,12,2.7,3.25,2.7,18464,2023-03-11,Everton,Brentford,1.71599,1.95088,2022
+2023-03-11,Bournemouth,Liverpool,1,0,J Brooks,2,1,0,0,3,8,7,9,7.5,5.0,1.4,18462,2023-03-11,Bournemouth,Liverpool,1.10128,2.13465,2022
+2023-03-11,Leeds,Brighton,2,2,P Tierney,1,1,0,0,4,7,12,9,3.75,3.6,1.95,18466,2023-03-11,Leeds,Brighton,0.596738,1.51388,2022
+2023-03-12,Fulham,Arsenal,0,3,D Coote,0,1,0,0,4,8,10,9,6.0,4.0,1.57,18465,2023-03-12,Fulham,Arsenal,0.61832,2.64355,2022
+2023-03-12,Man United,Southampton,0,0,A Taylor,2,0,0,0,7,8,12,9,1.36,5.0,9.0,18468,2023-03-12,Man United,Southampton,0.910911,1.18053,2022
+2023-03-12,West Ham,Aston Villa,1,1,C Kavanagh,1,0,0,0,13,2,8,6,2.2,3.3,3.4,18471,2023-03-12,West Ham,Aston Villa,2.14634,1.99139,2022
+2023-03-12,Newcastle,Wolves,2,1,A Madley,1,2,0,0,10,3,11,10,1.65,3.75,5.5,18469,2023-03-12,Newcastle,Wolves,2.45527,0.709895,2022
+2023-03-15,Brighton,Crystal Palace,1,0,P Bankes,1,2,0,0,1,4,13,20,1.44,4.2,8.0,18276,2023-03-15,Brighton,Crystal Palace,0.588727,1.21452,2022
+2023-03-15,Southampton,Brentford,0,2,M Salisbury,1,2,0,0,3,3,14,10,2.88,3.25,2.5,18265,2023-03-15,Southampton,Brentford,0.358977,1.66591,2022
+2023-03-17,Nott'm Forest,Newcastle,1,2,P Tierney,5,1,0,0,3,7,17,9,5.5,3.8,1.62,18479,2023-03-17,Nott'm Forest,Newcastle,0.531985,2.50027,2022
+2023-03-18,Chelsea,Everton,2,2,D England,2,2,0,0,8,2,8,12,1.5,4.2,7.5,18476,2023-03-18,Chelsea,Everton,1.90027,1.64675,2022
+2023-03-18,Wolves,Leeds,2,4,M Salisbury,3,5,1,0,5,4,15,9,2.25,3.2,3.3,18481,2023-03-18,Wolves,Leeds,2.76358,1.6549,2022
+2023-03-18,Brentford,Leicester,1,1,D Bond,1,2,1,0,8,4,10,11,1.91,3.6,3.75,18474,2023-03-18,Brentford,Leicester,0.476467,1.42133,2022
+2023-03-18,Aston Villa,Bournemouth,3,0,R Jones,1,4,0,0,9,6,8,13,1.7,3.8,5.0,18473,2023-03-18,Aston Villa,Bournemouth,3.45474,0.50014,2022
+2023-03-18,Southampton,Tottenham,3,3,S Hooper,1,1,0,0,10,3,13,8,4.75,3.6,1.75,18480,2023-03-18,Southampton,Tottenham,2.52077,1.88473,2022
+2023-03-19,Arsenal,Crystal Palace,4,1,S Attwell,0,1,0,0,5,4,8,10,1.25,5.5,15.0,18472,2023-03-19,Arsenal,Crystal Palace,1.53568,1.19194,2022
+2023-04-01,Crystal Palace,Leicester,2,1,T Robinson,3,4,0,0,10,1,12,16,2.5,3.25,2.9,18486,2023-04-01,Crystal Palace,Leicester,1.93471,0.198959,2022
+2023-04-01,Nott'm Forest,Wolves,1,1,C Kavanagh,3,5,0,0,4,3,14,13,3.0,3.1,2.55,18490,2023-04-01,Nott'm Forest,Wolves,1.11441,0.383739,2022
+2023-04-01,Brighton,Brentford,3,3,M Oliver,2,1,0,0,14,0,16,10,1.67,4.0,5.0,18484,2023-04-01,Brighton,Brentford,3.8195,1.2788,2022
+2023-04-01,Chelsea,Aston Villa,0,2,A Madley,3,3,0,0,13,2,14,16,1.67,3.8,5.25,18485,2023-04-01,Chelsea,Aston Villa,2.38024,0.765794,2022
+2023-04-01,Arsenal,Leeds,4,1,D England,0,2,0,0,4,3,11,13,1.29,6.0,9.0,18482,2023-04-01,Arsenal,Leeds,3.29548,0.497609,2022
+2023-04-01,Man City,Liverpool,4,1,S Hooper,1,1,0,0,7,1,9,12,1.62,4.2,5.0,18488,2023-04-01,Man City,Liverpool,3.01243,0.318171,2022
+2023-04-01,Bournemouth,Fulham,2,1,P Bankes,1,4,0,0,4,3,15,13,2.55,3.3,2.8,18483,2023-04-01,Bournemouth,Fulham,3.14054,0.601049,2022
+2023-04-02,Newcastle,Man United,2,0,S Attwell,0,0,0,0,7,4,8,12,2.4,3.4,2.9,18489,2023-04-02,Newcastle,Man United,3.33162,0.334127,2022
+2023-04-02,West Ham,Southampton,1,0,P Tierney,0,2,0,0,5,3,10,11,1.73,3.6,5.0,18491,2023-04-02,West Ham,Southampton,1.40363,0.318261,2022
+2023-04-03,Everton,Tottenham,1,1,D Coote,0,3,1,1,3,3,10,14,3.4,3.3,2.2,18487,2023-04-03,Everton,Tottenham,0.823365,1.39177,2022
+2023-04-04,Bournemouth,Brighton,0,2,D Bond,1,1,0,0,5,5,11,5,6.0,4.2,1.53,18266,2023-04-04,Bournemouth,Brighton,1.15322,2.63392,2022
+2023-04-04,Leeds,Nott'm Forest,2,1,R Jones,1,4,0,0,11,4,11,13,1.7,3.75,5.0,18271,2023-04-04,Leeds,Nott'm Forest,2.43248,0.613917,2022
+2023-04-04,Leicester,Aston Villa,1,2,G Scott,2,0,1,0,4,8,10,14,2.55,3.3,2.75,18263,2023-04-04,Leicester,Aston Villa,0.671597,1.00159,2022
+2023-04-04,Chelsea,Liverpool,0,0,A Taylor,1,4,0,0,3,5,6,17,2.2,3.4,3.25,18281,2023-04-04,Chelsea,Liverpool,2.18903,0.202217,2022
+2023-04-05,Man United,Brentford,1,0,J Brooks,3,2,0,0,12,3,8,13,1.65,4.0,5.0,18448,2023-04-05,Man United,Brentford,1.1445,0.64499,2022
+2023-04-05,West Ham,Newcastle,1,5,C Pawson,2,1,0,0,7,6,11,12,3.6,3.25,2.15,18268,2023-04-05,West Ham,Newcastle,0.83342,2.84091,2022
+2023-04-08,Southampton,Man City,1,4,R Jones,0,2,0,0,0,10,6,10,11.0,6.0,1.25,18499,2023-04-08,Southampton,Man City,0.492801,3.05999,2022
+2023-04-08,Wolves,Chelsea,1,0,P Bankes,2,5,0,0,8,8,14,10,4.2,3.5,1.91,18501,2023-04-08,Wolves,Chelsea,0.601153,0.815308,2022
+2023-04-08,Tottenham,Brighton,2,1,S Attwell,3,1,0,0,3,7,15,15,2.55,3.5,2.7,18500,2023-04-08,Tottenham,Brighton,0.594139,1.47549,2022
+2023-04-08,Leicester,Bournemouth,0,1,D Coote,0,3,0,0,6,6,10,13,1.83,3.75,4.2,18496,2023-04-08,Leicester,Bournemouth,0.731965,1.92396,2022
+2023-04-08,Brentford,Newcastle,1,2,C Kavanagh,0,0,0,0,6,5,10,15,3.6,3.4,2.05,18493,2023-04-08,Brentford,Newcastle,2.06521,1.02337,2022
+2023-04-08,Aston Villa,Nott'm Forest,2,0,A Taylor,3,4,0,0,1,8,7,17,1.6,4.2,5.25,18492,2023-04-08,Aston Villa,Nott'm Forest,1.42718,0.232452,2022
+2023-04-08,Man United,Everton,2,0,M Oliver,0,0,0,0,10,4,10,9,1.5,4.33,6.5,18498,2023-04-08,Man United,Everton,4.38578,0.949183,2022
+2023-04-08,Fulham,West Ham,0,1,J Gillett,1,1,0,0,11,4,10,12,2.8,3.25,2.63,18494,2023-04-08,Fulham,West Ham,0.456524,1.23261,2022
+2023-04-09,Leeds,Crystal Palace,1,5,S Hooper,3,1,0,0,2,4,11,8,2.1,3.4,3.6,18495,2023-04-09,Leeds,Crystal Palace,1.02075,3.22687,2022
+2023-04-09,Liverpool,Arsenal,2,2,P Tierney,4,4,0,0,5,4,11,11,2.88,3.6,2.38,18497,2023-04-09,Liverpool,Arsenal,4.64012,1.53631,2022
+2023-04-15,Wolves,Brentford,2,0,P Tierney,1,1,0,0,5,2,12,8,2.45,3.1,3.0,18511,2023-04-15,Wolves,Brentford,0.93912,1.5133,2022
+2023-04-15,Man City,Leicester,3,1,D England,1,1,0,0,6,2,8,8,1.14,8.5,15.0,18506,2023-04-15,Man City,Leicester,1.60702,1.92692,2022
+2023-04-15,Southampton,Crystal Palace,0,2,M Oliver,3,1,0,0,6,2,6,13,2.8,3.1,2.7,18508,2023-04-15,Southampton,Crystal Palace,0.678449,0.86306,2022
+2023-04-15,Tottenham,Bournemouth,2,3,A Madley,1,2,0,0,8,1,8,9,1.45,4.5,7.0,18509,2023-04-15,Tottenham,Bournemouth,2.30604,1.20598,2022
+2023-04-15,Chelsea,Brighton,1,2,R Jones,2,2,0,0,2,8,11,11,2.63,3.4,2.63,18503,2023-04-15,Chelsea,Brighton,0.46331,2.52107,2022
+2023-04-15,Aston Villa,Newcastle,3,0,J Brooks,1,1,0,0,7,2,13,15,3.6,3.4,2.05,18502,2023-04-15,Aston Villa,Newcastle,1.91802,0.425086,2022
+2023-04-15,Everton,Fulham,1,3,A Taylor,3,2,0,0,4,8,10,6,2.05,3.4,3.7,18504,2023-04-15,Everton,Fulham,2.24262,1.92209,2022
+2023-04-16,West Ham,Arsenal,2,2,D Coote,1,2,0,0,7,2,11,8,6.0,4.2,1.55,18510,2023-04-16,West Ham,Arsenal,1.96095,2.71782,2022
+2023-04-16,Nott'm Forest,Man United,0,2,S Hooper,2,2,0,0,4,9,9,9,5.5,4.0,1.62,18507,2023-04-16,Nott'm Forest,Man United,1.05289,3.33747,2022
+2023-04-17,Leeds,Liverpool,1,6,C Pawson,0,1,0,0,4,2,6,12,4.2,4.2,1.73,18505,2023-04-17,Leeds,Liverpool,1.16748,2.65476,2022
+2023-04-21,Arsenal,Southampton,3,3,S Hooper,1,5,0,0,7,2,10,14,1.2,7.0,13.0,18512,2023-04-21,Arsenal,Southampton,2.39609,1.43063,2022
+2023-04-22,Leicester,Wolves,2,1,A Madley,1,3,0,0,1,7,17,16,2.38,3.3,3.0,18518,2023-04-22,Leicester,Wolves,2.66929,0.59626,2022
+2023-04-22,Liverpool,Nott'm Forest,3,2,M Oliver,0,1,0,0,9,3,9,12,1.17,7.5,17.0,18519,2023-04-22,Liverpool,Nott'm Forest,3.32745,0.724666,2022
+2023-04-22,Brentford,Aston Villa,1,1,M Salisbury,3,2,0,0,8,4,12,8,2.5,3.25,2.88,18514,2023-04-22,Brentford,Aston Villa,2.03162,1.66602,2022
+2023-04-22,Fulham,Leeds,2,1,P Bankes,1,4,0,0,8,6,10,15,2.3,3.4,3.1,18517,2023-04-22,Fulham,Leeds,1.43763,1.07482,2022
+2023-04-22,Crystal Palace,Everton,0,0,J Brooks,1,1,0,1,8,1,12,14,2.05,3.2,3.75,18516,2023-04-22,Crystal Palace,Everton,0.368137,0.433712,2022
+2023-04-23,Bournemouth,West Ham,0,4,A Taylor,1,2,0,0,8,5,7,8,2.88,3.2,2.55,18513,2023-04-23,Bournemouth,West Ham,0.974687,2.52322,2022
+2023-04-23,Newcastle,Tottenham,6,1,D Coote,0,3,0,0,9,3,7,13,1.83,3.75,4.2,18521,2023-04-23,Newcastle,Tottenham,3.98532,0.883001,2022
+2023-04-25,Leeds,Leicester,1,1,P Tierney,4,2,0,0,3,6,14,15,2.3,3.5,3.0,18523,2023-04-25,Leeds,Leicester,2.09645,2.08594,2022
+2023-04-25,Wolves,Crystal Palace,2,0,R Jones,5,4,0,0,6,11,13,14,2.45,3.2,3.0,18527,2023-04-25,Wolves,Crystal Palace,1.12829,0.580294,2022
+2023-04-25,Aston Villa,Fulham,1,0,T Bramall,3,2,0,0,8,2,6,18,1.75,4.0,4.2,18528,2023-04-25,Aston Villa,Fulham,0.839159,0.079864,2022
+2023-04-26,West Ham,Liverpool,1,2,C Kavanagh,0,0,0,0,3,6,6,8,3.9,3.9,1.85,18526,2023-04-26,West Ham,Liverpool,0.939348,1.7045,2022
+2023-04-26,Man City,Arsenal,4,1,M Oliver,3,1,0,0,1,3,13,13,1.55,4.5,5.25,18531,2023-04-26,Man City,Arsenal,2.01168,0.398372,2022
+2023-04-26,Nott'm Forest,Brighton,3,1,J Gillett,2,0,0,0,2,7,7,8,6.0,4.2,1.53,18524,2023-04-26,Nott'm Forest,Brighton,2.43846,2.33064,2022
+2023-04-26,Chelsea,Brentford,0,2,A Madley,1,2,0,0,5,2,5,13,1.7,4.0,4.75,18529,2023-04-26,Chelsea,Brentford,1.21124,0.695344,2022
+2023-04-27,Tottenham,Man United,2,2,A Taylor,1,2,0,0,6,8,8,7,2.8,3.6,2.4,18525,2023-04-27,Tottenham,Man United,2.37239,1.96508,2022
+2023-04-27,Southampton,Bournemouth,0,1,D England,0,3,0,0,6,4,9,11,2.25,3.4,3.2,18530,2023-04-27,Southampton,Bournemouth,0.477034,0.988554,2022
+2023-04-27,Everton,Newcastle,1,4,A Marriner,2,1,0,0,3,14,8,6,4.75,3.6,1.73,18522,2023-04-27,Everton,Newcastle,0.777008,2.86368,2022
+2023-04-29,Crystal Palace,West Ham,4,3,C Pawson,1,2,0,0,8,5,9,17,2.63,3.25,2.75,18536,2023-04-29,Crystal Palace,West Ham,2.31888,1.98262,2022
+2023-04-29,Brentford,Nott'm Forest,2,1,P Bankes,1,2,0,0,6,0,6,13,1.65,3.8,5.5,18534,2023-04-29,Brentford,Nott'm Forest,1.32059,0.939693,2022
+2023-04-29,Brighton,Wolves,6,0,D Coote,1,1,0,0,2,5,14,11,1.5,4.33,6.5,18535,2023-04-29,Brighton,Wolves,3.60471,0.603985,2022
+2023-04-30,Bournemouth,Leeds,4,1,C Kavanagh,1,0,0,0,2,6,12,14,2.55,3.5,2.7,18533,2023-04-30,Bournemouth,Leeds,2.51723,1.33691,2022
+2023-04-30,Fulham,Man City,1,2,S Hooper,1,3,0,0,2,5,9,10,12.0,6.0,1.25,18537,2023-04-30,Fulham,Man City,0.431813,2.32338,2022
+2023-04-30,Man United,Aston Villa,1,0,J Gillett,2,0,0,0,1,4,16,7,1.73,3.9,4.6,18540,2023-04-30,Man United,Aston Villa,1.3056,0.434738,2022
+2023-04-30,Newcastle,Southampton,3,1,A Taylor,1,4,0,0,11,2,7,10,1.3,5.25,10.0,18541,2023-04-30,Newcastle,Southampton,3.91457,0.897175,2022
+2023-04-30,Liverpool,Tottenham,4,3,P Tierney,3,2,0,0,5,2,12,6,1.53,4.5,5.75,18539,2023-04-30,Liverpool,Tottenham,2.42911,1.44927,2022
+2023-05-01,Leicester,Everton,2,2,M Oliver,4,1,0,0,2,9,10,12,2.0,3.5,3.75,18538,2023-05-01,Leicester,Everton,3.32486,3.28648,2022
+2023-05-02,Arsenal,Chelsea,3,1,R Jones,0,2,0,0,7,2,10,10,1.6,4.0,5.5,18532,2023-05-02,Arsenal,Chelsea,2.7832,0.785202,2022
+2023-05-03,Liverpool,Fulham,1,0,S Attwell,0,0,0,0,7,5,10,8,1.25,5.75,11.0,18477,2023-05-03,Liverpool,Fulham,1.67372,0.740125,2022
+2023-05-03,Man City,West Ham,3,0,J Brooks,0,1,0,0,6,3,8,8,1.2,7.0,13.0,18478,2023-05-03,Man City,West Ham,2.99908,0.492075,2022
+2023-05-04,Brighton,Man United,1,0,A Marriner,4,4,0,0,8,6,10,14,1.95,3.5,3.75,18475,2023-05-04,Brighton,Man United,2.09953,1.32105,2022
+2023-05-06,Bournemouth,Chelsea,1,3,J Brooks,1,3,0,0,7,7,9,11,3.3,3.5,2.15,18542,2023-05-06,Bournemouth,Chelsea,1.21755,1.76852,2022
+2023-05-06,Man City,Leeds,2,1,A Madley,0,3,0,0,10,1,3,16,1.17,8.5,15.0,18546,2023-05-06,Man City,Leeds,2.83472,0.140924,2022
+2023-05-06,Tottenham,Crystal Palace,1,0,D England,3,5,0,0,8,4,15,14,1.8,3.8,4.2,18549,2023-05-06,Tottenham,Crystal Palace,1.15665,0.306669,2022
+2023-05-06,Wolves,Aston Villa,1,0,S Attwell,3,3,0,0,5,6,20,9,2.88,3.3,2.5,18551,2023-05-06,Wolves,Aston Villa,0.80605,1.50158,2022
+2023-05-06,Liverpool,Brentford,1,0,A Taylor,4,2,0,0,7,3,19,10,1.44,5.0,6.0,18545,2023-05-06,Liverpool,Brentford,1.992,0.183892,2022
+2023-05-07,Newcastle,Arsenal,0,2,C Kavanagh,2,1,0,0,9,4,16,12,2.45,3.75,2.63,18547,2023-05-07,Newcastle,Arsenal,1.37224,1.29061,2022
+2023-05-07,West Ham,Man United,1,0,P Bankes,0,2,0,0,5,6,4,9,3.4,3.75,2.05,18550,2023-05-07,West Ham,Man United,1.76618,1.1942,2022
+2023-05-08,Nott'm Forest,Southampton,4,3,M Oliver,1,0,0,0,2,11,16,10,2.1,3.6,3.4,18548,2023-05-08,Nott'm Forest,Southampton,1.91326,3.31096,2022
+2023-05-08,Fulham,Leicester,5,3,R Jones,0,3,0,0,2,7,13,15,2.63,3.5,2.6,18544,2023-05-08,Fulham,Leicester,1.75276,2.92566,2022
+2023-05-08,Brighton,Everton,1,5,S Hooper,1,5,0,0,15,1,11,13,1.33,5.25,9.0,18543,2023-05-08,Brighton,Everton,3.23717,2.94223,2022
+2023-05-13,Leeds,Newcastle,2,2,S Hooper,3,2,1,0,2,6,16,14,4.33,4.2,1.7,18558,2023-05-13,Leeds,Newcastle,2.01567,2.35118,2022
+2023-05-13,Aston Villa,Tottenham,2,1,P Bankes,3,3,0,0,8,3,9,14,2.25,3.6,2.9,18553,2023-05-13,Aston Villa,Tottenham,1.79987,1.18505,2022
+2023-05-13,Chelsea,Nott'm Forest,2,2,P Tierney,3,1,0,0,2,5,13,15,1.5,4.5,6.0,18555,2023-05-13,Chelsea,Nott'm Forest,0.999181,1.96797,2022
+2023-05-13,Crystal Palace,Bournemouth,2,0,M Salisbury,0,2,0,0,11,2,5,12,1.83,3.6,4.2,18556,2023-05-13,Crystal Palace,Bournemouth,1.40237,0.262022,2022
+2023-05-13,Man United,Wolves,2,0,J Brooks,3,2,0,0,11,7,9,9,1.36,5.0,7.5,18560,2023-05-13,Man United,Wolves,3.10118,0.268789,2022
+2023-05-13,Southampton,Fulham,0,2,T Bramall,2,0,0,0,1,8,17,12,2.75,3.3,2.5,18561,2023-05-13,Southampton,Fulham,0.149649,1.27085,2022
+2023-05-14,Everton,Man City,0,3,A Taylor,1,0,0,0,8,6,12,4,9.0,4.75,1.36,18557,2023-05-14,Everton,Man City,1.18597,1.04338,2022
+2023-05-14,Brentford,West Ham,2,0,M Oliver,1,0,0,0,7,5,5,5,2.0,3.5,3.6,18554,2023-05-14,Brentford,West Ham,4.42571,0.203312,2022
+2023-05-14,Arsenal,Brighton,0,3,A Madley,1,2,0,0,5,2,13,17,1.73,4.2,4.2,18552,2023-05-14,Arsenal,Brighton,0.958651,2.21276,2022
+2023-05-15,Leicester,Liverpool,0,3,C Pawson,2,1,0,0,4,4,11,17,5.25,4.33,1.57,18559,2023-05-15,Leicester,Liverpool,0.527496,1.77085,2022
+2023-05-18,Newcastle,Brighton,4,1,R Jones,2,4,0,0,6,1,17,16,2.0,3.8,3.5,18449,2023-05-18,Newcastle,Brighton,4.11359,0.593493,2022
+2023-05-20,Tottenham,Brentford,1,3,J Gillett,1,1,0,0,8,2,11,9,1.83,3.9,4.0,18569,2023-05-20,Tottenham,Brentford,1.61667,1.15344,2022
+2023-05-20,Bournemouth,Man United,0,1,C Kavanagh,1,0,0,0,3,6,6,7,6.0,4.75,1.5,18562,2023-05-20,Bournemouth,Man United,0.815723,1.71783,2022
+2023-05-20,Fulham,Crystal Palace,2,2,J Smith,3,0,0,0,7,4,13,12,2.45,3.4,2.9,18564,2023-05-20,Fulham,Crystal Palace,1.95519,1.70785,2022
+2023-05-20,Liverpool,Aston Villa,1,1,J Brooks,3,5,0,0,9,4,16,13,1.45,5.0,6.25,18565,2023-05-20,Liverpool,Aston Villa,0.918508,1.46948,2022
+2023-05-20,Wolves,Everton,1,1,D Coote,5,1,0,0,1,7,18,10,2.75,3.3,2.6,18571,2023-05-20,Wolves,Everton,1.28976,2.46976,2022
+2023-05-20,Nott'm Forest,Arsenal,1,0,A Taylor,3,2,0,0,3,6,11,12,5.25,4.33,1.57,18568,2023-05-20,Nott'm Forest,Arsenal,1.1397,0.4902,2022
+2023-05-21,Brighton,Southampton,3,1,P Tierney,2,5,0,0,4,3,8,9,1.22,7.0,11.0,18563,2023-05-21,Brighton,Southampton,2.41418,0.863659,2022
+2023-05-21,West Ham,Leeds,3,1,P Bankes,1,3,0,0,9,5,6,11,2.4,3.5,2.88,18570,2023-05-21,West Ham,Leeds,2.48001,0.645828,2022
+2023-05-21,Man City,Chelsea,1,0,M Oliver,0,2,0,0,5,2,12,9,1.25,6.0,11.0,18566,2023-05-21,Man City,Chelsea,1.20557,1.15648,2022
+2023-05-22,Newcastle,Leicester,0,0,A Marriner,2,0,0,0,12,1,9,5,1.36,5.5,7.0,18567,2023-05-22,Newcastle,Leicester,2.05089,0.0839072,2022
+2023-05-24,Brighton,Man City,1,1,S Hooper,2,1,0,0,5,1,16,11,4.0,4.33,1.75,18515,2023-05-24,Brighton,Man City,2.11486,1.92973,2022
+2023-05-25,Man United,Chelsea,4,1,S Attwell,1,1,0,0,3,4,12,6,1.6,4.33,5.0,18520,2023-05-25,Man United,Chelsea,4.92231,1.68364,2022
+2023-05-28,Arsenal,Wolves,5,0,A Marriner,0,0,0,0,8,4,8,11,1.36,5.25,8.0,18572,2023-05-28,Arsenal,Wolves,3.02466,0.38772,2022
+2023-05-28,Aston Villa,Brighton,2,1,D Coote,4,4,0,0,4,3,15,16,2.0,3.6,3.5,18573,2023-05-28,Aston Villa,Brighton,2.55845,1.23117,2022
+2023-05-28,Brentford,Man City,1,0,J Brooks,4,0,0,0,3,4,12,8,3.8,4.0,1.83,18574,2023-05-28,Brentford,Man City,1.43893,1.18649,2022
+2023-05-28,Chelsea,Newcastle,1,1,J Gillett,0,0,0,0,10,3,9,11,2.9,3.5,2.38,18575,2023-05-28,Chelsea,Newcastle,2.01924,1.51899,2022
+2023-05-28,Crystal Palace,Nott'm Forest,1,1,T Bramall,0,2,0,0,5,4,9,13,1.67,4.0,5.0,18576,2023-05-28,Crystal Palace,Nott'm Forest,1.00786,0.436439,2022
+2023-05-28,Everton,Bournemouth,1,0,S Attwell,1,3,0,0,9,3,11,12,1.5,4.5,6.5,18577,2023-05-28,Everton,Bournemouth,1.12933,0.432084,2022
+2023-05-28,Leeds,Tottenham,1,4,A Taylor,3,0,0,0,12,3,7,5,2.75,3.8,2.3,18578,2023-05-28,Leeds,Tottenham,1.19151,2.03315,2022
+2023-05-28,Leicester,West Ham,2,1,S Hooper,1,1,0,0,3,5,8,10,1.91,3.8,3.6,18579,2023-05-28,Leicester,West Ham,2.03013,0.970352,2022
+2023-05-28,Man United,Fulham,2,1,R Jones,1,2,0,0,5,4,14,10,1.5,4.33,6.0,18580,2023-05-28,Man United,Fulham,2.74766,1.88167,2022
+2023-05-28,Southampton,Liverpool,4,4,D England,0,2,0,0,2,9,4,10,6.5,4.75,1.44,18581,2023-05-28,Southampton,Liverpool,1.33964,4.00345,2022
+2023-08-11,Burnley,Man City,0,3,C Pawson,0,0,1,0,6,5,11,8,8.0,5.5,1.33,22275,2023-08-11,Burnley,Man City,0.311032,2.40074,2023
+2023-08-12,Arsenal,Nott'm Forest,2,1,M Oliver,2,2,0,0,8,3,12,12,1.18,7.0,15.0,22276,2023-08-12,Arsenal,Nott'm Forest,0.84262,0.966305,2023
+2023-08-12,Bournemouth,West Ham,1,1,P Bankes,1,4,0,0,10,4,9,14,2.7,3.4,2.55,22277,2023-08-12,Bournemouth,West Ham,1.51025,1.4834,2023
+2023-08-12,Brighton,Luton,4,1,D Coote,2,2,0,0,6,7,11,12,1.33,5.5,9.0,22278,2023-08-12,Brighton,Luton,4.36748,1.88594,2023
+2023-08-12,Everton,Fulham,0,1,S Attwell,0,2,0,0,10,4,12,6,2.2,3.4,3.3,22279,2023-08-12,Everton,Fulham,2.59001,1.58144,2023
+2023-08-12,Newcastle,Aston Villa,5,1,A Madley,4,4,0,0,6,5,12,17,1.75,3.75,4.6,22281,2023-08-12,Newcastle,Aston Villa,4.32208,1.486,2023
+2023-08-13,Brentford,Tottenham,2,2,R Jones,1,4,0,0,3,6,12,13,2.75,3.4,2.45,22282,2023-08-13,Brentford,Tottenham,1.90756,1.45316,2023
+2023-08-13,Chelsea,Liverpool,1,1,A Taylor,3,3,0,0,4,4,5,12,2.9,3.4,2.38,22283,2023-08-13,Chelsea,Liverpool,1.93258,1.29994,2023
+2023-08-14,Man United,Wolves,1,0,S Hooper,2,3,0,0,8,7,14,10,1.33,5.5,9.0,22284,2023-08-14,Man United,Wolves,1.97087,1.72228,2023
+2023-08-19,Tottenham,Man United,2,0,M Oliver,1,3,0,0,5,6,9,8,2.8,3.6,2.38,22290,2023-08-19,Tottenham,Man United,2.53904,2.44604,2023
+2023-08-19,Wolves,Brighton,1,4,A Madley,3,6,1,0,5,3,14,11,4.0,3.8,1.85,22286,2023-08-19,Wolves,Brighton,2.68821,3.15562,2023
+2023-08-19,Man City,Newcastle,1,0,R Jones,1,5,0,0,3,0,12,11,1.67,4.0,5.0,22291,2023-08-19,Man City,Newcastle,1.22528,0.257154,2023
+2023-08-19,Fulham,Brentford,0,3,D Bond,2,2,1,0,5,5,13,12,2.7,3.3,2.63,22287,2023-08-19,Fulham,Brentford,0.399899,3.46888,2023
+2023-08-19,Liverpool,Bournemouth,3,1,T Bramall,1,3,1,0,10,2,11,13,1.2,7.0,13.0,22288,2023-08-19,Liverpool,Bournemouth,3.25448,1.3867,2023
+2023-08-20,Aston Villa,Everton,4,0,A Taylor,3,4,0,0,7,6,8,12,1.7,4.0,4.5,22292,2023-08-20,Aston Villa,Everton,3.24336,0.721465,2023
+2023-08-20,West Ham,Chelsea,3,1,J Brooks,2,3,1,0,3,9,12,9,3.75,3.5,2.0,22293,2023-08-20,West Ham,Chelsea,1.71234,1.60916,2023
+2023-08-21,Crystal Palace,Arsenal,0,1,D Coote,2,1,0,1,1,8,14,10,5.5,4.0,1.6,22294,2023-08-21,Crystal Palace,Arsenal,1.06916,2.20593,2023
+2023-08-25,Chelsea,Luton,3,0,R Jones,2,3,0,0,6,4,15,12,1.29,5.5,11.0,22295,2023-08-25,Chelsea,Luton,3.41419,0.465741,2023
+2023-08-26,Bournemouth,Tottenham,0,2,T Robinson,1,3,0,0,6,2,18,11,3.8,3.75,1.91,22296,2023-08-26,Bournemouth,Tottenham,0.483582,2.26115,2023
+2023-08-26,Arsenal,Fulham,2,2,P Tierney,0,3,0,1,8,3,6,5,1.2,7.0,13.0,22297,2023-08-26,Arsenal,Fulham,3.23088,0.849817,2023
+2023-08-26,Brentford,Crystal Palace,1,1,P Bankes,0,0,0,0,8,6,9,15,2.15,3.4,3.5,22298,2023-08-26,Brentford,Crystal Palace,0.948011,1.06061,2023
+2023-08-26,Everton,Wolves,0,1,C Pawson,3,4,0,0,7,0,10,14,2.3,3.3,3.2,22299,2023-08-26,Everton,Wolves,1.89792,1.40228,2023
+2023-08-26,Man United,Nott'm Forest,3,2,S Attwell,4,4,0,1,11,3,13,11,1.3,6.0,8.0,22300,2023-08-26,Man United,Nott'm Forest,3.02803,0.960354,2023
+2023-08-26,Brighton,West Ham,1,3,A Taylor,1,3,0,0,17,4,10,9,1.53,4.75,5.25,22301,2023-08-26,Brighton,West Ham,1.3743,2.9527,2023
+2023-08-27,Newcastle,Liverpool,1,2,J Brooks,1,2,0,1,5,9,16,10,2.2,3.75,3.0,22304,2023-08-27,Newcastle,Liverpool,1.62037,0.856121,2023
+2023-08-27,Burnley,Aston Villa,1,3,M Salisbury,2,0,0,0,4,6,12,11,3.4,3.4,2.15,22302,2023-08-27,Burnley,Aston Villa,0.630605,2.83691,2023
+2023-09-01,Luton,West Ham,1,2,P Tierney,1,1,0,0,9,6,8,13,4.75,3.8,1.73,21925,2023-09-01,Luton,West Ham,2.02244,1.22528,2023
+2023-09-02,Brentford,Bournemouth,2,2,R Madley,1,2,0,0,5,2,6,13,1.73,3.8,4.75,21928,2023-09-02,Brentford,Bournemouth,3.07185,2.11013,2023
+2023-09-02,Burnley,Tottenham,2,5,D England,4,3,0,0,7,4,15,9,3.6,4.0,1.85,21929,2023-09-02,Burnley,Tottenham,1.66604,2.39785,2023
+2023-09-02,Chelsea,Nott'm Forest,0,1,T Robinson,3,4,0,0,8,0,10,9,1.4,4.5,8.5,21930,2023-09-02,Chelsea,Nott'm Forest,2.28442,1.1505,2023
+2023-09-02,Man City,Fulham,5,1,M Oliver,2,4,0,0,4,5,12,12,1.17,8.0,15.0,21927,2023-09-02,Man City,Fulham,2.00152,1.46427,2023
+2023-09-02,Brighton,Newcastle,3,1,S Attwell,4,4,0,0,5,3,14,17,2.5,3.8,2.55,21931,2023-09-02,Brighton,Newcastle,1.32258,0.90476,2023
+2023-09-03,Crystal Palace,Wolves,3,2,R Jones,1,3,0,0,4,2,12,12,1.91,3.3,4.33,21932,2023-09-03,Crystal Palace,Wolves,2.32935,1.13911,2023
+2023-09-03,Liverpool,Aston Villa,3,0,S Hooper,0,1,0,0,7,3,12,7,1.65,4.5,4.5,21933,2023-09-03,Liverpool,Aston Villa,2.73138,0.615503,2023
+2023-09-03,Arsenal,Man United,3,1,A Taylor,2,3,0,0,12,3,8,7,1.75,3.8,4.5,21934,2023-09-03,Arsenal,Man United,1.90973,0.966109,2023
+2023-09-16,Newcastle,Brentford,1,0,C Pawson,3,5,0,0,8,3,8,12,1.53,4.2,6.0,21943,2023-09-16,Newcastle,Brentford,1.50126,0.633678,2023
+2023-09-16,West Ham,Man City,1,3,A Madley,3,2,0,0,4,11,7,11,7.0,4.5,1.45,21937,2023-09-16,West Ham,Man City,0.895632,4.15046,2023
+2023-09-16,Man United,Brighton,1,3,J Gillett,2,2,0,0,8,1,8,9,2.15,4.0,2.88,21940,2023-09-16,Man United,Brighton,0.719951,1.93908,2023
+2023-09-16,Aston Villa,Crystal Palace,3,1,D England,5,3,0,0,4,2,13,9,1.91,3.6,4.0,21938,2023-09-16,Aston Villa,Crystal Palace,2.31518,1.11696,2023
+2023-09-16,Fulham,Luton,1,0,M Salisbury,2,2,0,0,6,2,6,14,1.67,3.75,5.5,21939,2023-09-16,Fulham,Luton,1.75704,1.45705,2023
+2023-09-16,Wolves,Liverpool,1,3,M Oliver,1,3,0,0,4,4,10,4,6.0,5.0,1.45,21935,2023-09-16,Wolves,Liverpool,0.538833,2.82701,2023
+2023-09-17,Bournemouth,Chelsea,0,0,D Coote,1,5,0,0,1,7,15,20,4.33,3.75,1.8,21942,2023-09-17,Bournemouth,Chelsea,1.32515,1.39677,2023
+2023-09-17,Everton,Arsenal,0,1,S Hooper,1,1,0,0,1,11,12,10,6.0,4.5,1.5,21941,2023-09-17,Everton,Arsenal,0.28317,0.802605,2023
+2023-09-18,Nott'm Forest,Burnley,1,1,R Jones,2,3,0,1,5,4,16,10,2.2,3.5,3.25,21944,2023-09-18,Nott'm Forest,Burnley,0.705795,0.807651,2023
+2023-09-23,Crystal Palace,Fulham,0,0,P Tierney,3,2,0,0,3,2,10,15,1.91,3.4,4.2,21948,2023-09-23,Crystal Palace,Fulham,0.37236,0.542678,2023
+2023-09-23,Luton,Wolves,1,1,J Smith,0,2,0,1,10,1,12,17,3.25,3.4,2.2,21945,2023-09-23,Luton,Wolves,2.24101,0.762984,2023
+2023-09-23,Man City,Nott'm Forest,2,0,A Taylor,3,7,1,0,6,6,5,17,1.14,8.5,15.0,21946,2023-09-23,Man City,Nott'm Forest,1.33984,0.729109,2023
+2023-09-23,Brentford,Everton,1,3,M Oliver,2,2,0,0,1,4,9,12,1.8,3.8,4.2,21949,2023-09-23,Brentford,Everton,1.57402,2.51497,2023
+2023-09-23,Burnley,Man United,0,1,T Harrington,1,2,0,0,9,5,6,12,4.2,4.2,1.73,21950,2023-09-23,Burnley,Man United,0.935444,0.840273,2023
+2023-09-24,Liverpool,West Ham,3,1,C Kavanagh,0,2,0,0,7,4,12,13,1.4,5.0,7.0,21953,2023-09-24,Liverpool,West Ham,4.14262,1.53878,2023
+2023-09-24,Chelsea,Aston Villa,0,1,J Gillett,2,3,0,0,5,11,9,11,1.91,3.75,3.8,21947,2023-09-24,Chelsea,Aston Villa,1.19716,1.13479,2023
+2023-09-24,Arsenal,Tottenham,2,2,R Jones,3,4,0,0,11,4,12,19,1.67,4.33,4.33,21952,2023-09-24,Arsenal,Tottenham,2.3429,2.21166,2023
+2023-09-24,Brighton,Bournemouth,3,1,J Brooks,3,3,0,0,4,4,12,17,1.36,5.25,7.5,21951,2023-09-24,Brighton,Bournemouth,2.14533,1.58984,2023
+2023-09-30,Wolves,Man City,2,1,C Pawson,5,4,0,0,0,6,18,12,8.0,5.75,1.33,21961,2023-09-30,Wolves,Man City,0.673985,0.98075,2023
+2023-09-30,Aston Villa,Brighton,6,1,A Madley,4,4,0,0,1,3,19,21,2.55,3.75,2.55,21955,2023-09-30,Aston Villa,Brighton,1.90746,1.72819,2023
+2023-09-30,Bournemouth,Arsenal,0,4,M Salisbury,0,1,0,0,6,6,11,10,5.5,4.5,1.53,21959,2023-09-30,Bournemouth,Arsenal,0.644443,4.0742,2023
+2023-09-30,Everton,Luton,1,2,A Taylor,0,1,0,0,3,6,8,10,1.57,3.8,6.5,21956,2023-09-30,Everton,Luton,3.65377,1.5102,2023
+2023-09-30,Man United,Crystal Palace,0,1,C Kavanagh,3,2,0,0,10,4,10,8,1.55,4.2,5.75,21957,2023-09-30,Man United,Crystal Palace,1.55408,1.19015,2023
+2023-09-30,Newcastle,Burnley,2,0,T Bramall,1,3,0,0,5,3,7,15,1.3,5.75,9.0,21958,2023-09-30,Newcastle,Burnley,3.08516,0.801849,2023
+2023-09-30,Tottenham,Liverpool,2,1,S Hooper,5,4,0,2,12,5,11,17,2.9,4.0,2.15,21962,2023-09-30,Tottenham,Liverpool,2.18823,1.12299,2023
+2023-10-01,Nott'm Forest,Brentford,1,1,P Tierney,1,2,1,0,1,11,6,10,2.75,3.1,2.7,21963,2023-10-01,Nott'm Forest,Brentford,0.800317,1.75862,2023
+2023-10-02,Fulham,Chelsea,0,2,T Robinson,1,4,0,0,8,1,15,12,3.6,3.5,2.05,21964,2023-10-02,Fulham,Chelsea,0.889383,1.98461,2023
+2023-10-03,Luton,Burnley,1,2,P Bankes,4,2,0,0,7,6,14,6,2.9,3.0,2.63,22289,2023-10-03,Luton,Burnley,1.53058,0.920206,2023
+2023-10-07,Luton,Tottenham,0,1,J Brooks,2,1,0,1,5,6,16,7,6.0,4.75,1.45,21971,2023-10-07,Luton,Tottenham,0.848118,2.37947,2023
+2023-10-07,Burnley,Chelsea,1,4,S Attwell,2,4,0,0,7,3,11,8,4.5,3.8,1.73,21967,2023-10-07,Burnley,Chelsea,0.956642,1.97566,2023
+2023-10-07,Everton,Bournemouth,3,0,D Coote,1,2,0,0,8,7,14,15,1.91,3.6,3.8,21969,2023-10-07,Everton,Bournemouth,3.16482,0.981732,2023
+2023-10-07,Man United,Brentford,2,1,A Madley,0,5,0,0,7,5,10,17,1.67,4.2,4.75,21972,2023-10-07,Man United,Brentford,1.29356,1.02509,2023
+2023-10-07,Crystal Palace,Nott'm Forest,0,0,C Pawson,0,1,0,0,3,7,7,12,2.2,3.1,3.6,21968,2023-10-07,Crystal Palace,Nott'm Forest,0.982452,1.22105,2023
+2023-10-08,Arsenal,Man City,1,0,M Oliver,2,3,0,0,5,4,8,7,2.9,3.3,2.4,21965,2023-10-08,Arsenal,Man City,0.386558,0.858071,2023
+2023-10-08,Wolves,Aston Villa,1,1,R Jones,2,2,1,0,2,10,19,9,3.5,3.4,2.1,21974,2023-10-08,Wolves,Aston Villa,1.76232,1.81618,2023
+2023-10-08,Brighton,Liverpool,2,2,A Taylor,1,2,0,0,8,1,12,20,3.0,3.8,2.2,21966,2023-10-08,Brighton,Liverpool,2.23187,2.51029,2023
+2023-10-08,West Ham,Newcastle,2,2,P Bankes,3,3,0,0,4,2,11,18,3.2,3.75,2.1,21973,2023-10-08,West Ham,Newcastle,0.931345,1.97865,2023
+2023-10-21,Liverpool,Everton,2,0,C Pawson,1,1,0,1,12,4,9,9,1.33,5.75,7.5,21979,2023-10-21,Liverpool,Everton,2.28568,0.0937725,2023
+2023-10-21,Bournemouth,Wolves,1,2,P Tierney,2,6,1,0,3,12,15,10,2.38,3.4,3.0,21975,2023-10-21,Bournemouth,Wolves,1.01839,2.30454,2023
+2023-10-21,Brentford,Burnley,3,0,J Smith,5,2,0,1,5,5,14,12,1.83,3.75,4.2,21977,2023-10-21,Brentford,Burnley,3.15685,0.693129,2023
+2023-10-21,Man City,Brighton,2,1,R Jones,2,2,1,0,2,2,9,11,1.4,5.25,6.5,21980,2023-10-21,Man City,Brighton,0.962509,0.963733,2023
+2023-10-21,Newcastle,Crystal Palace,4,0,T Robinson,2,3,0,0,6,8,7,12,1.45,4.5,7.0,21981,2023-10-21,Newcastle,Crystal Palace,3.73336,1.08795,2023
+2023-10-21,Nott'm Forest,Luton,2,2,S Barrott,3,0,0,0,4,2,12,11,1.67,3.75,5.5,21982,2023-10-21,Nott'm Forest,Luton,3.27549,1.49555,2023
+2023-10-21,Chelsea,Arsenal,2,2,C Kavanagh,3,3,0,0,2,7,7,14,3.2,3.4,2.25,21978,2023-10-21,Chelsea,Arsenal,1.71838,1.05791,2023
+2023-10-22,Aston Villa,West Ham,4,1,D Coote,0,1,0,0,8,7,9,15,1.85,3.6,4.0,21976,2023-10-22,Aston Villa,West Ham,2.34143,0.659622,2023
+2023-10-23,Tottenham,Fulham,2,0,A Taylor,2,0,0,0,3,5,10,14,1.5,4.5,6.0,21984,2023-10-23,Tottenham,Fulham,1.63523,0.745838,2023
+2023-10-27,Crystal Palace,Tottenham,1,2,A Madley,2,1,0,0,11,2,19,11,4.5,3.75,1.75,21990,2023-10-27,Crystal Palace,Tottenham,0.561834,0.989103,2023
+2023-10-28,Wolves,Newcastle,2,2,A Taylor,1,4,0,0,8,7,13,15,4.2,4.0,1.75,21994,2023-10-28,Wolves,Newcastle,0.863393,2.31987,2023
+2023-10-28,Chelsea,Brentford,0,2,S Hooper,1,4,0,0,10,1,12,7,1.65,4.0,5.25,21989,2023-10-28,Chelsea,Brentford,1.71801,2.48137,2023
+2023-10-28,Bournemouth,Burnley,2,1,S Barrott,2,3,0,0,10,5,9,12,2.15,3.5,3.3,21985,2023-10-28,Bournemouth,Burnley,1.10052,0.90255,2023
+2023-10-29,West Ham,Everton,0,1,S Attwell,4,1,0,0,4,3,7,11,2.15,3.5,3.3,21993,2023-10-29,West Ham,Everton,0.618578,0.733813,2023
+2023-10-29,Aston Villa,Luton,3,1,J Brooks,3,2,0,0,6,4,11,10,1.25,6.5,9.5,21987,2023-10-29,Aston Villa,Luton,3.07654,0.453117,2023
+2023-10-29,Brighton,Fulham,1,1,M Salisbury,0,3,0,0,7,3,12,8,1.55,4.2,5.5,21988,2023-10-29,Brighton,Fulham,1.31996,0.552523,2023
+2023-10-29,Liverpool,Nott'm Forest,3,0,C Kavanagh,2,3,0,0,8,3,9,13,1.29,5.75,11.0,21991,2023-10-29,Liverpool,Nott'm Forest,2.70428,0.642014,2023
+2023-10-29,Man United,Man City,0,3,P Tierney,4,1,0,0,7,12,9,4,5.0,3.8,1.67,21992,2023-10-29,Man United,Man City,0.714628,4.54595,2023
+2023-11-04,Newcastle,Arsenal,1,0,S Attwell,5,1,0,0,0,11,14,9,2.8,3.2,2.6,22001,2023-11-04,Newcastle,Arsenal,1.12355,0.535473,2023
+2023-11-04,Everton,Brighton,1,1,T Robinson,4,2,0,0,3,3,15,5,3.1,3.6,2.2,21997,2023-11-04,Everton,Brighton,0.617607,0.442489,2023
+2023-11-04,Man City,Bournemouth,6,1,C Pawson,0,1,0,0,12,1,8,9,1.1,11.0,19.0,22000,2023-11-04,Man City,Bournemouth,2.39949,0.643127,2023
+2023-11-04,Brentford,West Ham,3,2,T Bramall,1,4,0,0,4,3,12,14,2.05,3.6,3.5,21995,2023-11-04,Brentford,West Ham,1.82944,1.75505,2023
+2023-11-04,Fulham,Man United,0,1,J Brooks,5,2,0,0,9,4,9,15,3.2,3.6,2.2,21998,2023-11-04,Fulham,Man United,1.18241,0.697095,2023
+2023-11-04,Burnley,Crystal Palace,0,2,P Bankes,0,5,0,0,12,1,9,12,2.75,3.25,2.6,21996,2023-11-04,Burnley,Crystal Palace,1.4998,1.43653,2023
+2023-11-05,Nott'm Forest,Aston Villa,2,0,J Gillett,1,1,0,0,0,10,6,9,4.2,3.75,1.85,22002,2023-11-05,Nott'm Forest,Aston Villa,0.592447,1.33116,2023
+2023-11-05,Luton,Liverpool,1,1,A Madley,1,1,0,0,4,7,7,13,12.0,6.5,1.22,21999,2023-11-05,Luton,Liverpool,1.3411,3.03925,2023
+2023-11-06,Tottenham,Chelsea,1,4,M Oliver,1,5,2,0,1,6,12,21,2.0,3.75,3.5,22004,2023-11-06,Tottenham,Chelsea,0.959108,4.05865,2023
+2023-11-11,Bournemouth,Newcastle,2,0,C Kavanagh,2,1,0,0,6,5,10,4,4.75,4.0,1.73,22005,2023-11-11,Bournemouth,Newcastle,2.78424,0.306141,2023
+2023-11-11,Wolves,Tottenham,2,1,T Robinson,4,3,0,0,11,3,19,15,3.1,3.75,2.2,22014,2023-11-11,Wolves,Tottenham,1.90884,0.432315,2023
+2023-11-11,Arsenal,Burnley,3,1,M Oliver,0,1,1,0,3,3,8,9,1.18,7.0,17.0,22006,2023-11-11,Arsenal,Burnley,2.63194,0.327706,2023
+2023-11-11,Crystal Palace,Everton,2,3,S Barrott,1,4,0,0,9,2,9,18,2.45,3.2,3.0,22010,2023-11-11,Crystal Palace,Everton,1.89194,1.7904,2023
+2023-11-11,Man United,Luton,1,0,G Scott,0,2,0,0,11,3,9,11,1.33,5.25,9.5,22012,2023-11-11,Man United,Luton,2.74105,0.408265,2023
+2023-11-12,Chelsea,Man City,4,4,A Taylor,5,3,0,0,3,3,12,15,5.0,3.7,1.73,22009,2023-11-12,Chelsea,Man City,3.47238,3.19324,2023
+2023-11-12,West Ham,Nott'm Forest,3,2,M Salisbury,2,2,0,0,9,4,9,12,1.85,3.6,4.0,22013,2023-11-12,West Ham,Nott'm Forest,2.06402,1.42128,2023
+2023-11-12,Aston Villa,Fulham,3,1,S Hooper,2,5,0,0,2,2,4,17,1.57,4.2,5.5,22007,2023-11-12,Aston Villa,Fulham,2.86039,0.648745,2023
+2023-11-12,Liverpool,Brentford,3,0,P Tierney,1,2,0,0,6,8,16,12,1.4,5.0,6.5,22011,2023-11-12,Liverpool,Brentford,1.56004,1.44954,2023
+2023-11-25,Man City,Liverpool,1,1,C Kavanagh,1,3,0,0,9,6,9,11,1.73,4.2,4.2,22020,2023-11-25,Man City,Liverpool,1.79622,0.766278,2023
+2023-11-25,Burnley,West Ham,1,2,S Barrott,1,3,0,0,4,5,11,7,3.4,3.5,2.05,22016,2023-11-25,Burnley,West Ham,1.44228,1.36963,2023
+2023-11-25,Luton,Crystal Palace,2,1,J Gillett,6,1,0,0,4,5,15,12,3.6,3.3,2.1,22019,2023-11-25,Luton,Crystal Palace,0.996153,1.83546,2023
+2023-11-25,Newcastle,Chelsea,4,1,S Hooper,4,4,0,1,4,2,13,19,2.55,3.5,2.63,22021,2023-11-25,Newcastle,Chelsea,2.15227,0.968061,2023
+2023-11-25,Nott'm Forest,Brighton,2,3,A Taylor,2,4,0,1,6,4,12,7,3.2,3.6,2.15,22022,2023-11-25,Nott'm Forest,Brighton,2.22655,1.21792,2023
+2023-11-25,Brentford,Arsenal,0,1,T Robinson,1,1,0,0,1,8,9,7,4.5,3.75,1.75,22015,2023-11-25,Brentford,Arsenal,1.66315,1.82699,2023
+2023-11-26,Everton,Man United,0,3,J Brooks,3,0,0,0,6,5,10,8,2.7,3.4,2.55,22017,2023-11-26,Everton,Man United,2.49764,2.07334,2023
+2023-11-26,Tottenham,Aston Villa,1,2,R Jones,0,4,0,0,9,3,11,13,2.3,3.8,2.8,22024,2023-11-26,Tottenham,Aston Villa,2.22542,2.39755,2023
+2023-11-27,Fulham,Wolves,3,2,M Salisbury,2,2,0,0,6,2,13,13,2.38,3.3,3.0,22018,2023-11-27,Fulham,Wolves,2.49057,1.57875,2023
+2023-12-02,Newcastle,Man United,1,0,R Jones,1,2,0,0,7,3,6,13,1.91,3.75,3.8,22032,2023-12-02,Newcastle,Man United,2.90191,0.422674,2023
+2023-12-02,Nott'm Forest,Everton,0,1,P Tierney,1,0,0,0,4,3,15,14,2.75,3.25,2.6,22033,2023-12-02,Nott'm Forest,Everton,0.673085,0.623789,2023
+2023-12-02,Arsenal,Wolves,2,1,P Bankes,1,2,0,0,4,0,10,10,1.25,5.5,12.0,22026,2023-12-02,Arsenal,Wolves,3.30368,1.07886,2023
+2023-12-02,Brentford,Luton,3,1,A Taylor,1,2,0,0,7,5,10,8,1.45,4.5,6.5,22027,2023-12-02,Brentford,Luton,3.25952,0.227176,2023
+2023-12-03,West Ham,Crystal Palace,1,1,M Oliver,2,0,0,0,2,3,17,7,2.0,3.5,3.8,22034,2023-12-03,West Ham,Crystal Palace,1.1466,0.987682,2023
+2023-12-03,Bournemouth,Aston Villa,2,2,T Bramall,5,3,0,0,7,7,16,12,3.4,4.0,1.95,22025,2023-12-03,Bournemouth,Aston Villa,2.54937,0.89511,2023
+2023-12-03,Chelsea,Brighton,3,2,C Pawson,3,5,1,0,5,8,16,12,1.73,4.2,4.2,22029,2023-12-03,Chelsea,Brighton,1.66304,0.855058,2023
+2023-12-03,Liverpool,Fulham,4,3,S Attwell,0,0,0,0,3,4,6,7,1.25,6.5,9.0,22030,2023-12-03,Liverpool,Fulham,2.72831,1.51005,2023
+2023-12-03,Man City,Tottenham,3,3,S Hooper,4,4,0,0,10,8,14,14,1.29,6.0,9.0,22031,2023-12-03,Man City,Tottenham,2.90729,0.433077,2023
+2023-12-05,Luton,Arsenal,3,4,S Barrott,2,1,0,0,3,8,14,7,17.0,7.0,1.18,22039,2023-12-05,Luton,Arsenal,0.526254,2.58815,2023
+2023-12-05,Wolves,Burnley,1,0,J Gillett,2,4,0,0,6,8,11,15,1.85,3.6,4.2,22042,2023-12-05,Wolves,Burnley,1.11886,0.781542,2023
+2023-12-06,Man United,Chelsea,2,1,C Kavanagh,4,0,0,0,12,4,12,12,2.88,3.4,2.45,22044,2023-12-06,Man United,Chelsea,4.03949,2.3512,2023
+2023-12-06,Aston Villa,Man City,1,0,J Brooks,2,2,0,0,6,0,13,13,4.75,4.2,1.7,22035,2023-12-06,Aston Villa,Man City,2.1922,1.00198,2023
+2023-12-06,Crystal Palace,Bournemouth,0,2,C Pawson,1,3,0,0,3,9,10,17,2.25,3.5,3.1,22043,2023-12-06,Crystal Palace,Bournemouth,1.26441,1.79997,2023
+2023-12-06,Brighton,Brentford,2,1,P Bankes,3,1,0,0,7,3,10,8,1.91,3.8,3.75,22036,2023-12-06,Brighton,Brentford,1.54099,1.22007,2023
+2023-12-06,Fulham,Nott'm Forest,5,0,J Smith,0,1,0,0,6,1,7,10,2.0,3.4,3.75,22038,2023-12-06,Fulham,Nott'm Forest,3.09427,0.218659,2023
+2023-12-07,Everton,Newcastle,3,0,T Robinson,3,0,0,0,5,2,18,8,3.25,3.25,2.25,22037,2023-12-07,Everton,Newcastle,2.95393,1.29564,2023
+2023-12-07,Tottenham,West Ham,1,2,M Salisbury,3,3,0,0,8,4,11,12,1.75,4.2,4.2,22041,2023-12-07,Tottenham,West Ham,1.61268,1.7409,2023
+2023-12-09,Crystal Palace,Liverpool,1,2,A Madley,5,2,1,0,6,5,17,17,6.0,4.5,1.5,22047,2023-12-09,Crystal Palace,Liverpool,1.79152,1.3708,2023
+2023-12-09,Brighton,Burnley,1,1,S Hooper,0,4,0,0,9,1,5,8,1.5,4.75,6.0,22046,2023-12-09,Brighton,Burnley,2.96247,1.05162,2023
+2023-12-09,Man United,Bournemouth,0,3,P Bankes,3,1,0,0,10,4,7,10,1.55,4.33,5.75,22051,2023-12-09,Man United,Bournemouth,1.11296,1.9742,2023
+2023-12-09,Wolves,Nott'm Forest,1,1,S Barrott,0,1,0,0,4,3,9,11,1.85,3.6,4.33,22054,2023-12-09,Wolves,Nott'm Forest,1.02199,1.21801,2023
+2023-12-09,Aston Villa,Arsenal,1,0,J Gillett,4,2,0,0,3,3,16,11,3.3,3.6,2.1,22045,2023-12-09,Aston Villa,Arsenal,0.628499,1.71667,2023
+2023-12-10,Everton,Chelsea,2,0,M Oliver,2,2,0,0,4,8,12,12,3.1,3.5,2.25,22048,2023-12-10,Everton,Chelsea,1.11437,0.885512,2023
+2023-12-10,Fulham,West Ham,5,0,P Tierney,2,1,0,0,3,6,5,10,2.38,3.5,2.9,22049,2023-12-10,Fulham,West Ham,2.1884,0.983,2023
+2023-12-10,Luton,Man City,1,2,T Robinson,2,1,0,0,6,3,16,6,17.0,8.0,1.14,22050,2023-12-10,Luton,Man City,0.689037,2.23353,2023
+2023-12-10,Tottenham,Newcastle,4,1,C Kavanagh,1,3,0,0,3,6,10,12,2.15,3.8,3.1,22053,2023-12-10,Tottenham,Newcastle,4.40118,1.61368,2023
+2023-12-15,Nott'm Forest,Tottenham,0,2,J Gillett,2,4,0,1,6,4,16,11,4.2,4.2,1.73,22063,2023-12-15,Nott'm Forest,Tottenham,1.70569,1.60738,2023
+2023-12-16,Burnley,Everton,0,2,A Taylor,0,1,0,0,8,6,9,8,3.6,3.4,2.1,22058,2023-12-16,Burnley,Everton,0.811435,2.22305,2023
+2023-12-16,Man City,Crystal Palace,2,2,P Tierney,1,1,0,0,6,1,12,9,1.18,8.0,13.0,22061,2023-12-16,Man City,Crystal Palace,2.41646,1.64977,2023
+2023-12-16,Newcastle,Fulham,3,0,S Barrott,0,2,0,1,5,1,7,12,1.8,3.8,4.0,22062,2023-12-16,Newcastle,Fulham,4.27933,0.471042,2023
+2023-12-17,Liverpool,Man United,0,0,M Oliver,2,4,0,1,12,0,13,8,1.3,6.0,8.0,22060,2023-12-17,Liverpool,Man United,1.97111,0.632715,2023
+2023-12-17,West Ham,Wolves,3,0,C Kavanagh,3,1,0,0,6,6,12,15,2.15,3.5,3.3,22064,2023-12-17,West Ham,Wolves,1.03828,0.556206,2023
+2023-12-17,Arsenal,Brighton,2,0,T Robinson,1,3,0,0,10,1,11,9,1.44,5.0,6.0,22056,2023-12-17,Arsenal,Brighton,2.76976,0.663054,2023
+2023-12-17,Brentford,Aston Villa,1,2,D Coote,6,4,1,1,7,12,19,6,3.2,3.75,2.1,22057,2023-12-17,Brentford,Aston Villa,0.796812,1.4664,2023
+2023-12-21,Crystal Palace,Brighton,1,1,J Brooks,5,2,0,0,3,1,12,11,3.3,3.3,2.15,22066,2023-12-21,Crystal Palace,Brighton,1.65409,1.33653,2023
+2023-12-23,West Ham,Man United,2,0,S Hooper,2,3,0,0,4,4,13,15,2.6,3.6,2.6,22072,2023-12-23,West Ham,Man United,1.51468,0.730496,2023
+2023-12-23,Fulham,Burnley,0,2,R Welch,2,1,0,0,8,6,5,17,1.67,3.75,5.25,22067,2023-12-23,Fulham,Burnley,1.38096,0.41714,2023
+2023-12-23,Luton,Newcastle,1,0,D England,2,1,0,0,6,7,11,5,4.75,4.2,1.65,22069,2023-12-23,Luton,Newcastle,1.81844,1.41488,2023
+2023-12-23,Nott'm Forest,Bournemouth,2,3,R Jones,0,3,1,0,6,6,10,10,2.75,3.4,2.55,22070,2023-12-23,Nott'm Forest,Bournemouth,0.791806,1.89067,2023
+2023-12-23,Tottenham,Everton,2,1,S Attwell,1,4,0,0,3,8,6,18,1.75,4.2,4.0,22071,2023-12-23,Tottenham,Everton,1.57527,1.98385,2023
+2023-12-23,Liverpool,Arsenal,1,1,C Kavanagh,2,5,0,0,4,5,13,14,2.38,3.6,2.8,22068,2023-12-23,Liverpool,Arsenal,0.982901,0.851681,2023
+2023-12-24,Wolves,Chelsea,2,1,D Coote,3,5,0,0,10,6,11,9,3.75,3.75,1.91,22073,2023-12-24,Wolves,Chelsea,1.74626,1.75447,2023
+2023-12-26,Man United,Aston Villa,3,2,C Pawson,1,3,0,0,3,6,10,10,2.6,3.5,2.6,22082,2023-12-26,Man United,Aston Villa,1.20104,1.83637,2023
+2023-12-26,Burnley,Liverpool,0,2,P Tierney,2,1,0,0,4,4,7,10,6.5,5.25,1.4,22079,2023-12-26,Burnley,Liverpool,0.972389,1.68451,2023
+2023-12-26,Newcastle,Nott'm Forest,1,3,C Kavanagh,3,3,0,0,10,2,10,11,1.5,4.33,5.75,22083,2023-12-26,Newcastle,Nott'm Forest,2.79106,3.1074,2023
+2023-12-26,Bournemouth,Fulham,3,0,T Robinson,0,2,0,0,6,5,10,10,2.15,3.6,3.2,22075,2023-12-26,Bournemouth,Fulham,2.07911,0.324365,2023
+2023-12-27,Brentford,Wolves,1,4,A Madley,1,1,0,0,8,2,5,14,1.95,3.5,4.2,22077,2023-12-27,Brentford,Wolves,2.59347,1.89483,2023
+2023-12-27,Chelsea,Crystal Palace,2,1,M Salisbury,3,2,0,0,4,3,13,16,1.67,4.0,5.0,22080,2023-12-27,Chelsea,Crystal Palace,2.73005,0.958077,2023
+2023-12-27,Everton,Man City,1,3,J Brooks,4,2,0,0,8,4,13,5,5.75,4.0,1.57,22081,2023-12-27,Everton,Man City,1.23529,2.28321,2023
+2023-12-28,Brighton,Tottenham,4,2,J Gillett,3,2,0,0,7,6,18,6,2.5,3.6,2.6,22078,2023-12-28,Brighton,Tottenham,3.84702,2.06955,2023
+2023-12-28,Arsenal,West Ham,0,2,M Oliver,2,0,0,0,10,3,8,8,1.33,5.5,7.5,22076,2023-12-28,Arsenal,West Ham,2.7884,1.59711,2023
+2023-12-30,Wolves,Everton,3,0,T Bramall,2,3,0,0,5,2,9,14,2.63,3.3,2.7,22094,2023-12-30,Wolves,Everton,2.64477,0.519641,2023
+2023-12-30,Crystal Palace,Brentford,3,1,R Jones,0,1,0,0,7,4,14,10,2.2,3.3,3.4,22086,2023-12-30,Crystal Palace,Brentford,1.61057,1.28731,2023
+2023-12-30,Nott'm Forest,Man United,2,1,T Robinson,2,4,0,0,4,5,9,11,3.2,3.6,2.15,22091,2023-12-30,Nott'm Forest,Man United,0.744348,0.651905,2023
+2023-12-30,Luton,Chelsea,2,3,P Tierney,2,2,0,0,7,2,14,21,6.5,4.2,1.5,22089,2023-12-30,Luton,Chelsea,2.64093,1.57463,2023
+2023-12-30,Aston Villa,Burnley,3,2,S Attwell,4,1,0,1,6,2,9,14,1.36,5.25,7.5,22085,2023-12-30,Aston Villa,Burnley,2.92587,1.11923,2023
+2023-12-31,Tottenham,Bournemouth,3,1,S Hooper,3,3,0,0,4,13,9,18,1.75,4.2,4.0,22092,2023-12-31,Tottenham,Bournemouth,2.15027,1.58229,2023
+2023-12-31,Fulham,Arsenal,2,1,J Smith,4,1,0,0,5,4,11,10,5.25,4.5,1.55,22087,2023-12-31,Fulham,Arsenal,1.52829,1.6591,2023
+2024-01-01,Liverpool,Newcastle,4,2,A Taylor,3,5,0,0,7,3,16,15,1.45,4.5,7.0,22088,2024-01-01,Liverpool,Newcastle,6.67151,0.910974,2023
+2024-01-02,West Ham,Brighton,0,0,S Barrott,1,0,0,0,2,0,4,6,2.45,3.75,2.75,22093,2024-01-02,West Ham,Brighton,0.9831,2.1552,2023
+2024-01-12,Burnley,Luton,1,1,T Harrington,1,0,0,0,2,8,7,12,2.0,3.6,3.6,22096,2024-01-12,Burnley,Luton,1.52023,0.965167,2023
+2024-01-13,Chelsea,Fulham,1,0,A Taylor,5,1,0,0,6,4,13,9,1.6,4.2,5.25,22097,2024-01-13,Chelsea,Fulham,2.0456,0.697847,2023
+2024-01-13,Newcastle,Man City,2,3,C Kavanagh,1,2,0,0,3,13,7,7,5.5,4.33,1.55,22100,2024-01-13,Newcastle,Man City,1.23638,2.55452,2023
+2024-01-14,Everton,Aston Villa,0,0,D Coote,1,4,0,0,4,5,13,14,2.8,3.5,2.45,22098,2024-01-14,Everton,Aston Villa,1.03664,1.3435,2023
+2024-01-14,Man United,Tottenham,2,2,J Brooks,2,1,0,0,8,13,8,5,2.2,3.75,3.0,22099,2024-01-14,Man United,Tottenham,0.923233,1.31224,2023
+2024-01-20,Arsenal,Crystal Palace,5,0,P Tierney,0,0,0,0,6,7,8,12,1.3,5.75,9.0,22103,2024-01-20,Arsenal,Crystal Palace,3.52167,0.288083,2023
+2024-01-20,Brentford,Nott'm Forest,3,2,D England,1,3,0,0,6,4,10,14,1.91,3.6,4.0,22104,2024-01-20,Brentford,Nott'm Forest,1.94219,1.22251,2023
+2024-01-21,Bournemouth,Liverpool,0,4,A Madley,1,2,0,0,8,5,9,12,4.2,4.5,1.7,22102,2024-01-21,Bournemouth,Liverpool,0.834585,1.53344,2023
+2024-01-22,Brighton,Wolves,0,0,C Pawson,1,4,0,0,8,2,10,13,1.65,4.33,5.0,22095,2024-01-22,Brighton,Wolves,1.3701,1.14116,2023
+2024-01-30,Nott'm Forest,Arsenal,1,2,S Hooper,0,1,0,0,2,11,6,7,7.5,5.0,1.4,22108,2024-01-30,Nott'm Forest,Arsenal,0.631618,1.39143,2023
+2024-01-30,Fulham,Everton,0,0,T Bramall,1,2,0,0,15,6,6,13,2.45,3.2,3.0,22106,2024-01-30,Fulham,Everton,2.37499,2.83317,2023
+2024-01-30,Luton,Brighton,4,0,R Jones,2,2,0,0,7,4,13,14,4.2,4.2,1.75,22107,2024-01-30,Luton,Brighton,3.63312,1.01366,2023
+2024-01-30,Aston Villa,Newcastle,1,3,J Brooks,4,1,0,0,8,7,14,12,1.85,4.0,3.8,22105,2024-01-30,Aston Villa,Newcastle,1.44485,3.3224,2023
+2024-01-31,Man City,Burnley,3,1,S Barrott,2,2,0,0,7,3,3,13,1.08,12.0,21.0,22114,2024-01-31,Man City,Burnley,1.84756,1.49114,2023
+2024-01-31,Tottenham,Brentford,3,2,D Coote,2,3,0,0,5,3,13,15,1.67,4.2,4.75,22109,2024-01-31,Tottenham,Brentford,3.36194,1.59637,2023
+2024-01-31,Liverpool,Chelsea,4,1,P Tierney,2,4,0,0,8,1,15,16,1.57,4.33,5.25,22113,2024-01-31,Liverpool,Chelsea,3.6627,0.477972,2023
+2024-02-01,West Ham,Bournemouth,1,1,T Robinson,1,3,0,0,1,5,13,11,2.4,3.75,2.75,22110,2024-02-01,West Ham,Bournemouth,1.3128,1.13487,2023
+2024-02-01,Wolves,Man United,3,4,J Gillett,2,5,0,0,4,5,10,10,2.63,3.6,2.55,22111,2024-02-01,Wolves,Man United,2.27609,3.22698,2023
+2024-02-03,Newcastle,Luton,4,4,T Bramall,2,2,0,0,8,2,13,16,1.44,4.75,6.5,22123,2024-02-03,Newcastle,Luton,2.37353,2.67463,2023
+2024-02-03,Burnley,Fulham,2,2,D Bond,2,2,0,0,2,13,11,7,2.9,3.4,2.38,22119,2024-02-03,Burnley,Fulham,1.00428,1.28806,2023
+2024-02-03,Everton,Tottenham,2,2,M Oliver,3,0,0,0,9,5,8,14,3.0,3.6,2.25,22121,2024-02-03,Everton,Tottenham,3.25881,0.922371,2023
+2024-02-03,Brighton,Crystal Palace,4,1,S Hooper,1,3,0,0,3,2,8,14,1.7,4.0,4.75,22118,2024-02-03,Brighton,Crystal Palace,1.92591,0.241137,2023
+2024-02-04,Bournemouth,Nott'm Forest,1,1,R Welch,3,2,1,0,11,6,19,12,1.7,4.2,4.5,22115,2024-02-04,Bournemouth,Nott'm Forest,1.1895,0.456548,2023
+2024-02-04,Chelsea,Wolves,2,4,T Robinson,3,2,0,0,10,1,15,11,1.62,4.0,5.5,22120,2024-02-04,Chelsea,Wolves,2.35967,2.48996,2023
+2024-02-04,Man United,West Ham,3,0,A Madley,0,1,0,0,5,8,10,5,1.62,4.2,5.0,22122,2024-02-04,Man United,West Ham,0.96721,1.1807,2023
+2024-02-04,Arsenal,Liverpool,3,1,A Taylor,6,2,0,1,2,4,11,11,2.2,3.6,3.1,22116,2024-02-04,Arsenal,Liverpool,2.8526,0.542052,2023
+2024-02-05,Brentford,Man City,1,3,J Gillett,1,0,0,0,8,13,2,4,7.0,4.75,1.4,22117,2024-02-05,Brentford,Man City,0.865741,2.10785,2023
+2024-02-10,Liverpool,Burnley,3,1,T Robinson,3,2,0,0,9,3,11,13,1.17,8.0,17.0,22128,2024-02-10,Liverpool,Burnley,3.14734,1.11123,2023
+2024-02-10,Man City,Everton,2,0,J Brooks,0,2,0,0,9,0,6,11,1.18,8.0,13.0,22130,2024-02-10,Man City,Everton,1.58971,0.192072,2023
+2024-02-10,Fulham,Bournemouth,3,1,D England,1,2,0,0,1,14,11,11,2.38,3.5,2.8,22127,2024-02-10,Fulham,Bournemouth,1.7456,2.60612,2023
+2024-02-10,Tottenham,Brighton,2,1,S Barrott,2,3,0,0,9,6,14,13,1.8,4.2,3.8,22132,2024-02-10,Tottenham,Brighton,2.10928,1.49285,2023
+2024-02-10,Wolves,Brentford,0,2,S Hooper,2,3,0,0,7,4,11,9,2.1,3.6,3.4,22134,2024-02-10,Wolves,Brentford,1.05781,1.84908,2023
+2024-02-10,Nott'm Forest,Newcastle,2,3,A Taylor,1,2,0,0,4,4,9,6,3.3,3.75,2.05,22131,2024-02-10,Nott'm Forest,Newcastle,0.968075,0.511375,2023
+2024-02-11,West Ham,Arsenal,0,6,C Pawson,4,0,0,0,2,6,17,11,6.0,4.33,1.53,22133,2024-02-11,West Ham,Arsenal,0.191065,3.99893,2023
+2024-02-11,Aston Villa,Man United,1,2,R Jones,3,2,0,0,10,8,9,7,2.15,3.75,3.1,22125,2024-02-11,Aston Villa,Man United,2.64675,2.44591,2023
+2024-02-12,Crystal Palace,Chelsea,1,3,M Oliver,2,2,0,0,1,7,14,7,4.2,3.8,1.85,22126,2024-02-12,Crystal Palace,Chelsea,0.719516,1.26948,2023
+2024-02-17,Nott'm Forest,West Ham,2,0,T Bramall,4,4,0,1,5,3,13,15,2.38,3.5,2.9,22142,2024-02-17,Nott'm Forest,West Ham,2.66942,0.520016,2023
+2024-02-17,Tottenham,Wolves,1,2,A Taylor,0,1,0,0,10,4,8,13,1.53,4.75,5.25,22144,2024-02-17,Tottenham,Wolves,1.59768,1.77591,2023
+2024-02-17,Newcastle,Bournemouth,2,2,M Salisbury,1,3,0,0,4,2,9,22,1.83,4.2,3.75,22141,2024-02-17,Newcastle,Bournemouth,2.38425,2.08098,2023
+2024-02-17,Man City,Chelsea,1,1,A Madley,1,3,0,0,12,1,7,12,1.33,5.5,8.0,22140,2024-02-17,Man City,Chelsea,2.77713,1.82903,2023
+2024-02-17,Burnley,Arsenal,0,5,J Gillett,2,1,0,0,4,6,11,8,10.0,5.75,1.29,22136,2024-02-17,Burnley,Arsenal,0.335143,2.20575,2023
+2024-02-17,Brentford,Liverpool,1,4,M Oliver,2,1,0,0,1,6,4,18,5.5,4.33,1.57,22135,2024-02-17,Brentford,Liverpool,1.69518,3.08952,2023
+2024-02-17,Fulham,Aston Villa,1,2,L Smith,5,2,0,0,4,4,11,6,2.9,3.75,2.2,22138,2024-02-17,Fulham,Aston Villa,1.41796,1.57297,2023
+2024-02-18,Luton,Man United,1,2,D Coote,3,5,0,0,8,6,7,21,4.0,4.0,1.8,22139,2024-02-18,Luton,Man United,1.57234,3.58973,2023
+2024-02-19,Everton,Crystal Palace,1,1,P Tierney,0,2,0,0,3,6,8,12,1.7,3.6,5.25,22137,2024-02-19,Everton,Crystal Palace,2.44588,0.734685,2023
+2024-02-20,Man City,Brentford,1,0,D England,2,4,0,0,10,1,12,6,1.18,8.0,13.0,22074,2024-02-20,Man City,Brentford,2.53766,0.503799,2023
+2024-02-21,Liverpool,Luton,4,1,A Madley,1,4,0,0,13,4,15,14,1.2,7.0,13.0,22151,2024-02-21,Liverpool,Luton,3.70302,0.956512,2023
+2024-02-24,Bournemouth,Man City,0,1,J Gillett,2,2,0,0,3,8,14,6,7.0,5.25,1.4,22145,2024-02-24,Bournemouth,Man City,0.925889,1.79636,2023
+2024-02-24,Man United,Fulham,1,2,M Oliver,2,5,0,0,10,9,6,11,1.57,4.33,5.5,22152,2024-02-24,Man United,Fulham,1.96036,1.1385,2023
+2024-02-24,Arsenal,Newcastle,4,1,P Tierney,1,0,0,0,9,0,15,6,1.36,5.25,8.0,22146,2024-02-24,Arsenal,Newcastle,2.59336,0.217373,2023
+2024-02-24,Brighton,Everton,1,1,T Harrington,2,3,1,0,11,3,9,14,1.83,3.8,4.2,22148,2024-02-24,Brighton,Everton,1.6538,0.286655,2023
+2024-02-24,Aston Villa,Nott'm Forest,4,2,S Barrott,1,2,0,0,7,2,7,16,1.53,4.5,5.75,22147,2024-02-24,Aston Villa,Nott'm Forest,3.48861,2.25569,2023
+2024-02-24,Crystal Palace,Burnley,3,0,L Smith,3,1,0,1,12,3,8,13,1.95,3.5,4.0,22150,2024-02-24,Crystal Palace,Burnley,2.41612,0.0760216,2023
+2024-02-26,West Ham,Brentford,4,2,S Hooper,1,2,0,0,1,7,5,9,2.5,3.5,2.75,22153,2024-02-26,West Ham,Brentford,2.06873,1.33683,2023
+2024-03-02,Brentford,Chelsea,2,2,J Gillett,3,1,0,0,0,6,10,9,3.1,3.75,2.15,22155,2024-03-02,Brentford,Chelsea,2.4732,2.1523,2023
+2024-03-02,Everton,West Ham,1,3,C Pawson,1,2,0,0,4,5,9,6,2.05,3.6,3.5,22157,2024-03-02,Everton,West Ham,3.12075,2.17948,2023
+2024-03-02,Fulham,Brighton,3,0,S Hooper,1,2,0,0,2,6,16,10,2.55,3.6,2.63,22158,2024-03-02,Fulham,Brighton,1.37604,1.15198,2023
+2024-03-02,Newcastle,Wolves,3,0,T Robinson,0,1,0,0,3,5,8,11,1.91,4.0,3.6,22161,2024-03-02,Newcastle,Wolves,3.33495,0.507769,2023
+2024-03-02,Nott'm Forest,Liverpool,0,1,P Tierney,2,2,0,0,3,12,11,12,6.0,4.33,1.53,22162,2024-03-02,Nott'm Forest,Liverpool,0.971466,1.32259,2023
+2024-03-02,Tottenham,Crystal Palace,3,1,J Brooks,1,2,0,0,11,1,7,16,1.5,4.33,6.5,22164,2024-03-02,Tottenham,Crystal Palace,2.6625,0.277887,2023
+2024-03-02,Luton,Aston Villa,2,3,M Oliver,1,4,0,0,8,6,8,19,4.33,4.2,1.73,22159,2024-03-02,Luton,Aston Villa,2.43312,2.08586,2023
+2024-03-03,Burnley,Bournemouth,0,2,D Coote,2,4,0,0,7,2,8,13,3.75,3.6,1.95,22156,2024-03-03,Burnley,Bournemouth,1.60461,1.43616,2023
+2024-03-03,Man City,Man United,3,1,A Madley,0,1,0,0,15,2,5,10,1.25,5.75,11.0,22160,2024-03-03,Man City,Man United,2.64173,0.153764,2023
+2024-03-09,Arsenal,Brentford,2,1,R Jones,2,4,0,0,10,4,9,10,1.22,7.0,11.0,22166,2024-03-09,Arsenal,Brentford,1.59369,0.733239,2023
+2024-03-09,Wolves,Fulham,2,1,T Harrington,2,2,0,0,3,4,7,11,2.5,3.4,2.75,22174,2024-03-09,Wolves,Fulham,1.29589,2.94155,2023
+2024-03-09,Man United,Everton,2,0,S Hooper,1,2,0,0,5,8,13,11,1.83,3.6,4.0,22172,2024-03-09,Man United,Everton,2.9016,1.8214,2023
+2024-03-09,Crystal Palace,Luton,1,1,S Singh,2,3,0,0,8,6,20,11,1.75,3.8,4.2,22170,2024-03-09,Crystal Palace,Luton,3.25103,1.08531,2023
+2024-03-10,Aston Villa,Tottenham,0,4,C Kavanagh,0,2,1,0,6,4,11,15,2.38,4.0,2.6,22167,2024-03-10,Aston Villa,Tottenham,1.23267,2.25381,2023
+2024-03-10,Brighton,Nott'm Forest,1,0,M Salisbury,4,4,0,0,6,3,14,14,1.8,4.0,4.0,22168,2024-03-10,Brighton,Nott'm Forest,0.534518,0.687034,2023
+2024-03-10,West Ham,Burnley,2,2,D England,2,4,0,0,4,4,11,18,1.67,4.0,4.75,22173,2024-03-10,West Ham,Burnley,1.87414,0.88131,2023
+2024-03-10,Liverpool,Man City,1,1,M Oliver,0,3,0,0,7,4,6,10,3.0,3.75,2.2,22171,2024-03-10,Liverpool,Man City,2.25492,1.37289,2023
+2024-03-11,Chelsea,Newcastle,3,2,J Brooks,3,1,0,0,0,4,12,7,1.91,4.0,3.6,22169,2024-03-11,Chelsea,Newcastle,1.78315,0.568435,2023
+2024-03-13,Bournemouth,Luton,4,3,S Allison,1,2,0,0,11,3,16,11,1.5,4.75,5.75,25861,2024-03-13,Bournemouth,Luton,2.84403,2.79419,2023
+2024-03-16,Fulham,Tottenham,3,0,R Jones,2,3,0,0,4,5,9,10,3.5,3.8,1.95,22180,2024-03-16,Fulham,Tottenham,2.47234,2.14564,2023
+2024-03-16,Burnley,Brentford,2,1,D Bond,2,4,0,1,5,4,14,17,3.25,3.6,2.15,22177,2024-03-16,Burnley,Brentford,2.69776,1.25123,2023
+2024-03-16,Luton,Nott'm Forest,1,1,D England,1,2,0,0,6,7,10,17,2.8,3.5,2.45,22181,2024-03-16,Luton,Nott'm Forest,0.853782,1.95268,2023
+2024-03-17,West Ham,Aston Villa,1,1,J Gillett,3,3,0,0,7,11,13,12,2.63,3.75,2.45,22183,2024-03-17,West Ham,Aston Villa,1.32829,0.911274,2023
+2024-03-30,Newcastle,West Ham,4,3,R Jones,1,1,1,0,3,4,9,8,1.83,4.2,3.8,22191,2024-03-30,Newcastle,West Ham,3.80922,0.994584,2023
+2024-03-30,Bournemouth,Everton,2,1,S Barrott,1,2,0,0,9,8,14,11,2.2,3.6,3.2,22185,2024-03-30,Bournemouth,Everton,1.39268,0.93378,2023
+2024-03-30,Chelsea,Burnley,2,2,D England,2,2,0,1,12,4,12,7,1.29,6.0,9.5,22188,2024-03-30,Chelsea,Burnley,4.46643,2.10422,2023
+2024-03-30,Nott'm Forest,Crystal Palace,1,1,C Kavanagh,1,1,0,0,4,6,14,12,2.2,3.3,3.4,22192,2024-03-30,Nott'm Forest,Crystal Palace,0.784652,0.900972,2023
+2024-03-30,Tottenham,Luton,2,1,J Gillett,2,4,0,0,3,6,16,14,1.2,8.0,11.0,22194,2024-03-30,Tottenham,Luton,2.46523,0.402402,2023
+2024-03-30,Aston Villa,Wolves,2,0,P Tierney,3,4,0,0,5,4,11,19,1.6,4.33,5.0,22186,2024-03-30,Aston Villa,Wolves,1.28271,1.66232,2023
+2024-03-30,Brentford,Man United,1,1,S Hooper,2,2,0,0,14,4,7,14,3.0,3.8,2.2,22187,2024-03-30,Brentford,Man United,3.16487,0.989565,2023
+2024-03-31,Liverpool,Brighton,2,1,D Coote,5,3,0,0,8,4,20,6,1.36,5.5,7.5,22189,2024-03-31,Liverpool,Brighton,3.21149,0.43922,2023
+2024-03-31,Man City,Arsenal,0,0,A Taylor,0,2,0,0,7,4,9,20,1.91,3.8,3.8,22190,2024-03-31,Man City,Arsenal,1.22009,0.511402,2023
+2024-04-02,West Ham,Tottenham,1,1,J Brooks,1,4,0,0,9,5,13,9,3.3,4.2,1.95,22199,2024-04-02,West Ham,Tottenham,1.47017,1.39423,2023
+2024-04-02,Bournemouth,Crystal Palace,1,0,G Scott,3,2,0,0,9,2,13,14,1.95,3.8,3.6,22195,2024-04-02,Bournemouth,Crystal Palace,1.30969,0.174389,2023
+2024-04-02,Burnley,Wolves,1,1,T Bramall,0,2,0,0,7,4,10,12,2.45,3.6,2.75,22197,2024-04-02,Burnley,Wolves,1.12581,1.01021,2023
+2024-04-02,Newcastle,Everton,1,1,T Harrington,0,3,0,0,7,3,9,14,2.0,3.75,3.5,22202,2024-04-02,Newcastle,Everton,2.65009,1.69834,2023
+2024-04-02,Nott'm Forest,Fulham,3,1,M Oliver,0,0,0,0,3,8,7,8,2.7,3.4,2.63,22198,2024-04-02,Nott'm Forest,Fulham,1.94619,1.04304,2023
+2024-04-03,Arsenal,Luton,2,0,C Pawson,1,1,0,0,3,1,12,8,1.1,10.0,19.0,22196,2024-04-03,Arsenal,Luton,1.14384,0.292082,2023
+2024-04-03,Brentford,Brighton,0,0,A Madley,1,1,0,0,1,5,9,12,2.38,3.8,2.75,22200,2024-04-03,Brentford,Brighton,0.423299,1.22404,2023
+2024-04-03,Man City,Aston Villa,4,1,D England,1,2,0,0,2,3,6,13,1.3,6.0,8.0,22204,2024-04-03,Man City,Aston Villa,3.87704,1.18643,2023
+2024-04-04,Chelsea,Man United,4,3,J Gillett,3,0,0,0,12,3,7,15,2.0,4.0,3.4,22201,2024-04-04,Chelsea,Man United,3.48048,1.56686,2023
+2024-04-06,Wolves,West Ham,1,2,T Harrington,5,2,0,0,4,4,15,7,2.5,3.6,2.7,22214,2024-04-06,Wolves,West Ham,1.78341,1.14133,2023
+2024-04-06,Brighton,Arsenal,0,3,J Brooks,1,2,0,0,8,7,14,13,5.0,4.33,1.62,22206,2024-04-06,Brighton,Arsenal,0.428514,4.16518,2023
+2024-04-06,Luton,Bournemouth,2,1,A Madley,0,0,0,0,7,2,7,14,3.75,3.8,1.91,22210,2024-04-06,Luton,Bournemouth,1.30478,0.616108,2023
+2024-04-06,Fulham,Newcastle,0,1,S Allison,1,2,0,0,14,3,10,13,2.38,3.8,2.8,22209,2024-04-06,Fulham,Newcastle,0.834564,1.18012,2023
+2024-04-06,Everton,Burnley,1,0,M Oliver,2,1,0,1,3,5,11,13,1.65,4.0,5.25,22208,2024-04-06,Everton,Burnley,0.659844,0.34699,2023
+2024-04-06,Aston Villa,Brentford,3,3,M Salisbury,2,2,0,0,11,3,15,11,1.7,4.0,4.75,22205,2024-04-06,Aston Villa,Brentford,1.16333,1.42064,2023
+2024-04-06,Crystal Palace,Man City,2,4,P Tierney,1,1,0,0,2,9,13,3,9.5,5.25,1.33,22207,2024-04-06,Crystal Palace,Man City,1.49472,2.26381,2023
+2024-04-07,Man United,Liverpool,2,2,A Taylor,5,2,0,0,6,11,9,10,4.75,4.5,1.6,22211,2024-04-07,Man United,Liverpool,0.814509,4.43457,2023
+2024-04-07,Tottenham,Nott'm Forest,3,1,S Hooper,2,3,0,0,12,2,11,12,1.4,5.5,6.5,22213,2024-04-07,Tottenham,Nott'm Forest,1.61978,2.00122,2023
+2024-04-13,Newcastle,Tottenham,4,0,T Robinson,0,4,0,0,16,3,14,12,2.7,4.0,2.3,22222,2024-04-13,Newcastle,Tottenham,3.1483,0.737596,2023
+2024-04-13,Burnley,Brighton,1,1,S Hooper,1,2,0,0,4,5,18,8,3.5,3.75,2.0,22218,2024-04-13,Burnley,Brighton,1.8522,0.889445,2023
+2024-04-13,Man City,Luton,5,1,J Brooks,1,0,0,0,12,1,7,6,1.1,11.0,19.0,22221,2024-04-13,Man City,Luton,4.64245,0.809775,2023
+2024-04-13,Nott'm Forest,Wolves,2,2,C Pawson,2,3,0,0,10,1,15,10,2.1,3.4,3.5,22223,2024-04-13,Nott'm Forest,Wolves,1.76244,1.45688,2023
+2024-04-13,Bournemouth,Man United,2,2,T Harrington,4,0,0,0,7,2,13,14,2.4,3.9,2.6,22215,2024-04-13,Bournemouth,Man United,2.38519,1.52274,2023
+2024-04-14,Liverpool,Crystal Palace,0,1,C Kavanagh,1,1,0,0,11,1,10,10,1.22,7.0,12.0,22220,2024-04-14,Liverpool,Crystal Palace,3.04497,2.12879,2023
+2024-04-14,West Ham,Fulham,0,2,S Attwell,1,2,0,0,8,3,6,13,2.38,3.6,2.8,22224,2024-04-14,West Ham,Fulham,1.45307,3.61413,2023
+2024-04-14,Arsenal,Aston Villa,0,2,D Coote,3,1,0,0,4,6,12,7,1.29,5.75,10.0,22216,2024-04-14,Arsenal,Aston Villa,1.89003,0.929049,2023
+2024-04-15,Chelsea,Everton,6,0,P Tierney,1,4,0,0,4,8,5,21,1.7,4.2,4.5,22219,2024-04-15,Chelsea,Everton,3.37093,1.21791,2023
+2024-04-20,Luton,Brentford,1,5,J Gillett,1,2,0,0,4,9,13,9,3.1,3.75,2.15,22230,2024-04-20,Luton,Brentford,0.497799,3.7809,2023
+2024-04-20,Wolves,Arsenal,0,2,P Tierney,3,2,0,0,1,2,14,9,8.5,4.5,1.4,22234,2024-04-20,Wolves,Arsenal,0.164516,1.66179,2023
+2024-04-21,Everton,Nott'm Forest,2,0,A Taylor,3,2,0,0,6,4,15,9,2.05,3.5,3.6,22228,2024-04-21,Everton,Nott'm Forest,0.473233,1.18916,2023
+2024-04-21,Aston Villa,Bournemouth,3,1,T Robinson,1,3,0,0,8,4,8,14,1.85,4.0,3.6,22225,2024-04-21,Aston Villa,Bournemouth,2.62687,2.05211,2023
+2024-04-21,Crystal Palace,West Ham,5,2,G Scott,3,2,0,0,4,0,9,9,2.1,3.6,3.4,22227,2024-04-21,Crystal Palace,West Ham,3.7185,1.34536,2023
+2024-04-21,Fulham,Liverpool,1,3,C Pawson,3,0,0,0,1,4,5,11,5.25,4.5,1.57,22229,2024-04-21,Fulham,Liverpool,0.83885,1.02445,2023
+2024-04-23,Arsenal,Chelsea,5,0,S Hooper,2,2,0,0,4,2,12,11,1.44,5.0,6.0,22175,2024-04-23,Arsenal,Chelsea,3.45858,1.60343,2023
+2024-04-24,Everton,Liverpool,2,0,A Madley,0,3,0,0,4,13,6,13,7.0,5.0,1.4,22179,2024-04-24,Everton,Liverpool,1.89111,1.87155,2023
+2024-04-24,Crystal Palace,Newcastle,2,0,T Bramall,3,3,0,0,7,2,10,15,2.75,3.6,2.4,22178,2024-04-24,Crystal Palace,Newcastle,1.43661,0.55129,2023
+2024-04-24,Wolves,Bournemouth,0,1,S Attwell,4,1,0,1,8,12,10,17,2.7,3.6,2.5,22184,2024-04-24,Wolves,Bournemouth,0.484454,2.40311,2023
+2024-04-25,Brighton,Man City,0,4,J Gillett,2,0,0,0,4,4,10,3,6.5,5.0,1.4,22176,2024-04-25,Brighton,Man City,0.572021,1.90507,2023
+2024-04-27,West Ham,Liverpool,2,2,A Taylor,0,2,0,0,5,8,8,10,5.5,5.0,1.5,22243,2024-04-27,West Ham,Liverpool,0.794025,2.29298,2023
+2024-04-27,Fulham,Crystal Palace,1,1,S Attwell,0,2,0,0,5,9,11,15,2.1,3.5,3.5,22238,2024-04-27,Fulham,Crystal Palace,1.39418,1.05387,2023
+2024-04-27,Man United,Burnley,1,1,J Brooks,1,3,0,0,6,5,7,11,1.5,4.75,5.5,22239,2024-04-27,Man United,Burnley,3.06197,1.89591,2023
+2024-04-27,Wolves,Luton,2,1,D Coote,3,1,0,0,4,4,14,14,1.95,3.8,3.6,22244,2024-04-27,Wolves,Luton,1.49011,0.90435,2023
+2024-04-27,Everton,Brentford,1,0,D England,1,2,0,0,6,6,10,12,2.3,3.5,3.0,22237,2024-04-27,Everton,Brentford,1.21399,0.956356,2023
+2024-04-27,Aston Villa,Chelsea,2,2,C Pawson,3,5,0,0,2,4,13,14,2.15,3.8,3.0,22236,2024-04-27,Aston Villa,Chelsea,0.612257,1.56401,2023
+2024-04-28,Tottenham,Arsenal,2,3,M Oliver,2,1,0,0,8,6,12,16,4.2,4.2,1.75,22241,2024-04-28,Tottenham,Arsenal,2.60458,1.51469,2023
+2024-04-28,Nott'm Forest,Man City,0,2,S Hooper,0,0,0,0,4,5,8,6,8.0,6.0,1.3,22242,2024-04-28,Nott'm Forest,Man City,2.17312,0.932063,2023
+2024-04-28,Bournemouth,Brighton,3,0,P Tierney,2,2,0,0,8,2,14,10,2.25,3.8,2.9,22235,2024-04-28,Bournemouth,Brighton,2.48132,1.35682,2023
+2024-05-02,Chelsea,Tottenham,2,0,R Jones,0,1,0,0,4,9,12,16,2.15,3.8,3.0,22149,2024-05-02,Chelsea,Tottenham,2.22432,1.27064,2023
+2024-05-03,Luton,Everton,1,1,T Robinson,1,3,0,0,8,7,14,12,2.6,3.6,2.55,22252,2024-05-03,Luton,Everton,0.950391,1.22959,2023
+2024-05-04,Man City,Wolves,5,1,C Pawson,0,4,0,0,6,0,4,17,1.08,12.0,21.0,22253,2024-05-04,Man City,Wolves,4.52542,0.396887,2023
+2024-05-04,Burnley,Newcastle,1,4,A Taylor,2,2,0,0,4,11,8,8,3.4,4.0,1.95,22248,2024-05-04,Burnley,Newcastle,1.28632,4.25643,2023
+2024-05-04,Arsenal,Bournemouth,3,0,D Coote,2,3,0,0,6,1,16,12,1.22,7.5,11.0,22245,2024-05-04,Arsenal,Bournemouth,3.91372,0.4687,2023
+2024-05-04,Brentford,Fulham,0,0,G Scott,1,1,0,0,7,6,3,6,2.1,3.8,3.2,22246,2024-05-04,Brentford,Fulham,0.809379,1.45579,2023
+2024-05-05,Brighton,Aston Villa,1,0,R Jones,2,1,0,0,7,3,13,10,2.75,3.75,2.45,22247,2024-05-05,Brighton,Aston Villa,2.63566,0.0644055,2023
+2024-05-05,Chelsea,West Ham,5,0,A Madley,1,3,0,0,8,6,12,10,1.65,4.5,4.5,22249,2024-05-05,Chelsea,West Ham,4.21838,0.893899,2023
+2024-05-05,Liverpool,Tottenham,4,2,P Tierney,1,4,0,0,8,3,14,12,1.5,5.75,5.0,22251,2024-05-05,Liverpool,Tottenham,3.26222,1.17205,2023
+2024-05-06,Crystal Palace,Man United,4,0,J Gillett ,1,1,0,0,6,3,12,8,2.38,3.75,2.8,22250,2024-05-06,Crystal Palace,Man United,2.0656,0.341417,2023
+2024-05-11,Wolves,Crystal Palace,1,3,T Bramall,3,2,0,1,8,3,13,12,2.88,3.5,2.38,22264,2024-05-11,Wolves,Crystal Palace,1.1561,2.51452,2023
+2024-05-11,Nott'm Forest,Chelsea,2,3,T Harrington,2,3,0,0,5,6,14,8,3.4,3.8,2.0,22261,2024-05-11,Nott'm Forest,Chelsea,2.44569,2.41068,2023
+2024-05-11,West Ham,Luton,3,1,M Oliver,1,3,0,0,7,6,9,15,1.8,4.2,3.8,22263,2024-05-11,West Ham,Luton,3.71009,0.640456,2023
+2024-05-11,Tottenham,Burnley,2,1,J Gillett,3,5,0,0,9,3,10,14,1.36,5.75,7.0,22262,2024-05-11,Tottenham,Burnley,3.00238,0.950331,2023
+2024-05-11,Newcastle,Brighton,1,1,D England,3,4,0,0,8,4,9,16,1.57,4.75,4.75,22260,2024-05-11,Newcastle,Brighton,2.45163,1.91556,2023
+2024-05-11,Bournemouth,Brentford,1,2,M Donohue,2,2,0,0,3,8,16,12,1.95,4.0,3.5,22255,2024-05-11,Bournemouth,Brentford,1.07237,1.92722,2023
+2024-05-11,Fulham,Man City,0,4,A Taylor,1,0,1,0,1,7,9,6,13.0,7.0,1.2,22258,2024-05-11,Fulham,Man City,0.0886245,3.15218,2023
+2024-05-12,Man United,Arsenal,0,1,P Tierney,0,2,0,0,4,7,5,6,7.0,5.5,1.36,22259,2024-05-12,Man United,Arsenal,0.551669,1.73104,2023
+2024-05-13,Aston Villa,Liverpool,3,3,S Hooper,1,1,0,0,5,4,11,15,4.2,4.33,1.7,22256,2024-05-13,Aston Villa,Liverpool,2.71655,1.89968,2023
+2024-05-14,Tottenham,Man City,0,2,C Kavanagh,3,3,0,0,7,4,14,11,6.5,6.0,1.36,22233,2024-05-14,Tottenham,Man City,1.84285,2.70331,2023
+2024-05-15,Brighton,Chelsea,1,2,M Salisbury,2,2,0,1,4,6,13,14,3.3,4.0,1.95,22226,2024-05-15,Brighton,Chelsea,1.32423,1.544,2023
+2024-05-15,Man United,Newcastle,3,2,R Jones,3,3,0,0,9,9,16,7,2.75,4.0,2.3,22231,2024-05-15,Man United,Newcastle,1.49706,2.27657,2023
+2024-05-19,Luton,Fulham,2,4,M Donohue,5,4,0,0,4,4,15,20,2.9,3.9,2.2,22272,2024-05-19,Luton,Fulham,2.06743,1.11598,2023
+2024-05-19,Brighton,Man United,0,2,C Pawson,1,3,0,0,7,5,10,9,2.15,4.0,2.9,22267,2024-05-19,Brighton,Man United,1.9717,1.00404,2023
+2024-05-19,Liverpool,Wolves,2,0,C Kavanagh,1,1,0,1,10,2,14,11,1.17,8.0,15.0,22271,2024-05-19,Liverpool,Wolves,5.65937,0.731254,2023
+2024-05-19,Man City,West Ham,3,1,J Brooks,0,1,0,0,11,2,3,12,1.08,12.0,21.0,22273,2024-05-19,Man City,West Ham,2.31504,0.240159,2023
+2024-05-19,Crystal Palace,Aston Villa,5,0,D Bond,1,4,0,0,2,4,10,8,1.85,4.33,3.6,22270,2024-05-19,Crystal Palace,Aston Villa,2.23189,0.598846,2023
+2024-05-19,Arsenal,Everton,2,1,M Oliver,4,3,0,0,8,1,8,11,1.18,8.0,12.0,22265,2024-05-19,Arsenal,Everton,3.2117,0.664904,2023
+2024-05-19,Burnley,Nott'm Forest,1,2,G Scott,1,0,0,0,4,3,11,5,3.0,3.5,2.3,22268,2024-05-19,Burnley,Nott'm Forest,1.08222,1.57962,2023
+2024-05-19,Brentford,Newcastle,2,4,S Hooper,4,4,0,0,3,0,15,11,2.9,3.9,2.2,22266,2024-05-19,Brentford,Newcastle,1.70157,3.65044,2023
+2024-05-19,Chelsea,Bournemouth,2,1,A Taylor,2,3,0,0,6,5,5,9,1.45,5.0,6.0,22269,2024-05-19,Chelsea,Bournemouth,1.59771,2.002,2023
+2024-08-16,Man United,Fulham,1,0,R Jones,2,3,0,0,7,8,12,10,1.6,4.2,5.25,26602,2024-08-16,Man United,Fulham,2.04268,0.418711,2024
+2024-08-17,Ipswich,Liverpool,0,2,T Robinson,3,1,0,0,2,10,9,18,8.5,5.5,1.33,26603,2024-08-17,Ipswich,Liverpool,0.342601,3.92906,2024
+2024-08-17,Arsenal,Wolves,2,0,J Gillett,2,2,0,0,8,2,17,14,1.18,7.5,13.0,26604,2024-08-17,Arsenal,Wolves,1.6283,0.575835,2024
+2024-08-17,Everton,Brighton,0,3,S Hooper,1,1,1,0,1,5,8,8,2.63,3.3,2.63,26605,2024-08-17,Everton,Brighton,0.405325,1.79083,2024
+2024-08-17,Newcastle,Southampton,1,0,C Pawson,2,4,1,0,3,12,15,16,1.36,5.25,8.0,26606,2024-08-17,Newcastle,Southampton,0.433489,1.95483,2024
+2024-08-17,Nott'm Forest,Bournemouth,1,1,M Oliver,1,3,0,0,2,6,17,8,2.45,3.5,2.8,26607,2024-08-17,Nott'm Forest,Bournemouth,1.24405,1.90915,2024
+2024-08-17,West Ham,Aston Villa,1,2,T Harrington,1,2,0,0,5,3,18,11,2.45,3.6,2.75,26608,2024-08-17,West Ham,Aston Villa,2.8047,2.6703,2024
+2024-08-18,Chelsea,Man City,0,2,A Taylor,1,1,0,0,4,3,12,9,4.1,3.9,1.8,26610,2024-08-18,Chelsea,Man City,1.06123,1.18038,2024
+2024-08-18,Brentford,Crystal Palace,2,1,S Barrott,1,5,0,0,4,7,6,15,2.4,3.4,2.9,26609,2024-08-18,Brentford,Crystal Palace,1.38064,1.14757,2024
+2024-08-19,Leicester,Tottenham,1,1,C Kavanagh,1,1,0,0,2,13,11,12,5.0,4.33,1.62,26611,2024-08-19,Leicester,Tottenham,1.02614,1.40775,2024
+2024-08-24,Southampton,Nott'm Forest,0,1,S Barrott,3,3,0,0,4,10,14,14,2.55,3.3,2.8,26616,2024-08-24,Southampton,Nott'm Forest,0.214952,2.86475,2024
+2024-08-24,Tottenham,Everton,4,0,A Taylor,0,0,0,0,12,5,11,15,1.44,4.75,6.5,26617,2024-08-24,Tottenham,Everton,2.61143,0.648869,2024
+2024-08-24,Man City,Ipswich,4,1,M Salisbury,2,3,0,0,10,1,4,15,1.08,12.0,21.0,26615,2024-08-24,Man City,Ipswich,3.07818,0.479999,2024
+2024-08-24,Aston Villa,Arsenal,0,2,M Oliver,1,3,0,0,4,1,8,15,4.33,3.8,1.75,26618,2024-08-24,Aston Villa,Arsenal,1.31664,1.41399,2024
+2024-08-24,Crystal Palace,West Ham,0,2,R Jones,1,1,0,0,3,3,9,17,2.15,3.6,3.2,26613,2024-08-24,Crystal Palace,West Ham,1.3761,1.53421,2024
+2024-08-24,Brighton,Man United,2,1,C Pawson,1,2,0,0,4,4,9,13,2.5,3.7,2.63,26612,2024-08-24,Brighton,Man United,2.14153,1.28556,2024
+2024-08-24,Fulham,Leicester,2,1,D Bond,2,2,0,0,7,5,14,13,1.8,3.75,4.2,26614,2024-08-24,Fulham,Leicester,1.96218,0.857005,2024
+2024-08-25,Liverpool,Brentford,2,0,S Attwell,2,3,0,0,9,4,10,7,1.27,5.75,11.0,26621,2024-08-25,Liverpool,Brentford,2.71877,0.457239,2024
+2024-08-25,Wolves,Chelsea,2,6,D England,2,3,0,0,5,5,13,13,4.33,4.0,1.75,26619,2024-08-25,Wolves,Chelsea,2.4181,2.02935,2024
+2024-08-25,Bournemouth,Newcastle,1,1,D Coote,2,2,0,0,8,9,19,8,2.9,3.8,2.2,26620,2024-08-25,Bournemouth,Newcastle,2.53513,1.89287,2024
+2024-08-31,Arsenal,Brighton,1,1,C Kavanagh,3,2,1,0,3,7,12,7,1.33,5.5,8.5,26622,2024-08-31,Arsenal,Brighton,2.41798,1.81748,2024
+2024-08-31,Brentford,Southampton,3,1,J Smith,2,1,0,0,2,8,10,7,1.75,3.9,4.33,26623,2024-08-31,Brentford,Southampton,3.86281,1.64713,2024
+2024-08-31,Everton,Bournemouth,2,3,S Attwell,2,1,0,0,8,4,6,1,2.75,3.4,2.55,26624,2024-08-31,Everton,Bournemouth,2.55629,2.95688,2024
+2024-08-31,Ipswich,Fulham,1,1,L Smith,2,3,0,0,8,6,15,15,3.0,3.5,2.3,26625,2024-08-31,Ipswich,Fulham,0.707048,1.18883,2024
+2024-08-31,Leicester,Aston Villa,1,2,D Coote,4,5,0,0,1,4,13,21,4.5,4.0,1.7,26626,2024-08-31,Leicester,Aston Villa,0.774741,2.16385,2024
+2024-08-31,Nott'm Forest,Wolves,1,1,S Hooper,3,4,0,0,7,3,15,18,2.0,3.7,3.7,26627,2024-08-31,Nott'm Forest,Wolves,1.41069,0.937632,2024
+2024-08-31,West Ham,Man City,1,3,M Oliver,3,2,0,0,3,11,10,3,7.0,5.5,1.38,26628,2024-08-31,West Ham,Man City,0.947201,3.19297,2024
+2024-09-01,Chelsea,Crystal Palace,1,1,J Gillett,4,2,0,0,4,5,9,13,1.6,4.33,5.0,26630,2024-09-01,Chelsea,Crystal Palace,2.97743,0.459708,2024
+2024-09-01,Newcastle,Tottenham,2,1,R Jones,4,4,0,0,7,12,16,13,2.5,4.0,2.5,26629,2024-09-01,Newcastle,Tottenham,1.58694,1.63304,2024
+2024-09-01,Man United,Liverpool,0,3,A Taylor,4,1,0,0,5,2,7,7,3.7,4.2,1.85,26631,2024-09-01,Man United,Liverpool,1.50087,2.10397,2024
+2024-09-14,Bournemouth,Chelsea,0,1,A Taylor,6,8,0,0,6,3,16,9,3.4,3.8,2.0,26639,2024-09-14,Bournemouth,Chelsea,1.53731,0.932726,2024
+2024-09-14,Aston Villa,Everton,3,2,C Pawson,1,4,0,0,6,2,10,12,1.5,4.2,6.5,26638,2024-09-14,Aston Villa,Everton,3.15876,0.852158,2024
+2024-09-14,Man City,Brentford,2,1,D Bond,3,1,0,0,12,3,9,3,1.18,8.0,12.0,26637,2024-09-14,Man City,Brentford,1.55279,1.05094,2024
+2024-09-14,Liverpool,Nott'm Forest,0,1,M Oliver,4,4,0,0,7,2,15,6,1.22,6.5,12.0,26635,2024-09-14,Liverpool,Nott'm Forest,1.17044,0.589532,2024
+2024-09-14,Brighton,Ipswich,0,0,S Barrott,4,3,0,0,9,2,14,16,1.38,5.0,7.5,26633,2024-09-14,Brighton,Ipswich,1.75696,0.721323,2024
+2024-09-14,Crystal Palace,Leicester,2,2,T Harrington,0,3,0,0,5,2,11,15,1.62,4.0,5.5,26636,2024-09-14,Crystal Palace,Leicester,2.88716,1.65187,2024
+2024-09-14,Southampton,Man United,0,3,S Attwell,1,4,1,0,0,7,11,14,4.5,4.0,1.7,26632,2024-09-14,Southampton,Man United,1.35593,3.02693,2024
+2024-09-14,Fulham,West Ham,1,1,T Robinson,2,3,0,0,3,2,15,18,2.38,3.25,3.0,26634,2024-09-14,Fulham,West Ham,2.88601,0.682719,2024
+2024-09-15,Tottenham,Arsenal,0,1,J Gillett,5,3,0,0,7,6,13,10,3.0,3.5,2.3,26640,2024-09-15,Tottenham,Arsenal,0.792595,1.1209,2024
+2024-09-15,Wolves,Newcastle,1,2,C Kavanagh,3,3,0,0,4,7,17,6,3.4,3.5,2.1,26641,2024-09-15,Wolves,Newcastle,1.46969,1.48343,2024
+2024-09-21,Southampton,Ipswich,1,1,S Allison,4,4,0,0,2,10,16,16,2.25,3.5,3.2,26643,2024-09-21,Southampton,Ipswich,2.89813,1.645,2024
+2024-09-21,Crystal Palace,Man United,0,0,D Coote,3,1,0,0,4,11,7,12,2.88,3.75,2.3,26649,2024-09-21,Crystal Palace,Man United,1.66928,2.35056,2024
+2024-09-21,Tottenham,Brentford,3,1,J Brooks,3,1,0,0,9,4,11,9,1.55,4.5,5.5,26648,2024-09-21,Tottenham,Brentford,3.89481,0.893565,2024
+2024-09-21,Liverpool,Bournemouth,3,0,T Harrington,1,4,0,0,3,9,10,12,1.3,6.25,9.0,26645,2024-09-21,Liverpool,Bournemouth,2.43731,1.46979,2024
+2024-09-21,West Ham,Chelsea,0,3,S Barrott,5,2,0,0,6,5,17,9,3.6,3.9,1.95,26642,2024-09-21,West Ham,Chelsea,0.758267,2.39727,2024
+2024-09-21,Fulham,Newcastle,3,1,P Bankes,6,0,0,0,6,0,16,8,3.0,3.4,2.4,26646,2024-09-21,Fulham,Newcastle,3.21141,1.09768,2024
+2024-09-21,Aston Villa,Wolves,3,1,T Robinson,3,6,0,0,6,5,11,16,1.57,4.2,5.25,26647,2024-09-21,Aston Villa,Wolves,2.37351,0.520117,2024
+2024-09-21,Leicester,Everton,1,1,D England,1,2,0,0,6,1,11,12,2.45,3.4,2.88,26644,2024-09-21,Leicester,Everton,1.33793,1.82377,2024
+2024-09-22,Brighton,Nott'm Forest,2,2,R Jones,3,4,0,1,9,1,12,11,1.75,3.75,4.75,26650,2024-09-22,Brighton,Nott'm Forest,1.56836,1.36923,2024
+2024-09-22,Man City,Arsenal,2,2,M Oliver,3,4,0,1,8,2,7,10,1.8,3.6,4.5,26651,2024-09-22,Man City,Arsenal,2.75588,1.28411,2024
+2024-09-28,Wolves,Liverpool,1,2,A Taylor,2,3,0,0,2,10,16,8,8.0,5.75,1.33,26658,2024-09-28,Wolves,Liverpool,0.748925,2.11724,2024
+2024-09-28,Nott'm Forest,Fulham,0,1,J Smith,2,4,0,0,6,5,11,15,2.38,3.3,3.0,26653,2024-09-28,Nott'm Forest,Fulham,0.614351,1.43592,2024
+2024-09-28,Everton,Crystal Palace,2,1,A Madley,2,1,0,0,5,8,13,11,2.7,3.3,2.63,26654,2024-09-28,Everton,Crystal Palace,1.10959,1.12358,2024
+2024-09-28,Chelsea,Brighton,4,2,P Bankes,3,2,0,0,8,2,11,8,1.73,4.2,4.2,26657,2024-09-28,Chelsea,Brighton,3.65839,1.20712,2024
+2024-09-28,Arsenal,Leicester,4,2,S Barrott,2,4,0,0,17,0,11,6,1.17,8.0,15.0,26655,2024-09-28,Arsenal,Leicester,6.05305,0.337909,2024
+2024-09-28,Newcastle,Man City,1,1,J Gillett,4,4,0,0,5,6,14,10,5.25,4.33,1.6,26652,2024-09-28,Newcastle,Man City,1.34344,1.26516,2024
+2024-09-28,Brentford,West Ham,1,1,S Hooper,2,3,0,0,7,7,2,11,2.2,3.5,3.2,26656,2024-09-28,Brentford,West Ham,0.370222,0.878617,2024
+2024-09-29,Ipswich,Aston Villa,2,2,S Attwell,4,1,0,0,10,0,10,14,4.0,3.75,1.85,26659,2024-09-29,Ipswich,Aston Villa,1.84608,1.14494,2024
+2024-09-29,Man United,Tottenham,0,3,C Kavanagh,5,3,1,0,5,3,16,14,2.35,3.75,2.75,26660,2024-09-29,Man United,Tottenham,0.600721,5.4072,2024
+2024-09-30,Bournemouth,Southampton,3,1,M Oliver,2,5,0,0,7,4,19,12,1.65,4.1,5.0,26661,2024-09-30,Bournemouth,Southampton,1.44215,0.696068,2024
+2024-10-05,Man City,Fulham,3,2,P Bankes,2,1,0,0,8,3,4,10,1.25,7.0,9.5,26664,2024-10-05,Man City,Fulham,1.36684,2.75846,2024
+2024-10-05,Everton,Newcastle,0,0,C Pawson,1,2,0,0,0,10,12,8,3.2,3.6,2.2,26669,2024-10-05,Everton,Newcastle,0.692214,1.79048,2024
+2024-10-05,Leicester,Bournemouth,1,0,D Bond,4,1,0,0,0,9,12,14,3.1,3.75,2.15,26663,2024-10-05,Leicester,Bournemouth,0.912063,1.94963,2024
+2024-10-05,West Ham,Ipswich,4,1,A Taylor,0,1,0,0,5,5,12,6,1.8,3.8,4.33,26665,2024-10-05,West Ham,Ipswich,4.39402,1.18463,2024
+2024-10-05,Arsenal,Southampton,3,1,T Harrington,0,3,0,0,13,1,10,9,1.14,9.0,17.0,26666,2024-10-05,Arsenal,Southampton,3.25165,1.27313,2024
+2024-10-05,Crystal Palace,Liverpool,0,1,S Hooper,4,2,0,0,3,8,7,15,6.0,4.5,1.5,26662,2024-10-05,Crystal Palace,Liverpool,0.609481,2.07332,2024
+2024-10-05,Brentford,Wolves,5,3,A Madley,2,3,0,0,10,3,9,10,2.05,3.6,3.4,26667,2024-10-05,Brentford,Wolves,4.13513,0.696254,2024
+2024-10-06,Aston Villa,Man United,0,0,R Jones,1,5,0,0,6,3,12,11,2.2,3.75,3.0,26670,2024-10-06,Aston Villa,Man United,0.532809,0.448537,2024
+2024-10-06,Chelsea,Nott'm Forest,1,1,C Kavanagh,6,2,0,1,11,3,12,11,1.48,4.5,6.5,26668,2024-10-06,Chelsea,Nott'm Forest,2.27752,1.66654,2024
+2024-10-06,Brighton,Tottenham,3,2,D Coote,2,2,0,0,4,7,14,10,2.9,4.0,2.2,26671,2024-10-06,Brighton,Tottenham,1.97217,1.09279,2024
+2024-10-19,Newcastle,Brighton,0,1,P Bankes,2,2,0,0,9,4,11,9,1.95,3.7,3.6,26676,2024-10-19,Newcastle,Brighton,1.93657,1.6779,2024
+2024-10-19,Man United,Brentford,2,1,S Barrott,2,2,0,0,9,2,14,5,1.7,4.2,4.5,26675,2024-10-19,Man United,Brentford,1.76555,0.892843,2024
+2024-10-19,Bournemouth,Arsenal,2,0,R Jones,1,1,0,1,7,4,12,11,5.0,3.9,1.65,26680,2024-10-19,Bournemouth,Arsenal,2.18419,0.740758,2024
+2024-10-19,Fulham,Aston Villa,1,3,D England,3,3,1,1,6,11,8,11,2.45,3.5,2.8,26673,2024-10-19,Fulham,Aston Villa,2.63074,1.43595,2024
+2024-10-19,Tottenham,West Ham,4,1,A Madley,1,3,0,1,13,5,10,15,1.5,5.0,5.25,26672,2024-10-19,Tottenham,West Ham,1.44052,0.858803,2024
+2024-10-19,Ipswich,Everton,0,2,M Oliver,1,1,0,0,5,8,12,10,2.38,3.3,3.0,26674,2024-10-19,Ipswich,Everton,1.174,1.60804,2024
+2024-10-19,Southampton,Leicester,2,3,A Taylor,5,3,1,0,10,6,10,10,2.3,3.5,3.0,26678,2024-10-19,Southampton,Leicester,2.42776,2.83826,2024
+2024-10-20,Wolves,Man City,1,2,C Kavanagh,4,1,0,0,1,18,8,5,8.0,6.0,1.33,26681,2024-10-20,Wolves,Man City,0.761217,1.36569,2024
+2024-10-20,Liverpool,Chelsea,2,1,J Brooks,4,3,0,0,1,6,12,13,1.62,4.1,5.0,26679,2024-10-20,Liverpool,Chelsea,2.22517,1.33904,2024
+2024-10-21,Nott'm Forest,Crystal Palace,1,0,T Robinson,2,3,0,0,6,6,9,12,2.3,3.5,3.0,26677,2024-10-21,Nott'm Forest,Crystal Palace,1.88573,0.835001,2024
+2024-10-25,Leicester,Nott'm Forest,1,3,C Pawson,5,2,0,0,6,7,16,9,3.0,3.3,2.4,26682,2024-10-25,Leicester,Nott'm Forest,0.832415,2.54488,2024
+2024-10-26,Everton,Fulham,1,1,J Brooks,1,0,0,0,4,2,8,8,2.75,3.25,2.63,26687,2024-10-26,Everton,Fulham,0.884845,1.49531,2024
+2024-10-26,Aston Villa,Bournemouth,1,1,A Madley,7,6,0,0,9,7,12,14,1.85,3.9,3.8,26684,2024-10-26,Aston Villa,Bournemouth,1.974,0.328651,2024
+2024-10-26,Brentford,Ipswich,4,3,L Smith,0,1,0,1,5,5,7,10,1.65,4.33,4.75,26685,2024-10-26,Brentford,Ipswich,4.09663,1.65698,2024
+2024-10-26,Brighton,Wolves,2,2,M Oliver,3,3,0,0,9,6,12,10,1.62,4.5,4.5,26686,2024-10-26,Brighton,Wolves,1.51347,1.11074,2024
+2024-10-26,Man City,Southampton,1,0,T Harrington,1,3,0,0,12,1,9,9,1.11,10.0,17.0,26683,2024-10-26,Man City,Southampton,3.16286,0.369989,2024
+2024-10-27,Arsenal,Liverpool,2,2,A Taylor,2,2,0,0,1,3,14,14,2.5,3.25,2.9,26691,2024-10-27,Arsenal,Liverpool,1.0883,1.35346,2024
+2024-10-27,West Ham,Man United,2,1,D Coote,5,1,0,0,6,5,6,7,2.88,3.75,2.3,26690,2024-10-27,West Ham,Man United,2.99312,2.62598,2024
+2024-10-27,Chelsea,Newcastle,2,1,S Hooper,6,3,0,0,7,4,13,16,1.73,4.33,4.2,26688,2024-10-27,Chelsea,Newcastle,1.61794,1.74225,2024
+2024-10-27,Crystal Palace,Tottenham,1,0,D Bond,4,4,0,0,8,8,16,12,3.9,4.0,1.83,26689,2024-10-27,Crystal Palace,Tottenham,0.978611,1.0192,2024
+2024-11-02,Newcastle,Arsenal,1,0,J Brooks,4,4,0,0,4,6,16,18,3.75,3.75,1.95,26694,2024-11-02,Newcastle,Arsenal,0.859715,0.911305,2024
+2024-11-02,Bournemouth,Man City,2,1,M Oliver,2,1,0,0,3,10,11,6,5.5,4.2,1.57,26692,2024-11-02,Bournemouth,Man City,2.4493,2.3527,2024
+2024-11-02,Ipswich,Leicester,1,1,T Robinson,4,2,1,0,4,6,11,10,2.25,3.5,3.1,26695,2024-11-02,Ipswich,Leicester,1.33617,2.33858,2024
+2024-11-02,Liverpool,Brighton,2,1,T Harrington,1,1,0,0,10,7,10,18,1.4,5.0,7.5,26696,2024-11-02,Liverpool,Brighton,1.81037,1.01568,2024
+2024-11-02,Nott'm Forest,West Ham,3,0,P Bankes,1,2,0,1,11,6,7,9,2.15,3.5,3.4,26698,2024-11-02,Nott'm Forest,West Ham,2.35011,0.132317,2024
+2024-11-02,Southampton,Everton,1,0,A Madley,4,2,0,0,3,6,14,18,2.63,3.4,2.63,26699,2024-11-02,Southampton,Everton,0.540345,1.78581,2024
+2024-11-02,Wolves,Crystal Palace,2,2,A Taylor,1,2,0,0,3,6,7,9,2.5,3.4,2.88,26701,2024-11-02,Wolves,Crystal Palace,1.65018,2.64849,2024
+2024-11-03,Tottenham,Aston Villa,4,1,C Pawson,2,0,0,0,6,4,14,14,1.91,4.0,3.6,26700,2024-11-03,Tottenham,Aston Villa,2.09751,2.48749,2024
+2024-11-03,Man United,Chelsea,1,1,R Jones,6,2,0,0,4,8,19,14,2.6,3.5,2.6,26697,2024-11-03,Man United,Chelsea,2.1605,1.21071,2024
+2024-11-04,Fulham,Brentford,2,1,S Attwell,2,1,0,0,11,3,3,10,2.0,3.7,3.5,26693,2024-11-04,Fulham,Brentford,1.43017,0.739231,2024
+2024-11-09,Liverpool,Aston Villa,2,0,D Coote,0,3,0,0,2,9,11,15,1.42,5.25,6.5,26707,2024-11-09,Liverpool,Aston Villa,2.68196,1.66337,2024
+2024-11-09,Brighton,Man City,2,1,S Barrott,3,3,0,0,0,4,12,10,4.1,4.2,1.73,26703,2024-11-09,Brighton,Man City,2.87116,2.60334,2024
+2024-11-09,Wolves,Southampton,2,0,T Bramall,1,4,0,0,1,9,14,12,1.91,3.75,3.75,26711,2024-11-09,Wolves,Southampton,0.912781,0.792655,2024
+2024-11-09,Brentford,Bournemouth,3,2,D Bond,2,4,0,0,6,4,8,16,2.5,3.5,2.7,26702,2024-11-09,Brentford,Bournemouth,1.56474,2.49234,2024
+2024-11-09,Crystal Palace,Fulham,0,2,M Salisbury,1,1,1,0,1,8,10,11,2.7,3.5,2.55,26706,2024-11-09,Crystal Palace,Fulham,1.96037,2.25331,2024
+2024-11-09,West Ham,Everton,0,0,S Attwell,1,2,0,0,7,6,10,9,2.15,3.4,3.4,26710,2024-11-09,West Ham,Everton,1.1237,0.865983,2024
+2024-11-10,Man United,Leicester,3,0,P Bankes,0,1,0,0,1,5,9,5,1.38,5.5,6.5,26708,2024-11-10,Man United,Leicester,1.2369,0.417295,2024
+2024-11-10,Nott'm Forest,Newcastle,1,3,A Taylor,1,1,0,0,4,5,13,6,2.7,3.3,2.7,26704,2024-11-10,Nott'm Forest,Newcastle,1.17852,1.86904,2024
+2024-11-10,Tottenham,Ipswich,1,2,D England,1,5,0,0,12,2,10,19,1.25,6.5,9.0,26709,2024-11-10,Tottenham,Ipswich,1.75088,2.18392,2024
+2024-11-10,Chelsea,Arsenal,1,1,M Oliver,4,2,0,0,4,3,12,12,2.7,3.4,2.55,26705,2024-11-10,Chelsea,Arsenal,1.24067,1.9605,2024
+2024-11-23,Fulham,Wolves,1,4,R Jones,3,0,0,0,7,2,14,14,1.62,4.0,5.25,26717,2024-11-23,Fulham,Wolves,0.717158,1.33903,2024
+2024-11-23,Man City,Tottenham,0,4,J Brooks,4,2,0,0,9,3,19,9,1.48,4.75,6.0,26720,2024-11-23,Man City,Tottenham,2.15899,3.30449,2024
+2024-11-23,Everton,Brentford,0,0,C Kavanagh,0,0,0,1,10,4,8,10,2.45,3.4,2.88,26715,2024-11-23,Everton,Brentford,1.5951,1.34314,2024
+2024-11-23,Arsenal,Nott'm Forest,3,0,S Hooper,3,2,0,0,8,1,10,1,1.38,4.75,9.0,26714,2024-11-23,Arsenal,Nott'm Forest,1.66016,0.403136,2024
+2024-11-23,Aston Villa,Crystal Palace,2,2,T Robinson,3,2,0,0,10,1,10,11,1.62,4.0,5.5,26716,2024-11-23,Aston Villa,Crystal Palace,3.04455,1.61437,2024
+2024-11-23,Bournemouth,Brighton,1,2,S Attwell,2,2,0,1,7,0,13,10,2.4,3.6,2.8,26712,2024-11-23,Bournemouth,Brighton,1.91157,1.23059,2024
+2024-11-23,Leicester,Chelsea,1,2,A Madley,4,3,0,0,2,9,15,12,6.5,4.75,1.44,26719,2024-11-23,Leicester,Chelsea,0.967987,2.81658,2024
+2024-11-24,Southampton,Liverpool,2,3,S Barrott,3,4,0,0,3,10,11,9,11.0,5.75,1.27,26721,2024-11-24,Southampton,Liverpool,1.53985,3.18835,2024
+2024-11-24,Ipswich,Man United,1,1,A Taylor,0,0,0,0,4,3,11,10,5.25,4.0,1.62,26718,2024-11-24,Ipswich,Man United,1.98714,1.26912,2024
+2024-11-25,Newcastle,West Ham,0,2,C Pawson,1,0,0,0,8,3,11,8,1.5,4.5,6.0,26713,2024-11-25,Newcastle,West Ham,1.49781,0.942824,2024
+2024-11-29,Brighton,Southampton,1,1,R Jones,2,4,0,0,7,6,20,16,1.38,5.0,7.5,26723,2024-11-29,Brighton,Southampton,1.86986,0.934969,2024
+2024-11-30,West Ham,Arsenal,2,5,A Taylor,4,1,0,0,2,10,10,13,7.0,4.5,1.45,26730,2024-11-30,West Ham,Arsenal,1.23539,3.99935,2024
+2024-11-30,Wolves,Bournemouth,2,4,P Bankes,4,1,0,0,3,4,13,11,2.8,3.6,2.4,26731,2024-11-30,Wolves,Bournemouth,0.866034,3.07901,2024
+2024-11-30,Nott'm Forest,Ipswich,1,0,T Harrington,1,3,0,0,8,7,5,16,1.7,3.8,4.75,26728,2024-11-30,Nott'm Forest,Ipswich,1.76587,0.462771,2024
+2024-11-30,Crystal Palace,Newcastle,1,1,D England,3,3,0,0,8,9,12,11,2.9,3.6,2.3,26725,2024-11-30,Crystal Palace,Newcastle,2.29595,0.020989,2024
+2024-11-30,Brentford,Leicester,4,1,M Oliver,1,1,0,0,5,4,9,10,1.65,4.2,4.75,26722,2024-11-30,Brentford,Leicester,2.21885,0.907555,2024
+2024-12-01,Chelsea,Aston Villa,3,0,S Attwell,2,2,0,0,3,4,21,6,1.7,4.1,4.5,26724,2024-12-01,Chelsea,Aston Villa,1.94939,0.875443,2024
+2024-12-01,Man United,Everton,4,0,J Brooks,2,3,0,0,2,2,12,12,1.53,4.2,6.0,26727,2024-12-01,Man United,Everton,1.76161,0.766749,2024
+2024-12-01,Tottenham,Fulham,1,1,D Bond,0,1,0,1,7,11,4,14,1.7,4.5,4.1,26729,2024-12-01,Tottenham,Fulham,1.01086,1.57274,2024
+2024-12-01,Liverpool,Man City,2,0,C Kavanagh,1,3,0,0,7,4,9,8,2.1,3.6,3.3,26726,2024-12-01,Liverpool,Man City,3.70054,0.745015,2024
+2024-12-03,Ipswich,Crystal Palace,0,1,C Pawson,2,4,0,0,4,7,14,13,3.0,3.4,2.35,26737,2024-12-03,Ipswich,Crystal Palace,0.471708,1.65422,2024
+2024-12-03,Leicester,West Ham,3,1,J Smith,2,2,0,0,3,9,9,7,2.9,3.4,2.38,26738,2024-12-03,Leicester,West Ham,2.78061,2.87716,2024
+2024-12-04,Arsenal,Man United,2,0,S Barrott,1,3,0,0,13,0,12,8,1.44,4.5,7.0,26733,2024-12-04,Arsenal,Man United,2.96684,0.256083,2024
+2024-12-04,Southampton,Chelsea,1,5,T Harrington,1,0,1,0,5,7,7,14,8.5,5.25,1.33,26741,2024-12-04,Southampton,Chelsea,1.91014,5.8331,2024
+2024-12-04,Aston Villa,Brentford,3,1,L Smith,2,2,0,0,10,5,11,15,1.8,3.75,4.33,26734,2024-12-04,Aston Villa,Brentford,3.21673,1.13266,2024
+2024-12-04,Man City,Nott'm Forest,3,0,M Oliver,2,4,0,0,8,2,7,15,1.36,4.75,9.0,26739,2024-12-04,Man City,Nott'm Forest,3.20169,0.802155,2024
+2024-12-04,Everton,Wolves,4,0,M Salisbury,2,0,0,0,3,4,10,8,2.1,3.4,3.5,26735,2024-12-04,Everton,Wolves,1.49904,0.847724,2024
+2024-12-04,Newcastle,Liverpool,3,3,A Madley,2,5,0,0,5,6,9,17,4.2,4.0,1.75,26740,2024-12-04,Newcastle,Liverpool,1.52057,2.22766,2024
+2024-12-05,Fulham,Brighton,3,1,P Bankes,2,2,0,0,5,6,7,8,2.35,3.6,2.88,26736,2024-12-05,Fulham,Brighton,0.666644,1.09939,2024
+2024-12-05,Bournemouth,Tottenham,1,0,S Hooper,2,2,0,0,5,9,15,8,2.63,3.75,2.45,26732,2024-12-05,Bournemouth,Tottenham,3.27716,0.623934,2024
+2024-12-07,Aston Villa,Southampton,1,0,D Bond,1,3,0,0,14,1,18,15,1.36,5.5,7.0,26742,2024-12-07,Aston Villa,Southampton,2.51338,0.385832,2024
+2024-12-07,Brentford,Newcastle,4,2,T Robinson,3,0,0,0,3,4,10,7,2.88,3.75,2.3,26743,2024-12-07,Brentford,Newcastle,1.746,1.95645,2024
+2024-12-07,Crystal Palace,Man City,2,2,R Jones,1,0,0,1,6,8,4,10,5.5,4.2,1.57,26747,2024-12-07,Crystal Palace,Man City,1.21476,1.5846,2024
+2024-12-07,Man United,Nott'm Forest,2,3,D England,0,2,0,0,5,3,10,13,1.65,3.9,5.25,26744,2024-12-07,Man United,Nott'm Forest,1.4697,0.651217,2024
+2024-12-08,Leicester,Brighton,2,2,S Attwell,1,2,0,0,5,5,9,10,4.5,3.8,1.73,26751,2024-12-08,Leicester,Brighton,1.42438,1.12184,2024
+2024-12-08,Tottenham,Chelsea,3,4,A Taylor,2,2,0,0,5,10,17,11,3.4,3.9,2.0,26745,2024-12-08,Tottenham,Chelsea,3.25488,2.57326,2024
+2024-12-08,Fulham,Arsenal,1,1,C Kavanagh,4,2,0,0,0,6,10,9,5.0,4.33,1.6,26749,2024-12-08,Fulham,Arsenal,0.150988,2.4333,2024
+2024-12-08,Ipswich,Bournemouth,1,2,M Salisbury,2,1,0,0,6,13,9,13,3.5,3.75,2.0,26750,2024-12-08,Ipswich,Bournemouth,1.5668,3.49127,2024
+2024-12-09,West Ham,Wolves,2,1,J Brooks,5,4,0,0,11,0,12,17,1.9,3.9,3.75,26746,2024-12-09,West Ham,Wolves,1.19808,1.47567,2024
+2024-12-14,Arsenal,Everton,0,0,C Pawson,0,3,0,0,8,2,6,9,1.22,6.5,12.0,26755,2024-12-14,Arsenal,Everton,1.30865,0.132166,2024
+2024-12-14,Liverpool,Fulham,2,2,T Harrington,3,4,1,0,5,4,10,7,1.33,5.5,8.0,26752,2024-12-14,Liverpool,Fulham,2.09698,1.2862,2024
+2024-12-14,Newcastle,Leicester,4,0,T Bramall,3,3,0,0,5,2,7,16,1.3,6.0,8.5,26760,2024-12-14,Newcastle,Leicester,3.95461,0.186759,2024
+2024-12-14,Wolves,Ipswich,1,2,S Hooper,0,2,1,0,7,3,13,9,1.9,3.8,3.8,26758,2024-12-14,Wolves,Ipswich,1.23748,1.73349,2024
+2024-12-14,Nott'm Forest,Aston Villa,2,1,S Barrott,0,1,0,0,4,3,12,6,2.63,3.3,2.7,26761,2024-12-14,Nott'm Forest,Aston Villa,2.2861,0.389423,2024
+2024-12-15,Brighton,Crystal Palace,1,3,M Oliver,1,4,0,0,8,5,11,15,1.85,3.8,3.9,26756,2024-12-15,Brighton,Crystal Palace,1.32323,3.00618,2024
+2024-12-15,Man City,Man United,1,2,A Taylor,1,1,0,0,8,2,5,14,1.57,4.5,5.0,26753,2024-12-15,Man City,Man United,0.638103,2.04662,2024
+2024-12-15,Chelsea,Brentford,2,1,P Bankes,0,2,1,0,8,5,11,7,1.33,6.0,7.5,26757,2024-12-15,Chelsea,Brentford,2.59146,1.65861,2024
+2024-12-15,Southampton,Tottenham,0,5,D England,1,3,0,0,2,5,8,15,4.33,4.5,1.67,26759,2024-12-15,Southampton,Tottenham,1.27356,3.89322,2024
+2024-12-16,Bournemouth,West Ham,1,1,C Kavanagh,0,2,0,0,12,6,6,11,1.7,4.0,4.75,26754,2024-12-16,Bournemouth,West Ham,2.04842,1.81827,2024
+2024-12-21,Crystal Palace,Arsenal,1,5,S Hooper,2,2,0,0,3,3,9,8,6.25,4.2,1.55,26765,2024-12-21,Crystal Palace,Arsenal,1.6052,3.05434,2024
+2024-12-21,West Ham,Brighton,1,1,R Jones,2,2,0,0,8,4,14,20,2.88,3.7,2.35,26767,2024-12-21,West Ham,Brighton,1.22937,1.34379,2024
+2024-12-21,Aston Villa,Man City,2,1,P Bankes,3,3,0,0,5,4,14,7,3.25,3.7,2.1,26762,2024-12-21,Aston Villa,Man City,2.05988,1.09627,2024
+2024-12-21,Brentford,Nott'm Forest,0,2,M Oliver,3,4,0,0,9,5,9,14,2.3,3.6,2.9,26766,2024-12-21,Brentford,Nott'm Forest,0.769004,0.964897,2024
+2024-12-21,Ipswich,Newcastle,0,4,S Attwell,2,0,0,0,2,1,9,7,4.75,3.75,1.73,26771,2024-12-21,Ipswich,Newcastle,1.06427,3.23386,2024
+2024-12-22,Everton,Chelsea,0,0,C Kavanagh,4,1,0,0,2,5,20,12,5.0,4.2,1.62,26764,2024-12-22,Everton,Chelsea,1.07081,1.51591,2024
+2024-12-22,Fulham,Southampton,0,0,T Robinson,1,3,0,0,6,5,8,15,1.42,4.75,7.0,26763,2024-12-22,Fulham,Southampton,1.25255,0.280031,2024
+2024-12-22,Leicester,Wolves,0,3,A Taylor,2,0,0,0,6,1,15,16,2.55,3.4,2.7,26770,2024-12-22,Leicester,Wolves,0.78868,1.13531,2024
+2024-12-22,Man United,Bournemouth,0,3,C Pawson,1,3,0,0,13,1,11,11,1.8,3.8,4.2,26769,2024-12-22,Man United,Bournemouth,2.28533,1.82831,2024
+2024-12-22,Tottenham,Liverpool,3,6,S Barrott,1,2,0,0,7,5,7,9,4.5,4.0,1.73,26768,2024-12-22,Tottenham,Liverpool,1.20245,5.20214,2024
+2024-12-26,Liverpool,Leicester,3,1,D Bond,3,2,0,0,14,1,17,5,1.08,12.0,23.0,26776,2024-12-26,Liverpool,Leicester,1.89935,0.22097,2024
+2024-12-26,Wolves,Man United,2,0,T Harrington,2,2,0,1,4,4,12,12,3.9,3.7,1.91,26781,2024-12-26,Wolves,Man United,0.826489,0.358876,2024
+2024-12-26,Southampton,West Ham,0,1,L Smith,1,2,0,0,2,2,15,8,3.25,3.5,2.2,26780,2024-12-26,Southampton,West Ham,2.19833,1.90111,2024
+2024-12-26,Nott'm Forest,Tottenham,1,0,C Pawson,3,2,0,1,2,7,12,13,2.3,3.75,2.88,26779,2024-12-26,Nott'm Forest,Tottenham,1.30018,1.05758,2024
+2024-12-26,Chelsea,Fulham,1,2,S Barrott,1,3,0,0,3,1,13,13,1.48,4.75,6.0,26775,2024-12-26,Chelsea,Fulham,1.55626,1.77929,2024
+2024-12-26,Bournemouth,Crystal Palace,0,0,T Bramall,2,2,0,0,5,2,13,12,1.9,3.8,3.8,26772,2024-12-26,Bournemouth,Crystal Palace,1.20189,0.500066,2024
+2024-12-26,Man City,Everton,1,1,S Hooper,1,4,0,0,8,5,5,10,1.33,5.5,7.5,26777,2024-12-26,Man City,Everton,2.51965,0.653289,2024
+2024-12-26,Newcastle,Aston Villa,3,0,A Taylor,2,1,0,1,9,6,15,10,1.91,3.8,3.75,26778,2024-12-26,Newcastle,Aston Villa,2.82867,0.225522,2024
+2024-12-27,Brighton,Brentford,0,0,A Madley,0,2,0,0,5,3,6,12,1.62,4.33,4.75,26774,2024-12-27,Brighton,Brentford,1.33538,0.961233,2024
+2024-12-27,Arsenal,Ipswich,1,0,D England,1,1,0,0,5,1,7,12,1.14,9.0,15.0,26773,2024-12-27,Arsenal,Ipswich,2.16462,0.0783327,2024
+2024-12-29,West Ham,Liverpool,0,5,A Taylor,0,0,0,0,3,6,7,10,7.0,5.0,1.4,26791,2024-12-29,West Ham,Liverpool,0.518279,3.29868,2024
+2024-12-29,Fulham,Bournemouth,2,2,R Jones,1,3,0,0,1,7,7,16,2.3,3.6,2.88,26786,2024-12-29,Fulham,Bournemouth,0.961566,1.70692,2024
+2024-12-29,Tottenham,Wolves,2,2,C Kavanagh,1,2,0,0,5,5,9,10,1.6,5.0,4.2,26790,2024-12-29,Tottenham,Wolves,2.28433,0.640697,2024
+2024-12-29,Crystal Palace,Southampton,2,1,M Salisbury,2,3,0,0,8,7,18,19,1.57,3.9,5.5,26784,2024-12-29,Crystal Palace,Southampton,3.05417,1.21853,2024
+2024-12-29,Leicester,Man City,0,2,M Oliver,2,1,0,0,4,4,11,6,7.5,5.5,1.36,26788,2024-12-29,Leicester,Man City,1.84208,1.58002,2024
+2024-12-29,Everton,Nott'm Forest,0,2,T Harrington,4,1,0,0,5,4,13,10,2.6,3.2,2.8,26785,2024-12-29,Everton,Nott'm Forest,0.615191,2.02753,2024
+2024-12-30,Aston Villa,Brighton,2,2,C Pawson,2,3,0,0,12,3,9,14,1.9,3.8,3.6,26782,2024-12-30,Aston Villa,Brighton,1.87997,0.938042,2024
+2024-12-30,Ipswich,Chelsea,2,0,J Brooks,4,4,0,0,4,7,9,5,6.5,4.75,1.42,26787,2024-12-30,Ipswich,Chelsea,1.50093,1.60622,2024
+2024-12-30,Man United,Newcastle,0,2,S Hooper,1,1,0,0,2,3,13,8,2.75,3.5,2.55,26789,2024-12-30,Man United,Newcastle,1.00073,2.2424,2024
+2025-01-01,Brentford,Arsenal,1,3,P Bankes,1,2,0,0,4,3,6,8,6.5,4.75,1.44,26783,2025-01-01,Brentford,Arsenal,0.272604,1.99848,2024
+2025-01-04,Brighton,Arsenal,1,1,A Taylor,2,3,0,0,2,5,17,14,4.33,3.75,1.8,26794,2025-01-04,Brighton,Arsenal,1.76513,1.81142,2024
+2025-01-04,Southampton,Brentford,0,5,S Attwell,2,0,0,0,2,2,10,4,3.0,3.4,2.4,26799,2025-01-04,Southampton,Brentford,0.249614,5.54874,2024
+2025-01-04,Crystal Palace,Chelsea,1,1,T Robinson,0,2,0,0,6,6,9,12,3.8,3.75,1.91,26795,2025-01-04,Crystal Palace,Chelsea,1.2766,1.51541,2024
+2025-01-04,Man City,West Ham,4,1,M Salisbury,2,1,0,0,7,1,8,13,1.3,6.25,7.5,26798,2025-01-04,Man City,West Ham,1.97986,1.53286,2024
+2025-01-04,Aston Villa,Leicester,2,1,J Gillett,0,1,0,0,7,2,10,11,1.33,5.5,8.5,26793,2025-01-04,Aston Villa,Leicester,2.3456,0.81548,2024
+2025-01-04,Tottenham,Newcastle,1,2,A Madley,1,4,0,0,9,10,11,15,2.88,3.8,2.25,26800,2025-01-04,Tottenham,Newcastle,1.00333,2.42963,2024
+2025-01-04,Bournemouth,Everton,1,0,J Brooks,2,2,0,0,9,3,15,14,1.73,3.75,4.75,26792,2025-01-04,Bournemouth,Everton,2.61852,0.561015,2024
+2025-01-05,Fulham,Ipswich,2,2,D Bond,1,5,0,0,9,2,10,14,1.55,4.2,5.75,26796,2025-01-05,Fulham,Ipswich,2.65469,1.4434,2024
+2025-01-05,Liverpool,Man United,2,2,M Oliver,2,4,0,0,6,9,10,13,1.29,6.25,8.0,26797,2025-01-05,Liverpool,Man United,2.862,1.67469,2024
+2025-01-06,Wolves,Nott'm Forest,0,3,P Bankes,1,2,0,0,5,3,10,8,3.3,3.2,2.3,26801,2025-01-06,Wolves,Nott'm Forest,1.90463,2.57227,2024
+2025-01-14,Brentford,Man City,2,2,A Taylor,0,0,0,0,4,5,4,4,4.75,4.2,1.62,26803,2025-01-14,Brentford,Man City,2.39088,2.65315,2024
+2025-01-14,Chelsea,Bournemouth,2,2,R Jones,2,3,0,0,9,3,15,16,1.48,4.75,6.0,26809,2025-01-14,Chelsea,Bournemouth,2.53808,1.14845,2024
+2025-01-14,West Ham,Fulham,3,2,C Pawson,3,3,0,0,0,3,9,18,3.0,3.4,2.38,26808,2025-01-14,West Ham,Fulham,0.937322,2.83581,2024
+2025-01-14,Nott'm Forest,Liverpool,1,1,C Kavanagh,2,1,0,0,0,9,7,10,5.25,4.1,1.62,26807,2025-01-14,Nott'm Forest,Liverpool,0.5292,2.72291,2024
+2025-01-15,Arsenal,Tottenham,2,1,S Hooper,3,1,0,0,10,4,16,9,1.4,5.25,7.0,26802,2025-01-15,Arsenal,Tottenham,2.25501,0.777071,2024
+2025-01-15,Newcastle,Wolves,3,0,D England,0,2,0,0,4,2,10,13,1.36,5.5,8.0,26810,2025-01-15,Newcastle,Wolves,2.13327,1.47433,2024
+2025-01-15,Everton,Aston Villa,0,1,S Barrott,2,1,0,0,8,5,17,10,3.25,3.2,2.3,26804,2025-01-15,Everton,Aston Villa,1.23126,1.28522,2024
+2025-01-15,Leicester,Crystal Palace,0,2,A Madley,0,0,0,0,4,3,7,6,3.9,3.6,1.91,26806,2025-01-15,Leicester,Crystal Palace,2.09904,2.2647,2024
+2025-01-16,Ipswich,Brighton,0,2,T Harrington,2,2,0,0,1,9,13,14,3.9,3.7,1.91,26805,2025-01-16,Ipswich,Brighton,0.268127,1.06343,2024
+2025-01-16,Man United,Southampton,3,1,J Brooks,1,3,0,0,5,4,7,10,1.29,6.0,9.5,26811,2025-01-16,Man United,Southampton,3.10847,1.36705,2024
+2025-01-18,Newcastle,Bournemouth,1,4,S Attwell,1,6,0,0,7,6,7,18,1.62,4.2,5.0,26819,2025-01-18,Newcastle,Bournemouth,0.837801,2.70174,2024
+2025-01-18,Brentford,Liverpool,0,2,A Madley,2,3,0,0,2,15,6,14,6.5,5.0,1.42,26813,2025-01-18,Brentford,Liverpool,1.20021,4.16249,2024
+2025-01-18,Leicester,Fulham,0,2,M Salisbury,3,1,0,0,5,2,8,8,4.33,3.7,1.8,26817,2025-01-18,Leicester,Fulham,0.676934,2.36823,2024
+2025-01-18,West Ham,Crystal Palace,0,2,T Bramall,1,0,1,0,2,4,13,10,2.6,3.5,2.63,26821,2025-01-18,West Ham,Crystal Palace,0.221062,1.62561,2024
+2025-01-18,Arsenal,Aston Villa,2,2,C Kavanagh,2,3,0,0,10,1,10,18,1.5,4.1,7.0,26812,2025-01-18,Arsenal,Aston Villa,1.64458,1.20602,2024
+2025-01-19,Ipswich,Man City,0,6,S Barrott,0,1,0,0,4,7,4,7,7.5,5.25,1.36,26816,2025-01-19,Ipswich,Man City,0.795637,3.20228,2024
+2025-01-19,Nott'm Forest,Southampton,3,2,A Taylor,0,4,0,0,2,8,4,18,1.38,4.75,8.0,26820,2025-01-19,Nott'm Forest,Southampton,2.36419,1.25922,2024
+2025-01-19,Man United,Brighton,1,3,P Bankes,3,3,0,0,4,2,13,12,2.1,3.6,3.3,26818,2025-01-19,Man United,Brighton,1.31823,2.17172,2024
+2025-01-19,Everton,Tottenham,3,2,D England,2,1,0,0,3,8,14,14,2.8,3.5,2.45,26815,2025-01-19,Everton,Tottenham,2.56089,1.35719,2024
+2025-01-20,Chelsea,Wolves,3,1,S Hooper,4,2,0,0,3,6,8,14,1.36,5.75,6.5,26814,2025-01-20,Chelsea,Wolves,3.14882,1.06726,2024
+2025-01-25,Bournemouth,Nott'm Forest,5,0,C Pawson,2,3,0,0,3,9,9,12,2.05,3.7,3.4,26822,2025-01-25,Bournemouth,Nott'm Forest,2.8254,0.996166,2024
+2025-01-25,Brighton,Everton,0,1,T Robinson,3,4,0,0,9,1,8,11,1.67,3.75,5.5,26824,2025-01-25,Brighton,Everton,0.64378,0.870883,2024
+2025-01-25,Liverpool,Ipswich,4,1,M Salisbury,0,2,0,0,3,4,10,11,1.08,12.0,15.0,26827,2025-01-25,Liverpool,Ipswich,2.16809,0.804707,2024
+2025-01-25,Southampton,Newcastle,1,3,S Barrott,1,0,0,0,3,8,10,5,6.5,5.25,1.42,26829,2025-01-25,Southampton,Newcastle,0.825621,3.08319,2024
+2025-01-25,Wolves,Arsenal,0,1,M Oliver,0,1,1,1,1,5,20,10,7.0,4.5,1.45,26831,2025-01-25,Wolves,Arsenal,0.514724,0.887358,2024
+2025-01-25,Man City,Chelsea,3,1,J Brooks,3,2,0,0,2,4,6,8,2.05,4.0,3.3,26828,2025-01-25,Man City,Chelsea,2.23213,1.49843,2024
+2025-01-26,Fulham,Man United,0,1,A Taylor,0,1,0,0,3,0,7,9,2.3,3.4,3.1,26826,2025-01-26,Fulham,Man United,0.560571,0.201988,2024
+2025-01-26,Aston Villa,West Ham,1,1,P Bankes,2,3,0,0,4,3,13,16,1.53,4.33,5.75,26823,2025-01-26,Aston Villa,West Ham,0.907851,1.67886,2024
+2025-01-26,Crystal Palace,Brentford,1,2,T Harrington,2,2,0,0,4,7,8,11,2.05,3.75,3.3,26825,2025-01-26,Crystal Palace,Brentford,1.23177,1.92037,2024
+2025-01-26,Tottenham,Leicester,1,2,R Jones,1,5,0,0,6,4,6,16,1.45,5.5,5.5,26830,2025-01-26,Tottenham,Leicester,1.27483,1.40469,2024
+2025-02-01,Nott'm Forest,Brighton,7,0,S Hooper,1,3,0,0,4,6,8,13,2.38,3.5,2.8,26840,2025-02-01,Nott'm Forest,Brighton,4.0677,0.756296,2024
+2025-02-01,Bournemouth,Liverpool,0,2,D England,2,3,0,0,3,3,15,9,4.5,4.33,1.67,26832,2025-02-01,Bournemouth,Liverpool,1.65273,2.7219,2024
+2025-02-01,Everton,Leicester,4,0,D Bond,0,0,0,0,5,6,7,13,1.75,3.75,4.5,26836,2025-02-01,Everton,Leicester,3.11261,0.447136,2024
+2025-02-01,Ipswich,Southampton,1,2,M Oliver,0,3,0,0,1,2,11,14,1.95,3.6,3.8,26837,2025-02-01,Ipswich,Southampton,1.94845,1.17566,2024
+2025-02-01,Newcastle,Fulham,1,2,C Kavanagh,4,4,0,0,4,7,10,15,1.7,4.0,4.75,26839,2025-02-01,Newcastle,Fulham,1.22716,1.60881,2024
+2025-02-01,Wolves,Aston Villa,2,0,A Madley,2,3,0,0,5,8,20,13,3.3,3.6,2.1,26841,2025-02-01,Wolves,Aston Villa,2.00146,0.742809,2024
+2025-02-02,Arsenal,Man City,5,1,P Bankes,2,0,0,0,5,2,6,7,1.95,3.5,4.0,26833,2025-02-02,Arsenal,Man City,1.53202,0.743191,2024
+2025-02-02,Brentford,Tottenham,0,2,J Gillett,0,1,0,0,10,3,4,11,2.1,3.9,3.2,26834,2025-02-02,Brentford,Tottenham,1.66475,0.945355,2024
+2025-02-02,Man United,Crystal Palace,0,2,J Brooks,3,1,0,0,11,0,12,13,2.0,3.5,3.8,26838,2025-02-02,Man United,Crystal Palace,1.50706,2.44633,2024
+2025-02-03,Chelsea,West Ham,2,1,S Attwell,3,1,0,0,4,3,11,10,1.36,4.75,8.0,26835,2025-02-03,Chelsea,West Ham,1.39066,1.1868,2024
+2025-02-12,Everton,Liverpool,2,2,M Oliver,2,2,1,1,2,3,9,20,7.5,4.5,1.44,26748,2025-02-12,Everton,Liverpool,0.910523,0.929103,2024
+2025-02-14,Brighton,Chelsea,3,0,K Kavanagh,1,2,0,0,2,9,12,15,2.7,3.6,2.45,26843,2025-02-14,Brighton,Chelsea,2.06892,0.649788,2024
+2025-02-15,Southampton,Bournemouth,1,3,J Gillett,1,3,0,0,4,6,13,15,6.0,4.5,1.5,26849,2025-02-15,Southampton,Bournemouth,0.974418,2.08722,2024
+2025-02-15,West Ham,Brentford,0,1,D England,1,1,0,0,9,2,10,13,2.35,3.6,2.88,26851,2025-02-15,West Ham,Brentford,0.673466,1.96499,2024
+2025-02-15,Man City,Newcastle,4,0,A Madley,0,1,0,0,7,4,5,13,1.95,4.2,3.3,26848,2025-02-15,Man City,Newcastle,2.12004,0.157211,2024
+2025-02-15,Crystal Palace,Everton,1,2,A Taylor,0,1,0,0,6,2,9,12,1.8,3.4,5.0,26844,2025-02-15,Crystal Palace,Everton,2.30646,1.01565,2024
+2025-02-15,Aston Villa,Ipswich,1,1,R Jones,0,3,0,1,16,1,7,11,1.4,4.75,7.0,26842,2025-02-15,Aston Villa,Ipswich,2.89841,0.332864,2024
+2025-02-15,Leicester,Arsenal,0,2,S Barrott,2,1,0,0,3,7,9,10,8.5,5.0,1.33,26846,2025-02-15,Leicester,Arsenal,0.233209,1.75,2024
+2025-02-15,Fulham,Nott'm Forest,2,1,T Bramall,0,0,0,0,8,4,13,8,2.2,3.4,3.3,26845,2025-02-15,Fulham,Nott'm Forest,2.20993,0.331301,2024
+2025-02-16,Tottenham,Man United,1,0,P Bankes,1,2,0,0,10,5,13,9,2.45,3.75,2.62,26850,2025-02-16,Tottenham,Man United,1.97109,1.42652,2024
+2025-02-16,Liverpool,Wolves,2,1,S Hooper,2,2,0,0,4,3,15,13,1.15,8.0,12.0,26847,2025-02-16,Liverpool,Wolves,1.86758,1.05329,2024
+2025-02-19,Aston Villa,Liverpool,2,2,C Pawson,1,0,0,0,6,8,8,6,3.9,4.0,1.83,26884,2025-02-19,Aston Villa,Liverpool,1.02269,2.04279,2024
+2025-02-21,Leicester,Brentford,0,4,T Harrington,4,0,0,0,5,6,10,10,3.6,3.8,1.91,26858,2025-02-21,Leicester,Brentford,0.727901,2.03465,2024
+2025-02-22,Everton,Man United,2,2,A Madley,4,1,0,0,7,9,12,9,2.5,3.2,2.9,26855,2025-02-22,Everton,Man United,2.10444,0.645685,2024
+2025-02-22,Arsenal,West Ham,0,1,C Pawson,1,3,1,0,2,0,16,15,1.27,6.0,10.0,26853,2025-02-22,Arsenal,West Ham,1.37264,1.02684,2024
+2025-02-22,Bournemouth,Wolves,0,1,M Salisbury,3,3,1,0,6,7,17,9,1.53,4.5,5.5,26852,2025-02-22,Bournemouth,Wolves,0.629691,2.10124,2024
+2025-02-22,Fulham,Crystal Palace,0,2,R Jones,1,3,0,0,7,7,10,7,2.05,3.4,3.7,26856,2025-02-22,Fulham,Crystal Palace,0.23426,1.46203,2024
+2025-02-22,Ipswich,Tottenham,1,4,T Robinson,2,1,0,0,4,4,15,14,4.1,3.6,1.9,26857,2025-02-22,Ipswich,Tottenham,1.15389,1.58741,2024
+2025-02-22,Southampton,Brighton,0,4,D Bond,2,0,0,0,5,6,11,12,6.0,4.1,1.55,26861,2025-02-22,Southampton,Brighton,0.154147,5.12018,2024
+2025-02-22,Aston Villa,Chelsea,2,1,M Oliver,1,3,0,0,2,3,15,16,2.63,3.4,2.6,26854,2025-02-22,Aston Villa,Chelsea,2.69413,2.17418,2024
+2025-02-23,Man City,Liverpool,0,2,A Taylor,0,0,0,0,7,5,3,10,2.88,3.8,2.25,26859,2025-02-23,Man City,Liverpool,0.58248,0.807058,2024
+2025-02-23,Newcastle,Nott'm Forest,4,3,J Gillett,1,4,0,0,7,6,11,13,1.8,3.8,4.2,26860,2025-02-23,Newcastle,Nott'm Forest,3.45858,2.38603,2024
+2025-02-25,Brighton,Bournemouth,2,1,M Oliver,2,1,0,0,1,9,12,14,2.0,3.8,3.3,26863,2025-02-25,Brighton,Bournemouth,2.57927,1.70169,2024
+2025-02-25,Crystal Palace,Aston Villa,4,1,S Barrott,3,1,0,0,3,8,19,10,2.45,3.4,2.8,26868,2025-02-25,Crystal Palace,Aston Villa,4.02522,0.667217,2024
+2025-02-25,Wolves,Fulham,1,2,P Bankes,1,3,0,0,7,5,8,15,2.63,3.3,2.63,26867,2025-02-25,Wolves,Fulham,0.928973,1.43473,2024
+2025-02-25,Chelsea,Southampton,4,0,T Bramall,1,2,0,0,4,2,6,9,1.17,8.0,13.0,26869,2025-02-25,Chelsea,Southampton,2.98234,0.845039,2024
+2025-02-26,Brentford,Everton,1,1,S Hooper,2,1,0,0,2,5,3,6,2.0,3.7,3.5,26862,2025-02-26,Brentford,Everton,1.34009,1.44955,2024
+2025-02-26,Man United,Ipswich,3,2,D England,4,4,1,0,5,6,9,16,1.53,4.33,6.0,26871,2025-02-26,Man United,Ipswich,1.40202,1.04498,2024
+2025-02-26,Nott'm Forest,Arsenal,0,0,A Madley,1,1,0,0,3,11,10,17,3.9,3.6,1.95,26864,2025-02-26,Nott'm Forest,Arsenal,0.508611,1.31766,2024
+2025-02-26,Tottenham,Man City,0,1,J Gillett,3,0,0,0,8,3,12,15,3.25,4.0,2.0,26865,2025-02-26,Tottenham,Man City,1.28426,2.38641,2024
+2025-02-26,Liverpool,Newcastle,2,0,C Kavanagh,0,1,0,0,4,2,12,11,1.5,4.5,5.75,26870,2025-02-26,Liverpool,Newcastle,1.40027,0.45882,2024
+2025-02-27,West Ham,Leicester,2,0,S Attwell,0,0,0,0,3,3,12,6,1.62,4.2,5.0,26866,2025-02-27,West Ham,Leicester,1.70437,0.289578,2024
+2025-03-08,Nott'm Forest,Man City,1,0,C Kavanagh,3,2,0,0,3,2,9,7,4.0,3.75,1.85,26878,2025-03-08,Nott'm Forest,Man City,0.501476,0.721234,2024
+2025-03-08,Brighton,Fulham,2,1,S Barrott,0,2,0,0,3,7,6,12,1.95,3.6,3.75,26873,2025-03-08,Brighton,Fulham,1.94417,0.708227,2024
+2025-03-08,Crystal Palace,Ipswich,1,0,S Hooper,4,3,0,0,5,4,8,7,1.45,4.75,6.25,26875,2025-03-08,Crystal Palace,Ipswich,3.13879,1.63282,2024
+2025-03-08,Liverpool,Southampton,3,1,L Smith,2,1,0,0,6,4,10,9,1.1,9.0,19.0,26876,2025-03-08,Liverpool,Southampton,4.98996,0.511566,2024
+2025-03-08,Brentford,Aston Villa,0,1,J Gillett,2,2,0,0,6,5,10,5,2.2,3.8,2.9,26872,2025-03-08,Brentford,Aston Villa,0.637743,1.29638,2024
+2025-03-08,Wolves,Everton,1,1,S Attwell,2,2,0,0,5,5,11,16,2.6,3.1,2.88,26881,2025-03-08,Wolves,Everton,0.812432,1.3672,2024
+2025-03-09,Chelsea,Leicester,1,0,T Robinson,1,0,0,0,12,2,12,13,1.18,8.0,12.0,26874,2025-03-09,Chelsea,Leicester,1.76844,0.108487,2024
+2025-03-09,Tottenham,Bournemouth,2,2,J Brooks,3,3,0,0,3,6,15,16,2.7,3.9,2.35,26879,2025-03-09,Tottenham,Bournemouth,1.35053,2.22536,2024
+2025-03-09,Man United,Arsenal,1,1,A Taylor,0,1,0,0,2,9,8,11,5.75,3.5,1.7,26877,2025-03-09,Man United,Arsenal,1.31107,1.82996,2024
+2025-03-10,West Ham,Newcastle,0,1,M Salisbury,0,1,0,0,3,4,7,15,3.25,3.4,2.2,26880,2025-03-10,West Ham,Newcastle,0.823986,1.62976,2024
+2025-03-15,Bournemouth,Brentford,1,2,C Pawson,3,0,0,0,4,3,13,7,1.73,4.2,4.2,26882,2025-03-15,Bournemouth,Brentford,2.02714,1.60321,2024
+2025-03-15,Southampton,Wolves,1,2,R Jones,0,0,0,0,5,1,12,13,3.7,3.4,2.0,26891,2025-03-15,Southampton,Wolves,1.2821,0.540718,2024
+2025-03-15,Everton,West Ham,1,1,D Bond,1,2,0,0,6,5,12,8,2.05,3.2,3.9,26885,2025-03-15,Everton,West Ham,1.189,0.516029,2024
+2025-03-15,Ipswich,Nott'm Forest,2,4,M Salisbury,1,1,0,0,6,3,4,13,3.75,3.5,2.0,26887,2025-03-15,Ipswich,Nott'm Forest,0.520839,1.30722,2024
+2025-03-15,Man City,Brighton,2,2,S Hooper,2,5,0,0,4,5,10,10,1.67,4.33,4.5,26889,2025-03-15,Man City,Brighton,2.02642,2.11119,2024
+2025-03-16,Arsenal,Chelsea,1,0,C Kavanagh,3,3,0,0,5,4,10,13,1.8,3.6,4.5,26883,2025-03-16,Arsenal,Chelsea,0.695725,0.286036,2024
+2025-03-16,Fulham,Tottenham,2,0,A Madley,0,0,0,0,6,5,13,10,2.0,3.75,3.6,26886,2025-03-16,Fulham,Tottenham,1.03966,1.40865,2024
+2025-03-16,Leicester,Man United,0,3,T Bramall,2,0,0,0,6,4,6,6,4.5,3.5,1.83,26888,2025-03-16,Leicester,Man United,1.30455,1.13892,2024
+2025-04-01,Wolves,West Ham,1,0,T Harrington,4,2,0,0,1,2,16,12,2.5,3.2,2.9,26895,2025-04-01,Wolves,West Ham,1.10359,1.73057,2024
+2025-04-01,Arsenal,Fulham,2,1,J Brooks,1,2,0,0,5,4,2,10,1.48,4.33,7.0,26892,2025-04-01,Arsenal,Fulham,2.30189,1.44206,2024
+2025-04-01,Nott'm Forest,Man United,1,0,J Gillett,1,3,0,0,3,10,5,12,2.3,3.4,3.1,26894,2025-04-01,Nott'm Forest,Man United,0.512063,1.86688,2024
+2025-04-02,Liverpool,Everton,1,0,S Barrott,2,2,0,0,11,5,7,11,1.36,5.0,8.0,26901,2025-04-02,Liverpool,Everton,1.29718,0.823136,2024
+2025-04-02,Southampton,Crystal Palace,1,1,A Madley,2,1,0,0,2,2,14,9,5.75,3.8,1.62,26900,2025-04-02,Southampton,Crystal Palace,0.687304,0.93776,2024
+2025-04-02,Newcastle,Brentford,2,1,P Bankes,1,1,0,0,4,5,12,12,1.73,4.5,4.0,26899,2025-04-02,Newcastle,Brentford,2.26584,1.53201,2024
+2025-04-02,Brighton,Aston Villa,0,3,S Attwell,1,3,0,0,4,0,16,11,2.05,3.8,3.25,26893,2025-04-02,Brighton,Aston Villa,0.558009,1.20715,2024
+2025-04-02,Bournemouth,Ipswich,1,2,R Jones,1,2,0,0,8,3,14,15,1.36,5.25,7.5,26896,2025-04-02,Bournemouth,Ipswich,1.99637,1.41263,2024
+2025-04-02,Man City,Leicester,2,0,D England,1,4,0,0,5,0,11,8,1.2,8.0,10.0,26898,2025-04-02,Man City,Leicester,2.07165,0.104741,2024
+2025-04-03,Chelsea,Tottenham,1,0,C Pawson,5,5,0,0,4,6,7,16,1.65,4.5,4.5,26897,2025-04-03,Chelsea,Tottenham,1.30443,1.40274,2024
+2025-04-05,Everton,Arsenal,1,1,D England,3,1,0,0,3,8,17,13,5.25,3.25,1.75,26905,2025-04-05,Everton,Arsenal,1.22875,1.4031,2024
+2025-04-05,Crystal Palace,Brighton,2,1,A Taylor,0,1,2,1,2,4,12,13,2.35,3.6,2.8,26904,2025-04-05,Crystal Palace,Brighton,0.443965,1.27226,2024
+2025-04-05,Ipswich,Wolves,1,2,P Bankes,2,2,0,0,4,8,12,16,2.7,3.25,2.63,26907,2025-04-05,Ipswich,Wolves,0.872356,2.8096,2024
+2025-04-05,West Ham,Bournemouth,2,2,T Robinson,2,2,0,0,4,7,13,13,3.0,3.5,2.3,26911,2025-04-05,West Ham,Bournemouth,0.907832,1.94869,2024
+2025-04-05,Aston Villa,Nott'm Forest,2,1,S Hooper,2,2,0,0,4,4,7,15,1.95,3.6,3.7,26902,2025-04-05,Aston Villa,Nott'm Forest,2.63349,0.96769,2024
+2025-04-06,Fulham,Liverpool,3,2,C Kavanagh,3,0,0,0,4,4,10,9,4.5,3.5,1.83,26906,2025-04-06,Fulham,Liverpool,1.72764,1.40638,2024
+2025-04-06,Man United,Man City,0,0,J Brooks,3,2,0,0,5,3,13,9,3.4,3.6,2.1,26909,2025-04-06,Man United,Man City,1.23317,0.687894,2024
+2025-04-06,Brentford,Chelsea,0,0,M Oliver,1,3,0,0,3,6,12,12,3.2,3.6,2.15,26903,2025-04-06,Brentford,Chelsea,1.36123,1.47829,2024
+2025-04-06,Tottenham,Southampton,3,1,M Salisbury,1,1,0,0,4,1,16,20,1.38,5.5,6.5,26910,2025-04-06,Tottenham,Southampton,2.648,0.780439,2024
+2025-04-07,Leicester,Newcastle,0,3,R Jones,2,0,0,0,12,2,8,9,6.5,4.2,1.48,26908,2025-04-07,Leicester,Newcastle,0.354575,3.44111,2024
+2025-04-12,Southampton,Aston Villa,0,3,T Bramall,3,1,0,0,2,14,11,4,6.0,4.2,1.55,26921,2025-04-12,Southampton,Aston Villa,0.412256,2.99927,2024
+2025-04-12,Man City,Crystal Palace,5,2,J Gillett,2,3,0,0,1,4,10,16,1.5,4.75,5.75,26917,2025-04-12,Man City,Crystal Palace,4.59724,1.33808,2024
+2025-04-12,Brighton,Leicester,2,2,D Bond,2,5,0,0,3,6,9,11,1.29,6.0,10.0,26914,2025-04-12,Brighton,Leicester,3.6978,1.98444,2024
+2025-04-12,Nott'm Forest,Everton,0,1,C Pawson,0,3,0,0,1,7,9,13,2.1,3.3,3.7,26920,2025-04-12,Nott'm Forest,Everton,0.423949,1.26036,2024
+2025-04-12,Arsenal,Brentford,1,1,S Hooper,1,3,0,0,13,5,7,9,1.6,4.33,5.0,26913,2025-04-12,Arsenal,Brentford,0.767369,0.588583,2024
+2025-04-13,Newcastle,Man United,4,1,C Kavanagh,0,2,0,0,7,2,7,9,1.65,4.2,4.75,26918,2025-04-13,Newcastle,Man United,2.6383,0.786568,2024
+2025-04-13,Wolves,Tottenham,4,2,A Taylor,1,2,0,0,1,4,12,15,2.2,3.6,3.1,26919,2025-04-13,Wolves,Tottenham,2.22977,1.62887,2024
+2025-04-13,Liverpool,West Ham,2,1,A Madley,0,2,0,0,10,3,15,8,1.3,6.0,8.0,26916,2025-04-13,Liverpool,West Ham,1.42902,1.46598,2024
+2025-04-13,Chelsea,Ipswich,2,2,S Attwell,2,2,0,0,15,4,11,7,1.27,7.0,8.5,26915,2025-04-13,Chelsea,Ipswich,2.90758,1.60301,2024
+2025-04-14,Bournemouth,Fulham,1,0,O Oliver,3,2,0,0,6,9,11,10,2.15,3.5,3.3,26912,2025-04-14,Bournemouth,Fulham,1.8577,1.07203,2024
+2025-04-16,Newcastle,Crystal Palace,5,0,D England,2,3,0,0,5,4,9,15,1.67,3.9,5.0,26890,2025-04-16,Newcastle,Crystal Palace,2.32947,2.37548,2024
+2025-04-19,Brentford,Brighton,4,2,T Robinson,3,3,0,1,4,8,7,11,2.4,3.75,2.63,26923,2025-04-19,Brentford,Brighton,2.95516,1.24107,2024
+2025-04-19,Crystal Palace,Bournemouth,0,0,S Barrott,3,4,1,0,5,4,13,10,2.45,3.6,2.63,26924,2025-04-19,Crystal Palace,Bournemouth,0.337818,0.664093,2024
+2025-04-19,Everton,Man City,0,2,S Hooper,4,0,0,0,2,5,7,6,3.7,3.6,1.91,26925,2025-04-19,Everton,Man City,0.81683,1.87989,2024
+2025-04-19,West Ham,Southampton,1,1,A Kitchen,2,1,0,0,2,5,14,13,1.48,4.33,6.5,26931,2025-04-19,West Ham,Southampton,0.98423,0.922877,2024
+2025-04-19,Aston Villa,Newcastle,4,1,J Gillett,1,3,0,0,7,7,9,12,2.3,3.6,2.75,26922,2025-04-19,Aston Villa,Newcastle,3.05371,1.27176,2024
+2025-04-20,Leicester,Liverpool,0,1,S Attwell,1,2,0,0,1,13,11,7,11.0,6.25,1.22,26928,2025-04-20,Leicester,Liverpool,0.232205,4.52706,2024
+2025-04-20,Man United,Wolves,0,1,R Jones,2,3,0,0,9,2,11,18,2.0,3.6,3.6,26929,2025-04-20,Man United,Wolves,1.13966,0.187814,2024
+2025-04-20,Ipswich,Arsenal,0,4,C Kavanagh,0,0,1,0,0,12,10,7,8.0,4.5,1.4,26927,2025-04-20,Ipswich,Arsenal,0.192879,2.81362,2024
+2025-04-20,Fulham,Chelsea,1,2,A Taylor,1,3,0,0,6,4,13,9,2.7,3.7,2.35,26926,2025-04-20,Fulham,Chelsea,0.306122,0.75172,2024
+2025-04-21,Tottenham,Nott'm Forest,1,2,P Bankes,1,4,0,0,7,1,11,12,2.45,3.6,2.63,26930,2025-04-21,Tottenham,Nott'm Forest,2.4024,0.557682,2024
+2025-04-22,Man City,Aston Villa,2,1,C Pawson,3,3,0,0,10,2,9,10,1.8,4.1,3.9,26937,2025-04-22,Man City,Aston Villa,1.36232,1.85906,2024
+2025-04-23,Arsenal,Crystal Palace,2,2,M Salisbury,1,1,0,0,3,6,4,6,1.4,4.75,7.5,26933,2025-04-23,Arsenal,Crystal Palace,1.92149,2.50515,2024
+2025-04-26,Chelsea,Everton,1,0,C Kavanagh,0,0,0,0,10,2,11,11,1.55,4.0,6.0,26935,2025-04-26,Chelsea,Everton,0.768313,0.916838,2024
+2025-04-26,Brighton,West Ham,3,2,D England,1,1,0,0,8,1,7,9,1.67,4.2,4.75,26934,2025-04-26,Brighton,West Ham,1.29433,1.24134,2024
+2025-04-26,Newcastle,Ipswich,3,0,M Salisbury,1,2,0,1,11,2,9,9,1.18,7.5,13.0,26938,2025-04-26,Newcastle,Ipswich,4.11539,0.127203,2024
+2025-04-26,Southampton,Fulham,1,2,T Harrington,1,1,0,0,0,13,10,12,5.25,4.0,1.6,26940,2025-04-26,Southampton,Fulham,0.935581,1.9956,2024
+2025-04-26,Wolves,Leicester,3,0,S Barrott,1,4,0,0,4,2,7,17,1.5,4.2,6.25,26941,2025-04-26,Wolves,Leicester,2.57666,1.04978,2024
+2025-04-27,Liverpool,Tottenham,5,1,T Bramall,2,1,0,0,8,2,16,9,1.25,6.0,11.0,26936,2025-04-27,Liverpool,Tottenham,2.51104,0.512812,2024
+2025-04-27,Bournemouth,Man United,1,1,P Bankes,4,2,1,0,5,10,11,12,1.67,4.0,4.5,26932,2025-04-27,Bournemouth,Man United,0.60995,1.91039,2024
+2025-05-01,Nott'm Forest,Brentford,0,2,D England,3,5,0,0,4,5,10,12,2.15,3.5,3.25,26939,2025-05-01,Nott'm Forest,Brentford,0.670607,1.52054,2024
+2025-05-02,Man City,Wolves,1,0,P Bankes,0,0,0,0,4,5,7,11,1.4,4.75,7.5,26942,2025-05-02,Man City,Wolves,0.859463,0.622455,2024
+2025-05-03,Aston Villa,Fulham,1,0,R Jones,0,5,0,0,5,3,6,17,1.77,3.75,4.5,26946,2025-05-03,Aston Villa,Fulham,1.29013,0.702787,2024
+2025-05-03,Everton,Ipswich,2,2,L Smith,4,4,0,0,3,3,12,15,1.45,4.33,6.5,26950,2025-05-03,Everton,Ipswich,0.808481,1.14351,2024
+2025-05-03,Leicester,Southampton,2,0,D Webb,1,3,0,0,7,7,12,13,2.3,3.6,2.88,26951,2025-05-03,Leicester,Southampton,1.60739,0.550774,2024
+2025-05-03,Arsenal,Bournemouth,1,2,J Gillett,0,2,0,0,2,3,7,16,2.05,3.7,3.4,26945,2025-05-03,Arsenal,Bournemouth,2.05484,1.41783,2024
+2025-05-04,Brentford,Man United,4,3,A Taylor,0,2,0,0,7,4,8,10,1.65,4.1,4.75,26947,2025-05-04,Brentford,Man United,3.58737,1.13404,2024
+2025-05-04,Brighton,Newcastle,1,1,C Pawson,2,1,0,0,1,4,15,10,2.88,3.7,2.3,26944,2025-05-04,Brighton,Newcastle,0.687863,1.63777,2024
+2025-05-04,West Ham,Tottenham,1,1,M Oliver,2,2,0,0,1,3,18,15,2.1,3.7,3.25,26943,2025-05-04,West Ham,Tottenham,1.15166,0.847022,2024
+2025-05-04,Chelsea,Liverpool,3,1,S Hooper,2,2,0,0,3,6,10,11,2.15,3.7,3.1,26948,2025-05-04,Chelsea,Liverpool,3.51944,1.4267,2024
+2025-05-05,Crystal Palace,Nott'm Forest,1,1,A Madley,3,8,0,0,7,4,9,15,2.25,3.4,3.2,26949,2025-05-05,Crystal Palace,Nott'm Forest,2.34037,0.63684,2024
+2025-05-10,Bournemouth,Aston Villa,0,1,S Attwell,4,3,0,1,10,0,19,12,2.4,3.6,2.75,26955,2025-05-10,Bournemouth,Aston Villa,1.02272,1.12376,2024
+2025-05-10,Wolves,Brighton,0,2,M Oliver,1,1,0,0,7,4,8,12,2.7,3.5,2.5,26961,2025-05-10,Wolves,Brighton,0.73395,1.41254,2024
+2025-05-10,Fulham,Everton,1,3,M Salisbury,1,0,0,0,5,5,15,9,1.82,3.4,4.5,26953,2025-05-10,Fulham,Everton,1.20869,1.32604,2024
+2025-05-10,Ipswich,Brentford,0,1,S Barrott,2,4,0,0,5,6,6,12,5.0,4.0,1.65,26954,2025-05-10,Ipswich,Brentford,0.717433,1.32077,2024
+2025-05-10,Southampton,Man City,0,0,T Robinson,2,0,0,0,1,15,9,8,11.0,7.5,1.2,26959,2025-05-10,Southampton,Man City,0.136995,1.58463,2024
+2025-05-11,Tottenham,Crystal Palace,0,2,C Kavanagh,1,1,0,0,4,8,12,10,2.63,3.6,2.5,26960,2025-05-11,Tottenham,Crystal Palace,0.806792,3.98546,2024
+2025-05-11,Newcastle,Chelsea,2,0,J Brooks,4,2,0,1,2,8,9,13,2.1,3.75,3.1,26957,2025-05-11,Newcastle,Chelsea,1.6703,0.646426,2024
+2025-05-11,Man United,West Ham,0,2,J Gillett,0,1,0,0,8,5,3,13,1.9,3.6,4.0,26956,2025-05-11,Man United,West Ham,2.31287,2.15985,2024
+2025-05-11,Nott'm Forest,Leicester,2,2,T Harrington,3,3,0,0,4,4,11,11,1.33,5.25,8.0,26958,2025-05-11,Nott'm Forest,Leicester,1.76909,1.22949,2024
+2025-05-11,Liverpool,Arsenal,2,2,A Taylor,1,1,0,1,3,1,13,10,2.0,3.6,3.6,26952,2025-05-11,Liverpool,Arsenal,2.74682,2.18795,2024
+2025-05-16,Chelsea,Man United,1,0,C Kavanagh,1,6,0,0,7,2,10,14,1.44,5.0,6.25,26966,2025-05-16,Chelsea,Man United,1.29571,0.337632,2024
+2025-05-16,Aston Villa,Tottenham,2,0,P Bankes,1,2,0,0,9,1,5,12,1.3,6.0,8.5,26963,2025-05-16,Aston Villa,Tottenham,1.69061,0.523016,2024
+2025-05-18,Everton,Southampton,2,0,M Oliver,1,1,0,0,4,5,6,10,1.4,4.75,7.5,26968,2025-05-18,Everton,Southampton,2.67793,1.05025,2024
+2025-05-18,West Ham,Nott'm Forest,1,2,S Barrott,6,3,0,0,8,7,14,7,2.75,3.3,2.55,26971,2025-05-18,West Ham,Nott'm Forest,0.850457,2.14756,2024
+2025-05-18,Brentford,Fulham,2,3,J Gillett,4,4,0,0,5,3,12,8,1.91,3.9,3.6,26964,2025-05-18,Brentford,Fulham,2.43045,1.61741,2024
+2025-05-18,Leicester,Ipswich,2,0,A Kitchen,1,0,0,0,2,2,15,12,2.3,3.6,2.9,26969,2025-05-18,Leicester,Ipswich,0.788544,1.36957,2024
+2025-05-18,Arsenal,Newcastle,1,0,S Hooper,3,3,0,0,10,7,9,9,1.95,3.7,3.7,26962,2025-05-18,Arsenal,Newcastle,1.15958,2.24634,2024
+2025-05-19,Brighton,Liverpool,3,2,J Brooks,1,0,0,0,3,3,9,8,2.6,3.75,2.45,26965,2025-05-19,Brighton,Liverpool,2.17789,3.065,2024
+2025-05-20,Crystal Palace,Wolves,4,2,D Webb,1,2,0,0,0,10,14,8,2.25,3.3,3.2,26967,2025-05-20,Crystal Palace,Wolves,1.68451,1.42886,2024
+2025-05-20,Man City,Bournemouth,3,1,T Bramall,1,3,1,1,3,1,7,13,1.55,4.33,5.75,26970,2025-05-20,Man City,Bournemouth,1.59779,0.962014,2024
+2025-05-25,Fulham,Man City,0,2,A Madley,0,0,0,0,1,6,11,5,5.0,4.2,1.6,26981,2025-05-25,Fulham,Man City,2.21797,2.45923,2024
+2025-05-25,Southampton,Arsenal,1,2,D Bond,0,0,0,0,5,8,7,8,8.5,6.0,1.3,26977,2025-05-25,Southampton,Arsenal,0.598144,2.40711,2024
+2025-05-25,Nott'm Forest,Chelsea,0,1,A Taylor,2,2,0,0,7,4,10,11,3.0,3.75,2.2,26972,2025-05-25,Nott'm Forest,Chelsea,1.58014,1.30874,2024
+2025-05-25,Newcastle,Everton,0,1,T Harrington,1,4,0,0,12,3,12,9,1.33,5.5,8.5,26973,2025-05-25,Newcastle,Everton,1.1591,1.07279,2024
+2025-05-25,Bournemouth,Leicester,2,0,L Smith,0,2,0,0,6,1,19,16,1.33,5.25,8.5,26979,2025-05-25,Bournemouth,Leicester,2.72449,0.156702,2024
+2025-05-25,Liverpool,Crystal Palace,1,1,D England,1,0,1,0,11,0,7,10,1.4,6.0,5.75,26975,2025-05-25,Liverpool,Crystal Palace,1.92122,1.4144,2024
+2025-05-25,Ipswich,West Ham,1,3,T Robinson,1,1,0,0,4,0,10,9,3.0,3.8,2.2,26980,2025-05-25,Ipswich,West Ham,0.893095,0.967379,2024
+2025-05-25,Tottenham,Brighton,1,4,R Jones,3,1,0,0,2,11,13,8,4.2,4.33,1.7,26976,2025-05-25,Tottenham,Brighton,1.85265,3.11624,2024
+2025-05-25,Man United,Aston Villa,2,0,T Bramall,2,2,0,1,4,3,10,10,4.33,4.2,1.7,26974,2025-05-25,Man United,Aston Villa,2.96259,0.335222,2024
+2025-05-25,Wolves,Brentford,1,1,C Pawson,2,1,0,0,8,3,7,9,2.7,3.7,2.45,26978,2025-05-25,Wolves,Brentford,1.10889,1.97196,2024
+2025-08-15,Liverpool,Bournemouth,4,2,A Taylor,1,2,0,0,6,7,7,10,1.3,6.0,8.5,28778,2025-08-15,Liverpool,Bournemouth,2.33007,1.57303,2025
+2025-08-16,Sunderland,West Ham,3,0,R Jones,0,1,0,0,5,7,8,10,3.25,3.4,2.25,28781,2025-08-16,Sunderland,West Ham,0.724368,0.558948,2025
+2025-08-16,Tottenham,Burnley,3,0,M Oliver,0,0,0,0,6,5,14,8,1.38,4.75,8.5,28782,2025-08-16,Tottenham,Burnley,1.97858,0.734138,2025
+2025-08-16,Aston Villa,Newcastle,0,0,C Pawson,1,1,1,0,3,6,13,11,2.25,3.5,2.9,28779,2025-08-16,Aston Villa,Newcastle,0.318601,1.40098,2025
+2025-08-16,Brighton,Fulham,1,1,S Barrott,3,3,0,0,4,3,16,15,1.91,3.6,4.0,28780,2025-08-16,Brighton,Fulham,1.44008,0.902883,2025
+2025-08-16,Wolves,Man City,0,4,J Gillett,1,2,0,0,4,6,13,7,6.25,4.75,1.45,28783,2025-08-16,Wolves,Man City,0.519436,2.29903,2025
+2025-08-17,Nott'm Forest,Brentford,3,1,P Bankes,1,2,0,0,5,5,7,15,2.2,3.3,3.5,28785,2025-08-17,Nott'm Forest,Brentford,1.7555,1.32516,2025
+2025-08-17,Chelsea,Crystal Palace,0,0,D England,2,3,0,0,11,2,10,12,1.62,4.33,4.5,28784,2025-08-17,Chelsea,Crystal Palace,1.36793,1.03414,2025
+2025-08-17,Man United,Arsenal,0,1,S Hooper,1,4,0,0,3,4,10,19,3.6,3.6,1.95,28786,2025-08-17,Man United,Arsenal,1.37653,1.3304,2025
+2025-08-18,Leeds,Everton,1,0,C Kavanagh,0,2,0,0,7,2,6,8,2.38,3.3,3.0,28787,2025-08-18,Leeds,Everton,2.3812,0.674338,2025
+2025-08-22,West Ham,Chelsea,1,5,M Oliver,0,1,0,0,7,5,7,10,4.75,3.8,1.73,28788,2025-08-22,West Ham,Chelsea,0.978572,3.94997,2025
+2025-08-23,Man City,Tottenham,0,2,P Bankes,1,4,0,0,7,2,7,12,1.48,4.5,6.25,28789,2025-08-23,Man City,Tottenham,1.2475,1.28015,2025
+2025-08-23,Bournemouth,Wolves,1,0,T Bramall,2,4,0,1,8,3,13,16,1.8,3.8,4.2,28792,2025-08-23,Bournemouth,Wolves,1.78462,0.373367,2025
+2025-08-23,Brentford,Aston Villa,1,0,T Harrington,1,2,0,0,2,9,11,9,3.1,3.6,2.2,28790,2025-08-23,Brentford,Aston Villa,1.12964,0.976852,2025
+2025-08-23,Burnley,Sunderland,2,0,M Salisbury,0,1,0,0,4,3,9,5,2.2,3.2,3.5,28791,2025-08-23,Burnley,Sunderland,1.00381,1.12127,2025
+2025-08-23,Arsenal,Leeds,5,0,J Gillett,0,2,0,0,2,2,8,11,1.27,6.25,9.5,28793,2025-08-23,Arsenal,Leeds,2.73761,0.156761,2025
+2025-08-24,Crystal Palace,Nott'm Forest,1,1,A Taylor,3,3,0,0,1,3,11,11,2.35,3.3,3.1,28794,2025-08-24,Crystal Palace,Nott'm Forest,1.10188,1.32987,2025
+2025-08-24,Everton,Brighton,2,0,S Attwell,4,3,0,0,2,2,7,15,3.1,3.3,2.3,28795,2025-08-24,Everton,Brighton,1.80116,2.08487,2025
+2025-08-24,Fulham,Man United,1,1,C Kavanagh,1,1,0,0,9,6,12,10,3.25,3.5,2.15,28796,2025-08-24,Fulham,Man United,1.65333,1.54603,2025
+2025-08-25,Newcastle,Liverpool,2,3,S Hooper,2,3,1,0,7,1,17,15,3.25,3.8,2.05,28797,2025-08-25,Newcastle,Liverpool,1.96342,0.646559,2025
+2025-08-30,Leeds,Newcastle,0,0,P Bankes,1,1,0,0,5,5,10,15,3.5,3.4,2.1,28803,2025-08-30,Leeds,Newcastle,0.6773,0.303635,2025
+2025-08-30,Wolves,Everton,2,3,M Oliver,0,1,0,0,2,2,15,10,2.7,3.2,2.75,28800,2025-08-30,Wolves,Everton,0.943257,2.03791,2025
+2025-08-30,Tottenham,Bournemouth,0,1,S Hooper,2,4,0,0,0,8,17,13,1.73,4.2,4.2,28799,2025-08-30,Tottenham,Bournemouth,0.17067,2.1201,2025
+2025-08-30,Man United,Burnley,3,2,S Barrott,1,5,0,0,7,1,9,9,1.33,5.25,8.0,28802,2025-08-30,Man United,Burnley,4.02237,1.32618,2025
+2025-08-30,Chelsea,Fulham,2,0,R Jones,2,2,0,0,6,4,11,17,1.55,4.33,5.25,28798,2025-08-30,Chelsea,Fulham,2.4324,0.736228,2025
+2025-08-30,Sunderland,Brentford,2,1,A Taylor,3,2,0,0,3,4,11,12,3.0,3.3,2.4,28801,2025-08-30,Sunderland,Brentford,1.57127,1.44604,2025
+2025-08-31,Brighton,Man City,2,1,D England,2,2,0,0,3,2,16,14,3.8,3.9,1.9,28805,2025-08-31,Brighton,Man City,2.20864,2.13418,2025
+2025-08-31,Nott'm Forest,West Ham,0,3,C Pawson,0,0,0,0,9,7,14,6,1.67,3.75,5.25,28804,2025-08-31,Nott'm Forest,West Ham,0.716018,2.236,2025
+2025-08-31,Liverpool,Arsenal,1,0,C Kavanagh,2,2,0,0,3,8,7,10,2.2,3.5,3.2,28806,2025-08-31,Liverpool,Arsenal,0.481404,0.485679,2025
+2025-08-31,Aston Villa,Crystal Palace,0,3,S Attwell,2,3,0,0,10,1,7,14,1.85,3.7,4.0,28807,2025-08-31,Aston Villa,Crystal Palace,1.20586,2.59713,2025
+2025-09-13,Newcastle,Wolves,1,0,C Kavanagh,1,4,0,0,10,4,10,17,1.42,4.75,7.0,28809,2025-09-13,Newcastle,Wolves,1.19186,0.375942,2025
+2025-09-13,Brentford,Chelsea,2,2,S Attwell,3,2,0,0,5,6,13,9,4.5,3.9,1.73,28815,2025-09-13,Brentford,Chelsea,1.17533,0.755999,2025
+2025-09-13,West Ham,Tottenham,0,3,J Gillett,0,1,1,0,2,13,8,7,3.4,3.6,2.1,28814,2025-09-13,West Ham,Tottenham,0.793248,1.51402,2025
+2025-09-13,Fulham,Leeds,1,0,C Pawson,1,2,0,0,3,3,20,15,1.91,3.5,4.0,28813,2025-09-13,Fulham,Leeds,1.13979,0.830398,2025
+2025-09-13,Bournemouth,Brighton,2,1,P Bankes,4,4,0,0,4,4,16,10,2.35,3.5,2.9,28810,2025-09-13,Bournemouth,Brighton,1.44187,0.624923,2025
+2025-09-13,Crystal Palace,Sunderland,0,0,T Bramall,1,1,0,0,5,3,10,8,1.65,3.75,5.75,28811,2025-09-13,Crystal Palace,Sunderland,1.75805,0.354129,2025
+2025-09-13,Arsenal,Nott'm Forest,3,0,D England,1,1,0,0,8,4,8,11,1.38,5.0,8.0,28808,2025-09-13,Arsenal,Nott'm Forest,2.8817,0.293681,2025
+2025-09-13,Everton,Aston Villa,0,0,S Hooper,3,3,0,0,10,3,17,15,2.45,3.3,2.9,28812,2025-09-13,Everton,Aston Villa,1.8927,0.354327,2025
+2025-09-14,Burnley,Liverpool,0,1,M Oliver,0,2,0,0,1,13,9,9,8.0,5.5,1.33,28816,2025-09-14,Burnley,Liverpool,0.168041,2.79492,2025
+2025-09-14,Man City,Man United,3,0,A Taylor,0,0,0,0,2,4,8,8,1.75,4.0,4.2,28817,2025-09-14,Man City,Man United,1.99725,1.51915,2025
+2025-09-20,Fulham,Brentford,3,1,M Oliver,4,1,0,0,2,10,11,13,2.0,3.4,3.8,28825,2025-09-20,Fulham,Brentford,1.52431,0.826556,2025
+2025-09-20,Man United,Chelsea,2,1,P Bankes,0,5,1,1,5,5,13,14,2.6,3.8,2.45,28824,2025-09-20,Man United,Chelsea,1.34458,0.469843,2025
+2025-09-20,Wolves,Leeds,1,3,A Taylor,1,1,0,0,4,0,11,9,2.7,3.2,2.75,28820,2025-09-20,Wolves,Leeds,1.5661,0.456988,2025
+2025-09-20,West Ham,Crystal Palace,1,2,T Harrington,3,3,0,0,8,8,15,5,2.88,3.5,2.38,28819,2025-09-20,West Ham,Crystal Palace,0.466365,2.33565,2025
+2025-09-20,Brighton,Tottenham,2,2,C Kavanagh,1,2,0,0,2,10,10,13,2.25,3.7,3.0,28821,2025-09-20,Brighton,Tottenham,1.40466,1.19181,2025
+2025-09-20,Liverpool,Everton,2,1,D England,2,3,0,0,5,4,11,10,1.45,4.75,6.5,28818,2025-09-20,Liverpool,Everton,1.06166,0.721371,2025
+2025-09-20,Burnley,Nott'm Forest,1,1,T Bramall,1,1,0,0,4,5,12,11,3.4,3.3,2.2,28822,2025-09-20,Burnley,Nott'm Forest,1.14159,0.830779,2025
+2025-09-21,Bournemouth,Newcastle,0,0,R Jones,2,1,0,0,5,2,7,10,2.5,3.5,2.7,28823,2025-09-21,Bournemouth,Newcastle,0.55066,0.153629,2025
+2025-09-21,Sunderland,Aston Villa,1,1,S Barrott,2,1,1,0,6,5,14,8,3.4,3.5,2.1,28826,2025-09-21,Sunderland,Aston Villa,0.938312,0.939354,2025
+2025-09-21,Arsenal,Man City,1,1,S Attwell,1,2,0,0,11,2,11,10,1.85,3.9,3.8,28827,2025-09-21,Arsenal,Man City,0.718575,1.1227,2025
+2025-09-27,Man City,Burnley,5,1,R Jones,1,3,0,0,10,2,5,7,1.17,7.5,15.0,28833,2025-09-27,Man City,Burnley,3.22133,0.509491,2025
+2025-09-27,Tottenham,Wolves,1,1,M Salisbury,3,2,0,0,10,9,9,11,1.5,4.5,6.0,28835,2025-09-27,Tottenham,Wolves,0.818711,1.15951,2025
+2025-09-27,Leeds,Bournemouth,2,2,M Oliver,2,2,0,0,7,4,12,13,3.1,3.25,2.38,28832,2025-09-27,Leeds,Bournemouth,2.04728,1.06033,2025
+2025-09-27,Nott'm Forest,Sunderland,0,1,T Harrington,4,2,0,0,7,4,11,6,1.75,3.75,4.5,28834,2025-09-27,Nott'm Forest,Sunderland,1.4203,1.94154,2025
+2025-09-27,Chelsea,Brighton,1,3,S Hooper,3,5,1,0,5,7,9,16,1.85,3.8,3.8,28829,2025-09-27,Chelsea,Brighton,2.02653,2.4751,2025
+2025-09-27,Brentford,Man United,3,1,C Pawson,2,2,0,0,4,2,14,10,3.4,3.8,2.0,28828,2025-09-27,Brentford,Man United,2.78726,2.23609,2025
+2025-09-27,Crystal Palace,Liverpool,2,1,C Kavanagh,1,3,0,0,2,6,10,8,3.8,3.8,1.9,28830,2025-09-27,Crystal Palace,Liverpool,3.53323,3.10176,2025
+2025-09-28,Aston Villa,Fulham,3,1,A Madley,1,4,0,0,2,8,10,13,2.3,3.1,3.4,28831,2025-09-28,Aston Villa,Fulham,1.36575,0.952612,2025
+2025-09-28,Newcastle,Arsenal,1,2,J Gillett,2,1,0,0,7,12,8,9,3.6,3.4,2.1,28836,2025-09-28,Newcastle,Arsenal,0.739851,2.07048,2025
+2025-09-29,Everton,West Ham,1,1,S Barrott,3,4,0,0,3,5,7,16,1.7,3.75,5.0,28837,2025-09-29,Everton,West Ham,0.909703,0.775766,2025
+2025-10-03,Bournemouth,Fulham,3,1,S Hooper,0,1,0,0,4,3,8,10,1.95,3.5,3.9,28838,2025-10-03,Bournemouth,Fulham,1.33458,0.84335,2025
+2025-10-04,Leeds,Tottenham,1,2,T Bramall,2,3,0,0,4,1,10,12,2.7,3.5,2.5,28844,2025-10-04,Leeds,Tottenham,1.48051,0.688198,2025
+2025-10-04,Arsenal,West Ham,2,0,J Brooks,0,2,0,0,8,3,14,14,1.18,6.5,17.0,28839,2025-10-04,Arsenal,West Ham,3.0585,0.864549,2025
+2025-10-04,Man United,Sunderland,2,0,S Attwell,1,4,0,0,2,3,10,12,1.5,4.75,5.75,28845,2025-10-04,Man United,Sunderland,1.9298,0.807119,2025
+2025-10-04,Chelsea,Liverpool,2,1,A Taylor,0,2,0,0,7,2,9,8,2.8,3.75,2.3,28842,2025-10-04,Chelsea,Liverpool,1.23721,2.05981,2025
+2025-10-05,Brentford,Man City,0,1,D England,3,2,0,0,3,2,10,6,4.75,4.5,1.62,28841,2025-10-05,Brentford,Man City,0.693758,1.09647,2025
+2025-10-05,Wolves,Brighton,1,1,J Gillett,2,4,0,0,2,8,13,9,3.6,3.7,2.0,28847,2025-10-05,Wolves,Brighton,0.369404,1.39158,2025
+2025-10-05,Newcastle,Nott'm Forest,2,0,P Bankes,0,4,0,0,8,1,16,15,1.57,4.2,5.5,28846,2025-10-05,Newcastle,Nott'm Forest,3.81662,0.337689,2025
+2025-10-05,Everton,Crystal Palace,2,1,M Salisbury,2,3,0,0,2,4,13,16,2.45,3.25,3.0,28843,2025-10-05,Everton,Crystal Palace,2.13876,2.17789,2025
+2025-10-05,Aston Villa,Burnley,2,1,A Kitchen,3,1,0,0,6,4,9,15,1.6,4.0,5.75,28840,2025-10-05,Aston Villa,Burnley,1.73572,0.502292,2025
+2025-10-18,Fulham,Arsenal,0,1,A Taylor,0,0,0,0,6,10,11,4,5.75,4.1,1.55,28851,2025-10-18,Fulham,Arsenal,0.502332,2.07823,2025
+2025-10-18,Nott'm Forest,Chelsea,0,3,C Kavanagh,2,2,0,1,5,2,13,16,3.7,3.8,1.95,28854,2025-10-18,Nott'm Forest,Chelsea,2.0555,2.5583,2025
+2025-10-18,Brighton,Newcastle,2,1,C Pawson,0,1,0,0,8,4,9,9,2.63,3.4,2.6,28848,2025-10-18,Brighton,Newcastle,0.857104,1.28313,2025
+2025-10-18,Burnley,Leeds,2,0,T Robinson,2,1,0,0,1,5,10,7,3.25,3.25,2.25,28849,2025-10-18,Burnley,Leeds,0.509647,2.33152,2025
+2025-10-18,Crystal Palace,Bournemouth,3,3,J Gillett,1,4,0,0,6,5,8,16,2.2,3.4,3.25,28850,2025-10-18,Crystal Palace,Bournemouth,4.56284,2.0471,2025
+2025-10-18,Man City,Everton,2,0,T Harrington,0,2,0,0,11,3,8,14,1.4,5.0,7.0,28853,2025-10-18,Man City,Everton,2.4799,0.794622,2025
+2025-10-18,Sunderland,Wolves,2,0,R Jones,0,0,0,0,3,2,5,12,2.5,3.0,3.1,28855,2025-10-18,Sunderland,Wolves,1.02481,0.676323,2025
+2025-10-19,Liverpool,Man United,1,2,M Oliver,0,2,0,0,9,4,8,14,1.6,4.5,5.0,28852,2025-10-19,Liverpool,Man United,2.60972,2.53117,2025
+2025-10-19,Tottenham,Aston Villa,1,2,S Hooper,2,0,0,0,6,6,11,7,2.05,3.5,3.5,28856,2025-10-19,Tottenham,Aston Villa,1.51461,0.352231,2025
+2025-10-20,West Ham,Brentford,0,2,A Madley,1,1,0,0,6,10,10,10,2.5,3.25,2.88,28857,2025-10-20,West Ham,Brentford,0.260251,3.46635,2025
+2025-10-24,Leeds,West Ham,2,1,S Attwell,3,3,0,0,3,4,12,11,1.8,3.5,4.75,28864,2025-10-24,Leeds,West Ham,2.2214,0.498653,2025
+2025-10-25,Chelsea,Sunderland,1,2,A Madley,1,1,0,0,9,1,15,13,1.36,4.75,9.0,28862,2025-10-25,Chelsea,Sunderland,1.21332,1.5506,2025
+2025-10-25,Newcastle,Fulham,2,1,P Bankes,0,2,0,0,4,3,11,18,1.62,3.9,5.5,28866,2025-10-25,Newcastle,Fulham,2.76806,1.52001,2025
+2025-10-25,Man United,Brighton,4,2,A Taylor,2,2,0,0,1,6,4,13,1.95,3.8,3.5,28865,2025-10-25,Man United,Brighton,1.96231,0.947154,2025
+2025-10-25,Brentford,Liverpool,3,2,S Hooper,3,2,0,0,5,4,7,10,4.1,4.2,1.75,28861,2025-10-25,Brentford,Liverpool,3.27126,2.11838,2025
+2025-10-26,Arsenal,Crystal Palace,1,0,T Bramall,0,0,0,0,4,3,6,11,1.4,4.75,7.5,28859,2025-10-26,Arsenal,Crystal Palace,0.856175,0.350534,2025
+2025-10-26,Aston Villa,Man City,1,0,M Oliver,1,4,0,0,5,6,8,16,4.33,3.8,1.8,28860,2025-10-26,Aston Villa,Man City,0.843906,1.36914,2025
+2025-10-26,Bournemouth,Nott'm Forest,2,0,S Barrott,3,1,0,0,6,4,17,7,1.8,3.8,4.33,28858,2025-10-26,Bournemouth,Nott'm Forest,0.656601,0.305493,2025
+2025-10-26,Wolves,Burnley,2,3,T Harrington,1,0,0,0,5,3,12,7,1.95,3.3,4.2,28867,2025-10-26,Wolves,Burnley,2.58132,1.54544,2025
+2025-10-26,Everton,Tottenham,0,3,C Pawson,2,0,0,0,9,8,9,8,2.35,3.4,3.0,28863,2025-10-26,Everton,Tottenham,1.4032,2.09327,2025
+2025-11-01,Liverpool,Aston Villa,2,0,S Attwell,2,3,0,0,1,4,13,11,1.65,4.33,4.5,28872,2025-11-01,Liverpool,Aston Villa,1.47021,0.43502,2025
+2025-11-01,Tottenham,Chelsea,0,1,J Gillett,4,2,0,0,6,5,14,12,2.7,3.5,2.5,28876,2025-11-01,Tottenham,Chelsea,0.146954,3.34251,2025
+2025-11-01,Nott'm Forest,Man United,2,2,D England,1,1,0,0,8,5,10,7,3.3,3.75,2.05,28874,2025-11-01,Nott'm Forest,Man United,1.55066,0.91622,2025
+2025-11-01,Brighton,Leeds,3,0,M Oliver,0,1,0,0,4,7,10,7,1.85,3.75,4.0,28868,2025-11-01,Brighton,Leeds,2.64127,0.35919,2025
+2025-11-01,Crystal Palace,Brentford,2,0,P Bankes,0,3,0,0,6,5,7,11,1.91,3.6,3.9,28870,2025-11-01,Crystal Palace,Brentford,0.734558,0.820498,2025
+2025-11-01,Burnley,Arsenal,0,2,C Kavanagh,2,1,0,0,1,6,10,13,10.0,6.0,1.27,28869,2025-11-01,Burnley,Arsenal,0.679177,2.51649,2025
+2025-11-01,Fulham,Wolves,3,0,J Brooks,1,3,0,1,10,1,13,14,1.83,3.5,4.5,28871,2025-11-01,Fulham,Wolves,1.91207,0.209934,2025
+2025-11-02,West Ham,Newcastle,3,1,R Jones,1,2,0,0,7,6,5,10,5.25,4.0,1.62,28877,2025-11-02,West Ham,Newcastle,1.41383,0.523615,2025
+2025-11-02,Man City,Bournemouth,3,1,A Taylor,2,2,0,0,10,4,8,11,1.5,4.75,5.75,28873,2025-11-02,Man City,Bournemouth,2.48999,0.899846,2025
+2025-11-03,Sunderland,Everton,1,1,T Bramall,3,2,0,0,4,1,10,12,2.7,3.2,2.7,28875,2025-11-03,Sunderland,Everton,1.18068,1.00741,2025
+2025-11-08,Chelsea,Wolves,3,0,A Kitchen,1,2,0,0,10,1,12,14,1.36,4.75,8.5,28880,2025-11-08,Chelsea,Wolves,3.98342,0.111462,2025
+2025-11-08,West Ham,Burnley,3,2,M Salisbury,2,2,0,0,7,4,15,13,1.91,3.5,4.0,28887,2025-11-08,West Ham,Burnley,2.96728,1.87478,2025
+2025-11-08,Sunderland,Arsenal,2,2,C Pawson,2,1,0,0,2,2,13,13,7.5,5.0,1.38,28885,2025-11-08,Sunderland,Arsenal,1.20495,2.32943,2025
+2025-11-08,Everton,Fulham,2,0,A Madley,2,2,0,0,7,5,11,14,2.2,3.3,3.4,28882,2025-11-08,Everton,Fulham,2.30607,0.424478,2025
+2025-11-08,Tottenham,Man United,2,2,S Barrott,5,1,0,0,5,3,10,8,2.63,3.6,2.5,28886,2025-11-08,Tottenham,Man United,1.35532,0.820256,2025
+2025-11-09,Aston Villa,Bournemouth,4,0,J Brooks,2,2,0,0,6,9,8,20,2.2,3.4,3.25,28878,2025-11-09,Aston Villa,Bournemouth,1.88282,2.00992,2025
+2025-11-09,Brentford,Newcastle,3,1,S Attwell,2,1,0,0,6,2,10,13,2.8,3.5,2.45,28879,2025-11-09,Brentford,Newcastle,2.73729,0.432277,2025
+2025-11-09,Crystal Palace,Brighton,0,0,T Robinson,1,4,0,0,4,8,10,12,2.25,3.5,3.1,28881,2025-11-09,Crystal Palace,Brighton,0.839547,0.637037,2025
+2025-11-09,Nott'm Forest,Leeds,3,1,J Gillett,2,1,0,0,6,4,10,11,2.25,3.25,3.3,28884,2025-11-09,Nott'm Forest,Leeds,2.49097,0.419461,2025
+2025-11-09,Man City,Liverpool,3,0,C Kavanagh,2,4,0,0,7,7,14,15,1.9,3.9,3.7,28883,2025-11-09,Man City,Liverpool,1.59542,1.0281,2025
+2025-11-22,Newcastle,Man City,2,1,S Barrott,1,3,0,0,5,9,13,8,3.6,3.8,1.95,28896,2025-11-22,Newcastle,Man City,2.40555,2.45648,2025
+2025-11-22,Wolves,Crystal Palace,0,2,A Taylor,2,3,0,0,1,4,13,9,3.8,3.6,1.95,28897,2025-11-22,Wolves,Crystal Palace,1.66409,1.44933,2025
+2025-11-22,Fulham,Sunderland,1,0,D England,3,3,0,0,7,4,5,13,2.1,3.25,3.75,28892,2025-11-22,Fulham,Sunderland,2.83729,0.222768,2025
+2025-11-22,Liverpool,Nott'm Forest,0,3,A Madley,2,0,0,0,8,6,11,8,1.44,5.0,6.25,28894,2025-11-22,Liverpool,Nott'm Forest,1.79273,1.19459,2025
+2025-11-22,Bournemouth,West Ham,2,2,T Bramall,3,2,0,0,9,2,9,10,1.62,4.2,4.75,28888,2025-11-22,Bournemouth,West Ham,3.48299,0.390782,2025
+2025-11-22,Burnley,Chelsea,0,2,P Bankes,2,3,0,0,1,9,13,8,6.25,4.5,1.48,28891,2025-11-22,Burnley,Chelsea,0.660943,1.72093,2025
+2025-11-22,Brighton,Brentford,2,1,C Kavanagh,4,2,0,0,7,4,10,9,1.91,3.6,4.0,28890,2025-11-22,Brighton,Brentford,0.977488,2.19979,2025
+2025-11-23,Leeds,Aston Villa,1,2,R Jones,5,1,0,0,3,3,18,16,3.0,3.3,2.4,28893,2025-11-23,Leeds,Aston Villa,1.84668,1.35978,2025
+2025-11-23,Arsenal,Tottenham,4,1,M Oliver,1,3,0,0,4,1,11,15,1.42,4.75,7.5,28889,2025-11-23,Arsenal,Tottenham,2.27827,0.0300672,2025
+2025-11-24,Man United,Everton,0,1,T Harrington,2,0,0,1,9,1,12,9,1.75,4.0,4.33,28895,2025-11-24,Man United,Everton,2.2737,0.155063,2025
+2025-11-29,Brentford,Burnley,3,1,S Barrott,0,2,0,0,5,6,7,7,1.45,4.5,7.0,28899,2025-11-29,Brentford,Burnley,3.72106,0.874025,2025
+2025-11-29,Man City,Leeds,3,2,P Bankes,4,1,0,0,8,1,17,11,1.22,6.5,12.0,28903,2025-11-29,Man City,Leeds,2.85292,1.75142,2025
+2025-11-29,Sunderland,Bournemouth,3,2,T Robinson,5,5,0,1,6,3,14,13,3.2,3.3,2.3,28905,2025-11-29,Sunderland,Bournemouth,1.16955,1.79274,2025
+2025-11-29,Everton,Newcastle,1,4,C Pawson,0,0,0,0,8,7,4,6,2.8,3.25,2.63,28902,2025-11-29,Everton,Newcastle,1.01125,2.45882,2025
+2025-11-29,Tottenham,Fulham,1,2,S Attwell,3,2,0,0,8,2,11,7,2.2,3.3,3.3,28906,2025-11-29,Tottenham,Fulham,1.04396,0.494736,2025
+2025-11-30,Chelsea,Arsenal,1,1,A Taylor,1,6,1,0,3,3,12,13,3.4,3.3,2.2,28900,2025-11-30,Chelsea,Arsenal,0.791914,1.22828,2025
+2025-11-30,West Ham,Liverpool,0,2,D England,1,0,1,0,7,2,12,14,4.33,4.33,1.67,28907,2025-11-30,West Ham,Liverpool,0.364152,1.56793,2025
+2025-11-30,Crystal Palace,Man United,1,2,R Jones,3,2,0,0,4,4,14,14,2.3,3.4,3.1,28901,2025-11-30,Crystal Palace,Man United,2.13561,1.47768,2025
+2025-11-30,Aston Villa,Wolves,1,0,C Kavanagh,0,4,0,0,7,3,13,21,1.5,4.33,6.5,28898,2025-11-30,Aston Villa,Wolves,1.15486,0.692588,2025
+2025-11-30,Nott'm Forest,Brighton,0,2,M Oliver,0,1,0,0,9,2,11,10,2.75,3.3,2.63,28904,2025-11-30,Nott'm Forest,Brighton,0.960325,2.0572,2025
+2025-12-02,Bournemouth,Everton,0,1,M Salisbury,3,3,0,0,1,6,14,14,2.2,3.25,3.3,28908,2025-12-02,Bournemouth,Everton,0.635415,1.19573,2025
+2025-12-02,Fulham,Man City,4,5,C Pawson,0,1,0,0,7,2,9,7,4.33,4.1,1.73,28912,2025-12-02,Fulham,Man City,0.972635,1.96225,2025
+2025-12-02,Newcastle,Tottenham,2,2,T Bramall,0,3,0,0,11,8,5,12,1.83,3.8,4.1,28916,2025-12-02,Newcastle,Tottenham,1.88558,1.05205,2025
+2025-12-03,Leeds,Chelsea,3,1,D England,1,1,0,0,4,2,10,13,4.1,4.1,1.8,28913,2025-12-03,Leeds,Chelsea,2.2047,0.964018,2025
+2025-12-03,Wolves,Nott'm Forest,0,1,T Robinson,2,2,0,0,3,9,19,11,3.25,3.4,2.25,28917,2025-12-03,Wolves,Nott'm Forest,1.02461,1.12389,2025
+2025-12-03,Liverpool,Sunderland,1,1,S Attwell,1,1,0,0,7,3,10,5,1.36,5.25,7.0,28914,2025-12-03,Liverpool,Sunderland,1.37633,0.712662,2025
+2025-12-03,Brighton,Aston Villa,3,4,A Madley,2,2,0,0,5,6,10,9,2.15,3.5,3.4,28910,2025-12-03,Brighton,Aston Villa,1.96298,3.15745,2025
+2025-12-03,Arsenal,Brentford,2,0,T Harrington,0,1,0,0,4,8,7,9,1.36,5.0,8.5,28909,2025-12-03,Arsenal,Brentford,2.63126,0.588716,2025
+2025-12-03,Burnley,Crystal Palace,0,1,T Kirk,0,0,0,0,3,4,9,8,4.5,3.8,1.75,28911,2025-12-03,Burnley,Crystal Palace,1.16852,0.987797,2025
+2025-12-04,Man United,West Ham,1,1,A Kitchen,2,2,0,0,6,6,13,9,1.45,5.0,6.0,28915,2025-12-04,Man United,West Ham,2.27674,1.36584,2025
+2025-12-06,Aston Villa,Arsenal,2,1,P Bankes,0,2,0,0,3,3,10,8,4.2,3.5,1.9,28919,2025-12-06,Aston Villa,Arsenal,2.71986,1.85965,2025
+2025-12-06,Bournemouth,Chelsea,0,0,M Oliver,0,2,0,0,5,0,15,13,3.1,3.75,2.15,28918,2025-12-06,Bournemouth,Chelsea,1.41931,0.672602,2025
+2025-12-06,Everton,Nott'm Forest,3,0,C Kavanagh,4,3,0,0,6,3,17,15,2.2,3.2,3.5,28921,2025-12-06,Everton,Nott'm Forest,1.25348,0.31234,2025
+2025-12-06,Man City,Sunderland,3,0,A Madley,1,0,0,1,6,5,9,10,1.25,6.5,10.0,28924,2025-12-06,Man City,Sunderland,2.41605,0.626486,2025
+2025-12-06,Newcastle,Burnley,2,1,S Attwell,2,2,0,1,9,9,9,11,1.27,6.0,9.5,28925,2025-12-06,Newcastle,Burnley,1.80708,1.58375,2025
+2025-12-06,Tottenham,Brentford,2,0,R Jones,3,4,0,0,7,6,8,9,2.3,3.5,3.0,28926,2025-12-06,Tottenham,Brentford,2.42388,0.470563,2025
+2025-12-06,Leeds,Liverpool,3,3,A Taylor,3,3,0,0,5,4,14,14,3.8,4.0,1.85,28923,2025-12-06,Leeds,Liverpool,1.79333,2.04805,2025
+2025-12-07,Brighton,West Ham,1,1,S Hooper,2,2,0,0,10,6,12,8,1.55,4.33,5.75,28920,2025-12-07,Brighton,West Ham,2.10077,1.7064,2025
+2025-12-07,Fulham,Crystal Palace,1,2,S Barrott,0,0,0,0,6,4,5,8,2.55,3.3,2.8,28922,2025-12-07,Fulham,Crystal Palace,0.766771,1.71109,2025
+2025-12-08,Wolves,Man United,1,4,M Salisbury,3,2,0,0,1,9,17,12,4.2,4.0,1.75,28927,2025-12-08,Wolves,Man United,0.262147,4.04708,2025
+2025-12-13,Chelsea,Everton,2,0,T Bramall,1,0,0,0,4,7,13,11,1.67,3.8,5.25,28931,2025-12-13,Chelsea,Everton,2.64457,1.34,2025
+2025-12-13,Liverpool,Brighton,2,0,C Pawson,1,2,0,0,2,2,8,15,1.67,4.0,4.75,28933,2025-12-13,Liverpool,Brighton,2.4127,1.69004,2025
+2025-12-13,Burnley,Fulham,2,3,M Oliver,1,2,0,0,10,4,8,8,4.0,3.5,1.91,28930,2025-12-13,Burnley,Fulham,2.05486,1.65053,2025
+2025-12-13,Arsenal,Wolves,2,1,R Jones,0,4,0,0,8,0,7,15,1.13,8.5,21.0,28928,2025-12-13,Arsenal,Wolves,1.61796,0.61997,2025
+2025-12-14,Crystal Palace,Man City,0,3,D England,2,0,0,0,2,2,9,6,3.9,3.9,1.85,28932,2025-12-14,Crystal Palace,Man City,1.30092,1.35317,2025
+2025-12-14,Nott'm Forest,Tottenham,3,0,S Barrott,1,3,0,0,3,3,9,13,2.55,3.3,2.8,28935,2025-12-14,Nott'm Forest,Tottenham,2.32658,0.380246,2025
+2025-12-14,Sunderland,Newcastle,1,0,P Bankes,5,4,0,0,3,6,10,10,3.3,3.3,2.25,28936,2025-12-14,Sunderland,Newcastle,0.630045,0.169329,2025
+2025-12-14,West Ham,Aston Villa,2,3,A Taylor,1,2,0,0,5,3,18,13,3.75,3.5,2.0,28937,2025-12-14,West Ham,Aston Villa,1.27701,0.595093,2025
+2025-12-14,Brentford,Leeds,1,1,J Brooks,0,0,0,0,0,3,8,9,1.91,3.6,4.0,28929,2025-12-14,Brentford,Leeds,0.697006,1.63409,2025
+2025-12-15,Man United,Bournemouth,4,4,S Hooper,2,3,0,0,5,4,15,12,1.83,4.0,3.8,28934,2025-12-15,Man United,Bournemouth,3.21204,2.35196,2025
+2025-12-20,Leeds,Crystal Palace,4,1,T Bramall,1,3,0,0,9,5,5,10,2.6,3.3,2.75,28943,2025-12-20,Leeds,Crystal Palace,2.90786,1.53058,2025
+2025-12-20,Everton,Arsenal,0,1,S Barrott,2,2,0,0,2,3,4,5,5.75,4.1,1.57,28941,2025-12-20,Everton,Arsenal,0.213273,1.84723,2025
+2025-12-20,Tottenham,Liverpool,1,2,J Brooks,3,3,2,0,2,6,9,7,3.5,3.75,2.0,28946,2025-12-20,Tottenham,Liverpool,1.34905,1.23164,2025
+2025-12-20,Wolves,Brentford,0,2,M Donohue,2,4,0,0,3,4,12,15,3.5,3.6,2.05,28947,2025-12-20,Wolves,Brentford,1.26823,1.56309,2025
+2025-12-20,Bournemouth,Burnley,1,1,C Kavanagh,1,1,0,0,5,3,11,11,1.48,4.33,6.5,28938,2025-12-20,Bournemouth,Burnley,1.81847,0.480528,2025
+2025-12-20,Brighton,Sunderland,0,0,D England,2,2,0,0,3,4,11,15,1.67,4.0,5.25,28940,2025-12-20,Brighton,Sunderland,0.919272,1.31044,2025
+2025-12-20,Newcastle,Chelsea,2,2,A Madley,3,6,0,0,6,4,13,14,2.75,3.6,2.45,28945,2025-12-20,Newcastle,Chelsea,2.87863,1.0261,2025
+2025-12-20,Man City,West Ham,3,0,P Tierney,1,1,0,0,6,0,16,10,1.22,8.0,10.0,28944,2025-12-20,Man City,West Ham,3.58188,1.02143,2025
+2025-12-21,Aston Villa,Man United,2,1,M Oliver,1,2,0,0,5,5,11,14,2.1,3.6,3.3,28939,2025-12-21,Aston Villa,Man United,1.86917,1.30455,2025
+2025-12-22,Fulham,Nott'm Forest,1,0,A Taylor,5,4,0,0,1,5,5,9,2.4,3.25,3.0,28942,2025-12-22,Fulham,Nott'm Forest,1.70568,0.486296,2025
+2025-12-26,Man United,Newcastle,1,0,A Taylor,2,1,0,0,2,11,9,5,2.55,3.6,2.6,28954,2025-12-26,Man United,Newcastle,0.940811,1.12998,2025
+2025-12-27,West Ham,Fulham,0,1,C Kavanagh,1,3,0,0,5,4,8,8,2.63,3.4,2.6,28957,2025-12-27,West Ham,Fulham,1.13719,1.11436,2025
+2025-12-27,Chelsea,Aston Villa,1,2,S Attwell,5,3,0,0,6,7,16,8,1.83,3.9,4.0,28951,2025-12-27,Chelsea,Aston Villa,1.97155,2.05918,2025
+2025-12-27,Liverpool,Wolves,2,1,S Hooper,0,1,0,0,6,4,5,13,1.25,6.5,10.0,28953,2025-12-27,Liverpool,Wolves,1.56502,0.780664,2025
+2025-12-27,Nott'm Forest,Man City,1,2,R Jones,1,2,0,0,5,5,5,13,5.0,4.33,1.6,28955,2025-12-27,Nott'm Forest,Man City,0.600141,1.46468,2025
+2025-12-27,Brentford,Bournemouth,4,1,P Bankes,2,2,0,0,2,15,9,8,2.25,3.6,3.0,28949,2025-12-27,Brentford,Bournemouth,2.8513,2.56183,2025
+2025-12-27,Arsenal,Brighton,2,1,J Brooks,2,3,0,0,7,2,7,13,1.42,4.75,7.0,28948,2025-12-27,Arsenal,Brighton,2.54318,0.710064,2025
+2025-12-27,Burnley,Everton,0,0,C Pawson,0,2,0,0,6,5,8,8,4.1,3.4,1.95,28950,2025-12-27,Burnley,Everton,1.24948,1.25204,2025
+2025-12-28,Sunderland,Leeds,1,1,T Harrington,1,0,0,0,3,9,7,9,2.5,3.1,2.88,28956,2025-12-28,Sunderland,Leeds,0.805957,2.60653,2025
+2025-12-28,Crystal Palace,Tottenham,0,1,J Gillett,3,2,0,0,3,2,7,5,2.25,3.25,3.2,28952,2025-12-28,Crystal Palace,Tottenham,0.929681,0.870768,2025
+2025-12-30,Man United,Wolves,1,1,T Bramall,0,2,0,0,8,4,9,12,1.36,5.25,8.0,28964,2025-12-30,Man United,Wolves,1.13306,1.21784,2025
+2025-12-30,West Ham,Brighton,2,2,M Salisbury,3,5,0,0,5,5,11,18,3.4,3.75,2.0,28967,2025-12-30,West Ham,Brighton,2.27644,3.08914,2025
+2025-12-30,Arsenal,Aston Villa,4,1,D England,2,3,0,0,3,3,18,9,1.42,4.75,7.0,28958,2025-12-30,Arsenal,Aston Villa,4.41335,2.94195,2025
+2025-12-30,Chelsea,Bournemouth,2,2,S Barrott,1,1,0,0,12,3,5,12,1.5,4.75,5.75,28961,2025-12-30,Chelsea,Bournemouth,2.33294,3.49142,2025
+2025-12-30,Burnley,Newcastle,1,3,R Jones,2,1,0,0,3,4,9,3,5.25,4.2,1.6,28960,2025-12-30,Burnley,Newcastle,1.32551,2.49248,2025
+2025-12-30,Nott'm Forest,Everton,0,2,M Oliver,1,0,0,0,9,2,11,9,2.1,3.25,3.7,28965,2025-12-30,Nott'm Forest,Everton,1.75445,1.69525,2025
+2026-01-01,Crystal Palace,Fulham,1,1,T Harrington,0,5,0,0,6,3,7,10,2.15,3.3,3.4,28962,2026-01-01,Crystal Palace,Fulham,2.35346,1.75434,2025
+2026-01-01,Liverpool,Leeds,0,0,C Kavanagh,0,2,0,0,8,3,10,8,1.55,4.5,5.5,28963,2026-01-01,Liverpool,Leeds,1.67833,0.15936,2025
+2026-01-01,Brentford,Tottenham,0,0,A Madley,1,2,0,0,3,1,8,10,2.1,3.6,3.2,28959,2026-01-01,Brentford,Tottenham,0.556304,0.608309,2025
+2026-01-01,Sunderland,Man City,0,0,J Gillett,1,1,0,0,3,5,9,6,7.5,4.75,1.38,28966,2026-01-01,Sunderland,Man City,0.962141,2.44247,2025
+2026-01-03,Wolves,West Ham,3,0,P Bankes,1,0,0,0,6,7,11,10,2.5,3.3,2.88,28970,2026-01-03,Wolves,West Ham,2.23925,0.235678,2025
+2026-01-03,Aston Villa,Nott'm Forest,3,1,S Hooper,1,2,0,0,4,4,10,20,1.75,3.9,4.5,28972,2026-01-03,Aston Villa,Nott'm Forest,1.42988,0.8982,2025
+2026-01-03,Brighton,Burnley,2,0,T Robinson,0,4,0,0,4,4,7,17,1.48,4.33,7.0,28973,2026-01-03,Brighton,Burnley,1.4717,0.254551,2025
+2026-01-03,Bournemouth,Arsenal,2,3,C Kavanagh,3,1,0,0,7,5,13,8,6.5,4.75,1.44,28971,2026-01-03,Bournemouth,Arsenal,0.947846,1.28,2025
+2026-01-04,Fulham,Liverpool,2,2,C Pawson,1,1,0,0,3,8,11,4,3.8,3.75,1.91,28975,2026-01-04,Fulham,Liverpool,0.609182,1.7188,2025
+2026-01-04,Man City,Chelsea,1,1,M Oliver,3,3,0,0,8,2,12,14,1.6,4.75,4.5,28977,2026-01-04,Man City,Chelsea,1.03049,2.03726,2025
+2026-01-04,Tottenham,Sunderland,1,1,S Attwell,2,3,0,0,3,5,10,6,1.8,3.6,4.5,28969,2026-01-04,Tottenham,Sunderland,1.4175,0.467481,2025
+2026-01-04,Leeds,Man United,1,1,J Gillett,0,1,0,0,6,4,9,9,2.7,3.3,2.63,28976,2026-01-04,Leeds,Man United,0.970138,1.94781,2025
+2026-01-04,Everton,Brentford,2,4,A Taylor,0,2,0,0,4,5,9,8,2.35,3.25,3.1,28974,2026-01-04,Everton,Brentford,1.00566,3.05179,2025
+2026-01-04,Newcastle,Crystal Palace,2,0,J Brooks,1,3,0,0,8,6,5,12,1.7,3.9,4.75,28968,2026-01-04,Newcastle,Crystal Palace,2.72764,1.27825,2025
+2026-01-06,West Ham,Nott'm Forest,1,2,T Harrington,3,0,0,0,6,5,15,9,2.88,3.25,2.2,28987,2026-01-06,West Ham,Nott'm Forest,1.73697,1.26683,2025
+2026-01-07,Bournemouth,Tottenham,3,2,D England,3,3,0,0,3,7,19,10,2.1,3.6,3.3,28979,2026-01-07,Bournemouth,Tottenham,1.19014,1.6261,2025
+2026-01-07,Brentford,Sunderland,3,0,M Donohue,2,1,0,0,7,4,13,13,1.85,3.5,4.33,28981,2026-01-07,Brentford,Sunderland,3.86096,1.50644,2025
+2026-01-07,Crystal Palace,Aston Villa,0,0,A Madley,2,0,0,0,3,5,8,3,3.1,3.3,2.3,28983,2026-01-07,Crystal Palace,Aston Villa,1.32505,2.07015,2025
+2026-01-07,Everton,Wolves,1,1,T Kirk,1,3,2,0,2,7,13,15,1.75,3.5,5.0,28978,2026-01-07,Everton,Wolves,1.63321,0.71329,2025
+2026-01-07,Fulham,Chelsea,2,1,P Bankes,3,3,0,1,2,11,11,6,3.4,3.6,2.05,28984,2026-01-07,Fulham,Chelsea,1.06013,2.45107,2025
+2026-01-07,Man City,Brighton,1,1,T Bramall,1,6,0,0,6,2,6,16,1.4,5.25,6.5,28985,2026-01-07,Man City,Brighton,2.95904,1.33162,2025
+2026-01-07,Burnley,Man United,2,2,S Attwell,2,0,0,0,2,6,9,8,4.75,4.0,1.7,28982,2026-01-07,Burnley,Man United,0.31971,2.52488,2025
+2026-01-07,Newcastle,Leeds,4,3,M Salisbury,3,2,0,0,8,4,11,10,1.67,3.8,5.0,28986,2026-01-07,Newcastle,Leeds,2.43495,2.35318,2025
+2026-01-08,Arsenal,Liverpool,0,0,A Taylor,2,2,0,0,3,0,10,9,1.6,4.1,5.0,28980,2026-01-08,Arsenal,Liverpool,0.701832,0.318642,2025
+2026-01-17,Man United,Man City,2,0,A Taylor,2,3,0,0,1,6,13,8,3.7,3.8,1.91,28993,2026-01-17,Man United,Man City,3.07278,0.387015,2025
+2026-01-17,Chelsea,Brentford,2,0,J Brooks,3,2,0,0,3,9,7,10,1.73,4.0,4.75,28990,2026-01-17,Chelsea,Brentford,1.62263,1.47521,2025
+2026-01-17,Leeds,Fulham,1,0,C Kavanagh,1,5,0,0,7,3,6,11,2.15,3.3,3.5,28991,2026-01-17,Leeds,Fulham,2.16898,0.258796,2025
+2026-01-17,Liverpool,Burnley,1,1,A Madley,1,2,0,0,9,1,8,10,1.22,6.5,11.0,28992,2026-01-17,Liverpool,Burnley,3.49045,0.546971,2025
+2026-01-17,Sunderland,Crystal Palace,2,1,R Jones,3,3,0,0,3,4,8,15,2.75,3.1,2.75,28995,2026-01-17,Sunderland,Crystal Palace,1.84601,1.15169,2025
+2026-01-17,Tottenham,West Ham,1,2,J Gillett,5,3,0,0,11,5,12,17,1.73,4.0,4.5,28996,2026-01-17,Tottenham,West Ham,1.65292,2.76761,2025
+2026-01-17,Nott'm Forest,Arsenal,0,0,M Oliver,1,1,0,0,4,9,8,14,6.0,4.33,1.53,28994,2026-01-17,Nott'm Forest,Arsenal,0.318481,2.86323,2025
+2026-01-18,Wolves,Newcastle,0,0,S Barrott,2,2,0,0,4,7,14,8,4.75,4.0,1.7,28997,2026-01-18,Wolves,Newcastle,0.390216,0.813313,2025
+2026-01-18,Aston Villa,Everton,0,1,T Harrington,1,2,0,0,6,4,15,13,1.67,3.9,5.25,28988,2026-01-18,Aston Villa,Everton,0.905393,0.745859,2025
+2026-01-19,Brighton,Bournemouth,1,1,P Tierney,2,3,0,0,11,6,7,6,1.85,3.9,3.8,28989,2026-01-19,Brighton,Bournemouth,0.995777,1.69737,2025
+2026-01-24,Bournemouth,Liverpool,3,2,M Salisbury,1,1,0,0,3,11,7,7,3.75,3.8,1.9,28998,2026-01-24,Bournemouth,Liverpool,3.31474,0.937335,2025
+2026-01-24,Man City,Wolves,2,0,F Hallam,1,3,0,0,4,6,16,14,1.2,7.0,11.0,29005,2026-01-24,Man City,Wolves,1.0654,0.542683,2025
+2026-01-24,West Ham,Sunderland,3,1,T Bramall,2,4,0,0,3,3,9,16,2.5,3.2,2.88,29007,2026-01-24,West Ham,Sunderland,2.18675,0.713838,2025
+2026-01-24,Burnley,Tottenham,2,2,P Bankes,1,0,0,0,1,3,8,9,3.7,3.5,2.05,29001,2026-01-24,Burnley,Tottenham,1.54884,2.59093,2025
+2026-01-24,Fulham,Brighton,2,1,M Oliver,1,1,0,0,6,6,10,6,2.6,3.4,2.7,29004,2026-01-24,Fulham,Brighton,1.13243,1.94652,2025
+2026-01-25,Brentford,Nott'm Forest,0,2,S Barrott,1,0,0,0,6,5,11,10,1.91,3.5,4.1,29000,2026-01-25,Brentford,Nott'm Forest,2.00413,1.38958,2025
+2026-01-25,Crystal Palace,Chelsea,1,3,D England,2,2,1,0,4,5,11,10,3.5,3.8,2.0,29002,2026-01-25,Crystal Palace,Chelsea,2.41793,3.08817,2025
+2026-01-25,Newcastle,Aston Villa,0,2,J Gillett,1,2,0,0,6,5,7,12,1.95,3.7,3.7,29006,2026-01-25,Newcastle,Aston Villa,1.95484,1.32143,2025
+2026-01-25,Arsenal,Man United,2,3,C Pawson,2,0,0,0,9,2,11,9,1.55,4.2,6.0,28999,2026-01-25,Arsenal,Man United,1.42411,0.640902,2025
+2026-01-26,Everton,Leeds,1,1,S Hooper,0,3,0,0,4,4,9,13,2.5,3.25,2.9,29003,2026-01-26,Everton,Leeds,0.889916,1.6766,2025
+2026-01-31,Liverpool,Newcastle,4,1,S Hooper,1,3,0,0,7,11,11,7,1.8,3.9,4.1,29014,2026-01-31,Liverpool,Newcastle,3.09973,0.284319,2025
+2026-01-31,Wolves,Bournemouth,0,2,M Oliver,3,3,0,0,5,6,11,15,2.9,3.5,2.3,29017,2026-01-31,Wolves,Bournemouth,2.10353,1.59116,2025
+2026-01-31,Chelsea,West Ham,3,2,A Taylor,3,2,0,1,9,3,11,13,1.5,4.5,6.0,29009,2026-01-31,Chelsea,West Ham,2.66133,1.72585,2025
+2026-01-31,Brighton,Everton,1,1,C Kavanagh,1,2,0,0,5,2,13,14,1.85,3.6,4.1,29010,2026-01-31,Brighton,Everton,1.42825,1.28126,2025
+2026-01-31,Leeds,Arsenal,0,4,S Attwell,1,1,0,0,4,12,10,7,5.75,4.2,1.55,29015,2026-01-31,Leeds,Arsenal,0.17871,3.54427,2025
+2026-02-01,Aston Villa,Brentford,0,1,T Robinson,0,3,0,0,12,1,8,8,2.1,3.5,3.4,29008,2026-02-01,Aston Villa,Brentford,2.15316,0.314916,2025
+2026-02-01,Man United,Fulham,3,2,J Brooks,2,1,0,0,3,7,6,9,1.57,4.5,5.0,29012,2026-02-01,Man United,Fulham,1.84362,1.71998,2025
+2026-02-01,Nott'm Forest,Crystal Palace,1,1,M Salisbury,1,3,0,0,5,7,4,12,1.95,3.5,3.9,29013,2026-02-01,Nott'm Forest,Crystal Palace,0.987254,1.648,2025
+2026-02-01,Tottenham,Man City,2,2,R Jones,3,3,0,0,3,4,15,12,4.5,4.1,1.73,29016,2026-02-01,Tottenham,Man City,1.49738,2.03614,2025
+2026-02-02,Sunderland,Burnley,3,0,P Tierney,1,4,0,0,1,2,12,10,1.8,3.5,4.75,29011,2026-02-02,Sunderland,Burnley,1.8865,0.126371,2025
+2026-02-06,Leeds,Nott'm Forest,3,1,P Bankes,1,1,0,0,5,10,9,12,2.2,3.3,3.4,29023,2026-02-06,Leeds,Nott'm Forest,3.38179,1.6608,2025
+2026-02-07,Newcastle,Brentford,2,3,A Madley,2,2,0,0,9,3,14,18,2.1,3.5,3.5,29026,2026-02-07,Newcastle,Brentford,3.3215,1.65022,2025
+2026-02-07,Wolves,Chelsea,1,3,J Gillett,1,1,0,0,3,4,9,10,5.0,4.0,1.67,29027,2026-02-07,Wolves,Chelsea,1.11372,3.76278,2025
+2026-02-07,Fulham,Everton,1,2,S Attwell,1,5,0,0,6,6,11,12,2.1,3.25,3.75,29022,2026-02-07,Fulham,Everton,2.20126,1.88778,2025
+2026-02-07,Arsenal,Sunderland,3,0,S Barrott,1,2,0,0,5,2,11,8,1.22,6.25,12.0,29019,2026-02-07,Arsenal,Sunderland,1.19401,0.427225,2025
+2026-02-07,Bournemouth,Aston Villa,1,1,A Taylor,1,1,0,0,11,4,4,11,2.7,3.5,2.5,29018,2026-02-07,Bournemouth,Aston Villa,1.82646,0.646496,2025
+2026-02-07,Man United,Tottenham,2,0,M Oliver,1,2,0,1,7,0,12,11,1.57,4.5,5.0,29025,2026-02-07,Man United,Tottenham,2.16576,0.593404,2025
+2026-02-07,Burnley,West Ham,0,2,D England,3,1,0,0,5,2,11,10,3.3,3.5,2.15,29021,2026-02-07,Burnley,West Ham,1.84644,1.1223,2025
+2026-02-08,Brighton,Crystal Palace,0,1,T Bramall,1,3,0,0,3,4,12,9,1.95,3.5,3.9,29020,2026-02-08,Brighton,Crystal Palace,0.737798,0.928404,2025
+2026-02-08,Liverpool,Man City,1,2,C Pawson,2,4,1,0,5,4,13,16,2.38,3.7,2.75,29024,2026-02-08,Liverpool,Man City,1.26652,2.41476,2025
+2026-02-10,Tottenham,Newcastle,1,2,A Taylor,3,2,0,0,2,12,15,11,3.2,3.6,2.2,29036,2026-02-10,Tottenham,Newcastle,1.68925,2.46991,2025
+2026-02-10,West Ham,Man United,1,1,S Hooper,1,1,0,0,5,3,10,4,4.5,4.2,1.7,29037,2026-02-10,West Ham,Man United,1.30746,0.735767,2025
+2026-02-10,Chelsea,Leeds,2,2,R Jones,4,4,0,0,4,1,9,13,1.55,4.33,5.5,29030,2026-02-10,Chelsea,Leeds,3.21176,1.28948,2025
+2026-02-10,Everton,Bournemouth,1,2,A Madley,1,3,1,0,7,2,14,15,2.38,3.4,3.0,29032,2026-02-10,Everton,Bournemouth,2.33114,1.4121,2025
+2026-02-11,Aston Villa,Brighton,1,0,P Bankes,2,3,0,0,7,5,9,15,1.91,3.7,3.8,29028,2026-02-11,Aston Villa,Brighton,0.576138,0.481306,2025
+2026-02-11,Crystal Palace,Burnley,2,3,F Hallam,2,1,0,0,8,2,11,8,1.57,4.0,6.25,29031,2026-02-11,Crystal Palace,Burnley,2.1276,0.691273,2025
+2026-02-11,Man City,Fulham,3,0,P Tierney,3,1,0,0,4,4,8,10,1.36,5.5,7.0,29033,2026-02-11,Man City,Fulham,1.67722,1.05283,2025
+2026-02-11,Nott'm Forest,Wolves,0,0,T Robinson,0,2,0,0,8,2,12,13,1.7,3.8,5.0,29034,2026-02-11,Nott'm Forest,Wolves,3.69094,0.406959,2025
+2026-02-11,Sunderland,Liverpool,0,1,C Kavanagh,1,0,0,0,3,11,8,10,4.75,3.8,1.73,29035,2026-02-11,Sunderland,Liverpool,0.693794,3.08172,2025
+2026-02-12,Brentford,Arsenal,1,1,J Brooks,3,2,0,0,6,4,12,11,4.75,3.9,1.7,29029,2026-02-12,Brentford,Arsenal,1.81154,0.78418,2025
+2026-02-18,Wolves,Arsenal,2,2,P Tierney,2,1,0,0,1,3,6,8,11.0,5.25,1.29,29087,2026-02-18,Wolves,Arsenal,0.173119,2.01018,2025
+2026-02-21,West Ham,Bournemouth,0,0,S Barrott,1,1,0,0,9,5,10,11,2.5,3.7,2.63,29047,2026-02-21,West Ham,Bournemouth,2.34412,0.522731,2025
+2026-02-21,Chelsea,Burnley,1,1,L Smith,2,2,1,0,9,5,13,11,1.22,6.5,12.0,29040,2026-02-21,Chelsea,Burnley,2.51534,1.01255,2025
+2026-02-21,Man City,Newcastle,2,1,T Bramall,2,5,0,0,5,5,12,13,1.45,5.0,5.5,29043,2026-02-21,Man City,Newcastle,2.22648,0.507954,2025
+2026-02-21,Aston Villa,Leeds,1,1,M Oliver,1,4,0,0,7,2,11,16,1.85,3.6,4.33,29038,2026-02-21,Aston Villa,Leeds,1.25439,1.27855,2025
+2026-02-21,Brentford,Brighton,0,2,J Gillett,1,2,0,0,6,4,9,14,2.0,3.7,3.5,29039,2026-02-21,Brentford,Brighton,1.69023,1.37203,2025
+2026-02-22,Crystal Palace,Wolves,1,0,T Kirk,5,1,0,1,7,3,19,13,1.65,4.0,5.0,29041,2026-02-22,Crystal Palace,Wolves,2.03559,1.67749,2025
+2026-02-22,Nott'm Forest,Liverpool,0,1,A Taylor,2,0,0,0,7,2,13,9,4.1,3.9,1.8,29044,2026-02-22,Nott'm Forest,Liverpool,0.934768,2.39634,2025
+2026-02-22,Sunderland,Fulham,1,3,C Pawson,1,1,0,0,6,4,6,13,2.7,3.25,2.7,29045,2026-02-22,Sunderland,Fulham,1.7609,2.16696,2025
+2026-02-22,Tottenham,Arsenal,1,4,P Bankes,2,1,0,0,2,5,17,11,6.0,4.0,1.57,29046,2026-02-22,Tottenham,Arsenal,0.383264,3.31701,2025
+2026-02-23,Everton,Man United,0,1,D England,2,3,0,0,10,1,12,7,3.7,3.75,1.91,29042,2026-02-23,Everton,Man United,0.560924,1.4547,2025
+2026-02-27,Wolves,Aston Villa,2,0,C Pawson,3,3,0,0,0,5,13,19,4.1,3.7,1.85,29057,2026-02-27,Wolves,Aston Villa,1.50771,1.31328,2025
+2026-02-28,Leeds,Man City,0,1,P Bankes,0,3,0,0,5,3,10,8,4.75,4.33,1.62,29053,2026-02-28,Leeds,Man City,1.37824,2.46834,2025
+2026-02-28,Liverpool,West Ham,5,2,T Robinson,2,2,0,0,10,5,12,11,1.42,4.75,6.5,29054,2026-02-28,Liverpool,West Ham,2.09939,1.3517,2025
+2026-02-28,Newcastle,Everton,2,3,S Attwell,2,3,0,0,7,2,15,7,1.7,4.0,4.75,29056,2026-02-28,Newcastle,Everton,1.11889,2.40731,2025
+2026-02-28,Bournemouth,Sunderland,1,1,J Gillett,4,2,0,0,7,3,15,12,1.8,3.75,4.33,29048,2026-02-28,Bournemouth,Sunderland,1.82434,1.07887,2025
+2026-02-28,Burnley,Brentford,3,4,S Barrott,2,2,0,0,4,8,9,9,4.5,3.9,1.73,29051,2026-02-28,Burnley,Brentford,0.823824,2.44595,2025
+2026-03-01,Brighton,Nott'm Forest,2,1,A Madley,3,1,0,0,4,4,12,13,2.0,3.6,3.5,29050,2026-03-01,Brighton,Nott'm Forest,1.20107,0.83055,2025
+2026-03-01,Fulham,Tottenham,2,1,T Bramall,3,3,0,0,5,8,11,14,2.1,3.6,3.3,29052,2026-03-01,Fulham,Tottenham,2.3207,0.952091,2025
+2026-03-01,Man United,Crystal Palace,2,1,C Kavanagh,2,2,0,1,7,1,13,12,1.53,4.5,5.5,29055,2026-03-01,Man United,Crystal Palace,2.34609,0.384699,2025
+2026-03-01,Arsenal,Chelsea,2,1,D England,1,3,0,1,5,10,11,14,1.6,3.8,5.5,29049,2026-03-01,Arsenal,Chelsea,1.71598,1.35268,2025
+2026-03-03,Bournemouth,Brentford,0,0,C Pawson,2,1,0,0,4,3,9,10,2.5,3.6,2.63,29058,2026-03-03,Bournemouth,Brentford,2.3177,0.673328,2025
+2026-03-03,Everton,Burnley,2,0,T Robinson,0,1,0,0,6,3,10,12,1.57,4.0,6.0,29061,2026-03-03,Everton,Burnley,1.15845,0.762229,2025
+2026-03-03,Leeds,Sunderland,0,1,S Attwell,1,3,0,0,9,2,15,19,1.85,3.4,4.33,29063,2026-03-03,Leeds,Sunderland,0.888232,0.843856,2025
+2026-03-03,Wolves,Liverpool,2,1,T Bramall,2,1,0,0,2,11,10,13,5.5,4.5,1.5,29067,2026-03-03,Wolves,Liverpool,0.636033,2.17217,2025
+2026-03-04,Newcastle,Man United,2,1,P Bankes,2,3,1,0,2,4,15,16,2.63,3.5,2.6,29065,2026-03-04,Newcastle,Man United,1.96637,1.80571,2025
+2026-03-04,Fulham,West Ham,0,1,M Donohue,2,4,0,0,7,5,14,12,2.0,3.5,3.7,29062,2026-03-04,Fulham,West Ham,0.628123,1.49528,2025
+2026-03-04,Man City,Nott'm Forest,2,2,D England,0,4,0,0,6,1,10,6,1.38,5.0,7.5,29064,2026-03-04,Man City,Nott'm Forest,2.72655,1.23642,2025
+2026-03-04,Aston Villa,Chelsea,1,4,J Gillett,3,2,0,0,3,8,10,9,2.7,3.4,2.55,29059,2026-03-04,Aston Villa,Chelsea,1.06854,3.38883,2025
+2026-03-04,Brighton,Arsenal,0,1,C Kavanagh,4,1,0,0,4,3,14,12,4.75,4.1,1.65,29060,2026-03-04,Brighton,Arsenal,0.919228,0.514803,2025
+2026-03-05,Tottenham,Crystal Palace,1,3,A Madley,3,2,0,0,6,3,14,14,2.35,3.25,3.1,29066,2026-03-05,Tottenham,Crystal Palace,1.29615,1.91515,2025
+2026-03-14,Burnley,Bournemouth,0,0,P Bankes,1,0,0,0,5,8,11,5,4.1,3.8,1.83,29070,2026-03-14,Burnley,Bournemouth,1.67695,2.36979,2025
+2026-03-14,Sunderland,Brighton,0,1,T Kirk,1,2,0,0,7,3,7,12,3.3,3.3,2.25,29076,2026-03-14,Sunderland,Brighton,0.659083,1.12832,2025
+2026-03-14,Arsenal,Everton,2,0,A Madley,0,0,0,0,8,3,11,12,1.38,4.75,8.5,29068,2026-03-14,Arsenal,Everton,1.90855,1.17847,2025
+2026-03-14,Chelsea,Newcastle,0,1,P Tierney,2,2,0,0,8,1,9,10,1.8,4.2,3.8,29071,2026-03-14,Chelsea,Newcastle,1.72508,1.03251,2025
+2026-03-14,West Ham,Man City,1,1,M Oliver,2,2,0,0,1,15,14,5,4.33,4.33,1.7,29077,2026-03-14,West Ham,Man City,0.488982,1.9546,2025
+2026-03-15,Nott'm Forest,Fulham,0,0,S Barrott,2,3,0,0,5,4,8,10,2.2,3.4,3.3,29075,2026-03-15,Nott'm Forest,Fulham,0.821011,0.933988,2025
+2026-03-15,Liverpool,Tottenham,1,1,C Kavanagh,0,0,0,0,3,4,8,13,1.3,6.25,8.0,29073,2026-03-15,Liverpool,Tottenham,1.30076,1.15636,2025
+2026-03-15,Crystal Palace,Leeds,0,0,T Bramall,2,1,0,1,8,3,12,11,2.55,3.3,2.88,29072,2026-03-15,Crystal Palace,Leeds,0.525205,1.13558,2025
+2026-03-15,Man United,Aston Villa,3,1,A Taylor,3,2,0,0,6,6,10,5,1.73,4.0,4.5,29074,2026-03-15,Man United,Aston Villa,1.67823,1.21071,2025
+2026-03-16,Brentford,Wolves,2,2,S Attwell,2,4,0,0,1,5,12,10,1.55,4.2,5.75,29069,2026-03-16,Brentford,Wolves,2.7966,1.80044,2025
+2026-03-20,Bournemouth,Man United,2,2,S Attwell,2,2,0,1,6,8,10,9,3.2,3.8,2.1,29078,2026-03-20,Bournemouth,Man United,1.76664,1.74574,2025
+2026-03-21,Brighton,Liverpool,2,1,D England,5,5,0,0,4,8,11,11,3.1,3.5,2.2,29080,2026-03-21,Brighton,Liverpool,3.42956,0.956801,2025
+2026-03-21,Fulham,Burnley,3,1,C Kavanagh,2,2,0,1,6,6,6,9,1.53,4.1,6.25,29082,2026-03-21,Fulham,Burnley,3.48438,1.92556,2025
+2026-03-21,Everton,Chelsea,3,0,S Barrott,0,2,0,0,3,9,6,7,3.5,3.4,2.1,29081,2026-03-21,Everton,Chelsea,1.44532,1.35143,2025
+2026-03-21,Leeds,Brentford,0,0,J Gillett,2,0,0,0,6,2,6,9,2.45,3.5,2.88,29083,2026-03-21,Leeds,Brentford,0.417296,0.302221,2025
+2026-03-22,Newcastle,Sunderland,1,2,A Taylor,1,6,0,0,9,5,8,19,1.67,4.0,5.0,29085,2026-03-22,Newcastle,Sunderland,1.26705,2.66657,2025
+2026-03-22,Aston Villa,West Ham,2,0,P Tierney,0,1,0,0,6,6,3,7,1.95,3.6,3.8,29079,2026-03-22,Aston Villa,West Ham,2.48528,0.760054,2025
+2026-03-22,Tottenham,Nott'm Forest,0,3,M Oliver,1,2,0,0,13,3,13,13,2.25,3.4,3.2,29086,2026-03-22,Tottenham,Nott'm Forest,1.6189,1.54408,2025
+2026-04-10,West Ham,Wolves,4,0,J Gillett,2,2,0,0,5,2,11,7,1.8,3.8,4.33,29091,2026-04-10,West Ham,Wolves,2.54379,0.571967,2025
+2026-04-11,Burnley,Brighton,0,2,T Bramall,2,1,0,0,8,2,7,11,4.5,4.0,1.73,29094,2026-04-11,Burnley,Brighton,0.812029,1.07182,2025
+2026-04-11,Liverpool,Fulham,2,0,A Taylor,0,0,0,0,6,9,10,4,1.65,4.2,4.75,29097,2026-04-11,Liverpool,Fulham,2.01499,1.42024,2025
+2026-04-11,Brentford,Everton,2,2,F Hallam,0,2,0,0,2,3,6,7,2.15,3.3,3.5,29093,2026-04-11,Brentford,Everton,2.26302,1.57033,2025
+2026-04-11,Arsenal,Bournemouth,1,2,M Oliver,1,3,0,0,10,1,12,18,1.44,4.5,7.5,29092,2026-04-11,Arsenal,Bournemouth,3.16346,1.39461,2025
+2026-04-12,Crystal Palace,Newcastle,2,1,A Madley,0,3,0,0,2,4,17,12,3.0,3.6,2.2,29096,2026-04-12,Crystal Palace,Newcastle,3.13933,1.27299,2025
+2026-04-12,Nott'm Forest,Aston Villa,1,1,M Salisbury,2,2,0,0,7,3,15,10,2.63,3.3,2.7,29089,2026-04-12,Nott'm Forest,Aston Villa,0.85045,1.36297,2025
+2026-04-12,Sunderland,Tottenham,1,0,R Jones,3,3,0,0,2,6,14,15,2.7,3.2,2.7,29090,2026-04-12,Sunderland,Tottenham,1.77584,1.01598,2025
+2026-04-12,Chelsea,Man City,0,3,C Kavanagh,3,1,0,0,4,12,10,14,3.1,3.8,2.15,29095,2026-04-12,Chelsea,Man City,1.22108,2.40839,2025
+2026-04-13,Man United,Leeds,1,2,P Tierney,3,2,1,0,11,4,12,15,1.62,4.1,5.0,29088,2026-04-13,Man United,Leeds,1.36555,2.95118,2025
+2026-04-18,Chelsea,Man United,0,1,M Oliver,1,3,0,0,7,1,12,13,2.2,3.5,3.2,29100,2026-04-18,Chelsea,Man United,1.28109,0.436043,2025
+2026-04-18,Newcastle,Bournemouth,1,2,T Bramall,2,4,0,0,2,3,11,12,2.0,3.75,3.5,29105,2026-04-18,Newcastle,Bournemouth,1.61167,3.36662,2025
+2026-04-18,Tottenham,Brighton,2,2,S Attwell,3,1,0,0,7,5,14,14,2.7,3.75,2.4,29107,2026-04-18,Tottenham,Brighton,1.56052,1.1373,2025
+2026-04-18,Brentford,Fulham,0,0,P Tierney,0,1,0,0,9,3,8,13,2.1,3.75,3.25,29099,2026-04-18,Brentford,Fulham,2.33552,0.790707,2025
+2026-04-18,Leeds,Wolves,3,0,F Hallam,2,1,0,0,5,6,9,17,1.62,3.9,5.75,29103,2026-04-18,Leeds,Wolves,3.55804,0.568627,2025
+2026-04-19,Aston Villa,Sunderland,4,3,S Barrott,1,3,0,0,4,5,11,11,1.67,3.75,5.5,29098,2026-04-19,Aston Villa,Sunderland,3.90223,1.56008,2025
+2026-04-19,Everton,Liverpool,1,2,C Kavanagh,2,0,0,0,1,6,8,12,3.1,3.4,2.3,29102,2026-04-19,Everton,Liverpool,1.4784,1.38333,2025
+2026-04-19,Nott'm Forest,Burnley,4,1,T Kirk,0,2,0,0,4,4,8,12,1.5,4.2,7.0,29106,2026-04-19,Nott'm Forest,Burnley,1.4425,0.601418,2025
+2026-04-19,Man City,Arsenal,2,1,A Taylor,2,2,0,0,8,5,5,12,1.83,3.7,4.2,29104,2026-04-19,Man City,Arsenal,2.61528,2.28964,2025
+2026-04-20,Crystal Palace,West Ham,0,0,D England,2,1,0,0,4,6,13,12,2.38,3.2,3.1,29101,2026-04-20,Crystal Palace,West Ham,0.733442,0.622445,2025
+2026-04-21,Brighton,Chelsea,3,0,C Pawson,1,1,0,0,6,5,15,6,2.5,3.5,2.7,29110,2026-04-21,Brighton,Chelsea,2.51784,0.297865,2025
+2026-04-22,Burnley,Man City,0,1,A Madley,0,0,0,0,3,11,10,12,19.0,9.0,1.13,29111,2026-04-22,Burnley,Man City,0.973776,3.40888,2025
+2026-04-22,Bournemouth,Leeds,2,2,M Salisbury,3,0,0,0,12,1,6,10,2.0,3.5,3.6,29108,2026-04-22,Bournemouth,Leeds,1.91355,1.21601,2025
+2026-04-24,Sunderland,Nott'm Forest,0,5,D England,2,5,0,0,3,6,13,15,2.7,3.2,2.7,29115,2026-04-24,Sunderland,Nott'm Forest,0.614323,1.54208,2025
+2026-04-25,Arsenal,Newcastle,1,0,S Barrott,2,2,0,0,7,2,13,10,1.45,4.75,6.25,29109,2026-04-25,Arsenal,Newcastle,0.639189,0.868897,2025
+2026-04-25,Wolves,Tottenham,0,1,A Taylor,3,4,0,0,5,5,8,14,4.5,4.33,1.67,29117,2026-04-25,Wolves,Tottenham,0.762656,1.06403,2025
+2026-04-25,Fulham,Aston Villa,1,0,M Oliver,2,2,0,0,2,5,14,12,2.75,3.6,2.45,29112,2026-04-25,Fulham,Aston Villa,1.24069,0.906156,2025
+2026-04-25,Liverpool,Crystal Palace,3,1,A Madley,1,3,0,0,5,8,10,10,1.44,5.0,6.25,29113,2026-04-25,Liverpool,Crystal Palace,1.45071,2.19912,2025
+2026-04-25,West Ham,Everton,2,1,S Attwell,3,4,0,0,3,4,9,11,2.4,3.4,2.9,29116,2026-04-25,West Ham,Everton,1.8356,1.1144,2025
+2026-04-27,Man United,Brentford,2,1,C Kavanagh,2,4,0,0,7,8,6,9,1.85,3.8,4.0,29114,2026-04-27,Man United,Brentford,1.84852,1.30383,2025
+2026-05-01,Leeds,Burnley,3,1,T Bramall,4,3,0,0,5,0,12,11,1.33,5.0,9.5,29124,2026-05-01,Leeds,Burnley,2.09546,0.434597,2025
+2026-05-02,Brentford,West Ham,3,0,C Pawson,1,3,0,0,2,6,8,12,1.91,3.75,3.75,29121,2026-05-02,Brentford,West Ham,2.27374,0.753895,2025
+2026-05-02,Newcastle,Brighton,3,1,C Kavanagh,3,3,0,0,2,10,10,12,2.5,3.75,2.6,29126,2026-05-02,Newcastle,Brighton,3.12933,1.87112,2025
+2026-05-02,Wolves,Sunderland,1,1,P Tierney,0,4,0,1,6,3,11,11,3.1,3.2,2.1,29127,2026-05-02,Wolves,Sunderland,1.96131,0.923954,2025
+2026-05-02,Arsenal,Fulham,3,0,J Gillett,0,1,0,0,3,4,7,12,1.44,4.33,7.0,29119,2026-05-02,Arsenal,Fulham,4.09079,0.696714,2025
+2026-05-03,Aston Villa,Tottenham,1,2,S Barrott,2,5,0,0,5,5,12,12,2.15,3.6,3.2,29120,2026-05-03,Aston Villa,Tottenham,0.609494,1.12225,2025
+2026-05-03,Man United,Liverpool,3,2,D England,2,2,0,0,3,2,12,11,2.3,3.8,2.75,29125,2026-05-03,Man United,Liverpool,2.55612,1.02814,2025
+2026-05-03,Bournemouth,Crystal Palace,3,0,R Jones,0,2,0,0,7,1,10,11,1.57,4.33,5.25,29118,2026-05-03,Bournemouth,Crystal Palace,2.29626,0.678329,2025
+2026-05-04,Chelsea,Nott'm Forest,1,3,A Taylor,3,1,0,0,10,1,12,10,1.7,4.0,4.75,29122,2026-05-04,Chelsea,Nott'm Forest,2.17132,2.31019,2025
+2026-05-04,Everton,Man City,3,3,M Oliver,4,1,0,0,5,9,15,5,6.5,4.75,1.44,29123,2026-05-04,Everton,Man City,1.68558,1.41706,2025
+2026-05-09,Liverpool,Chelsea,1,1,C Pawson,2,4,0,0,5,2,17,17,1.83,4.0,3.9,29132,2026-05-09,Liverpool,Chelsea,0.623191,0.597184,2025
+2026-05-09,Brighton,Wolves,3,0,J Brooks,1,2,0,0,7,1,9,11,1.27,6.25,9.5,29128,2026-05-09,Brighton,Wolves,2.22427,0.515647,2025
+2026-05-09,Fulham,Bournemouth,0,1,A Madley,4,2,1,1,11,2,12,21,2.75,3.6,2.4,29131,2026-05-09,Fulham,Bournemouth,1.24334,0.998003,2025
+2026-05-09,Sunderland,Man United,0,0,S Attwell,0,3,0,0,7,8,12,12,3.9,3.75,1.85,29135,2026-05-09,Sunderland,Man United,1.2376,0.535981,2025
+2026-05-09,Man City,Brentford,3,0,M Salisbury,4,2,0,0,10,2,8,14,1.36,5.75,7.0,29133,2026-05-09,Man City,Brentford,4.37429,0.670038,2025
+2026-05-10,Nott'm Forest,Newcastle,1,1,P Tierney,2,0,0,0,2,1,16,11,2.6,3.6,2.6,29134,2026-05-10,Nott'm Forest,Newcastle,1.46434,1.65067,2025
+2026-05-10,West Ham,Arsenal,0,1,C Kavanagh,3,4,0,0,4,3,14,12,5.5,4.2,1.57,29137,2026-05-10,West Ham,Arsenal,1.32011,1.42953,2025
+2026-05-10,Burnley,Aston Villa,2,2,A Taylor,1,1,0,0,2,8,18,8,5.0,4.33,1.6,29129,2026-05-10,Burnley,Aston Villa,1.71234,1.75493,2025
+2026-05-10,Crystal Palace,Everton,2,2,T Bramall,0,2,0,0,5,10,5,13,2.7,3.3,2.63,29130,2026-05-10,Crystal Palace,Everton,3.28826,2.10265,2025
+2026-05-11,Tottenham,Leeds,1,1,J Gillett,3,1,0,0,14,2,12,7,1.83,4.1,3.75,29136,2026-05-11,Tottenham,Leeds,1.49036,1.86976,2025
+2026-05-13,Man City,Crystal Palace,3,0,S Attwell,0,2,0,0,9,4,10,7,1.2,7.5,12.0,29084,2026-05-13,Man City,Crystal Palace,1.95679,0.428862,2025
+2026-05-15,Aston Villa,Liverpool,4,2,C Kavanagh,3,1,0,0,4,9,12,9,2.75,3.5,2.4,29140,2026-05-15,Aston Villa,Liverpool,2.5252,1.55027,2025
+2026-05-17,Man United,Nott'm Forest,3,2,M Salisbury,2,1,0,0,7,6,11,5,1.6,4.2,5.25,29145,2026-05-17,Man United,Nott'm Forest,4.28532,1.84418,2025
+2026-05-17,Brentford,Crystal Palace,2,2,S Barrott,1,3,0,0,9,4,7,5,1.73,4.2,4.33,29141,2026-05-17,Brentford,Crystal Palace,1.54564,1.82274,2025
+2026-05-17,Everton,Sunderland,1,3,J Brooks,3,0,0,0,3,2,14,9,1.8,3.75,4.33,29143,2026-05-17,Everton,Sunderland,1.32181,1.28383,2025
+2026-05-17,Leeds,Brighton,1,0,M Oliver,1,0,0,0,7,8,9,7,3.2,3.6,2.15,29144,2026-05-17,Leeds,Brighton,0.747756,2.23238,2025
+2026-05-17,Wolves,Fulham,1,1,T Kirk,1,0,0,0,3,6,20,8,3.8,3.8,1.9,29147,2026-05-17,Wolves,Fulham,1.49725,1.48412,2025
+2026-05-17,Newcastle,West Ham,3,1,J Gillett,1,3,0,0,9,1,8,11,2.1,3.8,3.2,29146,2026-05-17,Newcastle,West Ham,2.1336,0.957771,2025
+2026-05-18,Arsenal,Burnley,1,0,P Tierney,1,3,0,0,3,3,7,16,1.09,11.0,23.0,29139,2026-05-18,Arsenal,Burnley,1.22695,0.194884,2025
+2026-05-19,Bournemouth,Man City,1,1,A Taylor,4,2,0,0,7,6,16,7,4.5,4.33,1.67,29138,2026-05-19,Bournemouth,Man City,1.71486,1.26917,2025
+2026-05-19,Chelsea,Tottenham,2,1,S Attwell,4,3,0,0,3,4,11,18,1.91,3.7,3.9,29142,2026-05-19,Chelsea,Tottenham,1.09262,2.15227,2025
+2026-05-24,Brighton,Man United,0,3,S Barrott,0,1,0,0,0,3,11,8,1.85,4.2,3.6,29148,2026-05-24,Brighton,Man United,0.702398,2.32868,2025
+2026-05-24,Burnley,Wolves,1,1,A Kitchen,2,2,0,0,7,7,10,11,2.35,3.5,2.9,29149,2026-05-24,Burnley,Wolves,1.28476,2.8433,2025
+2026-05-24,Crystal Palace,Arsenal,1,2,F Hallam,0,1,0,0,3,4,9,12,4.2,4.0,1.75,29150,2026-05-24,Crystal Palace,Arsenal,1.00492,3.90645,2025
+2026-05-24,Fulham,Newcastle,2,0,R Jones,2,2,0,0,6,6,13,6,2.88,3.8,2.25,29151,2026-05-24,Fulham,Newcastle,1.72878,0.24232,2025
+2026-05-24,Liverpool,Brentford,1,1,D England,2,3,0,0,14,2,9,9,1.8,4.2,3.8,29152,2026-05-24,Liverpool,Brentford,2.99412,1.46082,2025
+2026-05-24,Man City,Aston Villa,1,2,A Madley,1,0,0,0,9,4,8,4,1.29,6.0,9.0,29153,2026-05-24,Man City,Aston Villa,1.38085,2.4397,2025
+2026-05-24,Nott'm Forest,Bournemouth,1,1,C Pawson,1,1,0,0,6,3,11,7,3.3,3.75,2.05,29154,2026-05-24,Nott'm Forest,Bournemouth,2.05852,1.33684,2025
+2026-05-24,Sunderland,Chelsea,2,1,C Kavanagh,3,2,0,0,7,7,15,18,3.6,3.6,2.0,29155,2026-05-24,Sunderland,Chelsea,2.33109,0.920885,2025
+2026-05-24,Tottenham,Everton,1,0,M Oliver,5,3,0,1,6,2,15,12,1.91,3.75,3.8,29156,2026-05-24,Tottenham,Everton,1.40597,0.268476,2025
+2026-05-24,West Ham,Leeds,3,0,A Taylor,0,3,0,0,6,4,11,14,1.85,4.0,3.75,29157,2026-05-24,West Ham,Leeds,2.73135,1.94969,2025
