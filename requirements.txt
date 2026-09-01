@@ -6,15 +6,23 @@ scipy>=1.10.0
 # Machine Learning
 scikit-learn>=1.2.0
 xgboost>=2.0.0
+joblib>=1.3.0
 
-# Data Scraping
+# Deep Learning (Neural Dixon-Coles)
+torch>=2.0.0
+
+# Data Scraping & API integration
 understatapi>=0.6.0
 requests>=2.31.0
+python-dotenv>=1.0.0
 
 # Development Environment
 jupyterlab>=4.0.0
 matplotlib>=3.7.0
 seaborn>=0.12.0
+
+# Visualisation
+plotly>=5.18.0
 
 #Cloud Deployment
 streamlit
