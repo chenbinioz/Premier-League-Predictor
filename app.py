@@ -46,6 +46,7 @@ from scripts.predict_next_gameweek import (
     run_ndc_inference,
     run_xgb_inference,
 )
+from src.data.live_fetchers import fetch_from_football_data_csv, normalize_team_name
 
 # Page Configuration
 st.set_page_config(
@@ -474,6 +475,52 @@ def _probability_triplet(row: pd.Series, prefix: str, fallback_prefix: str | Non
     return None
 
 
+def _odds_to_prob_triplet(home_odds: object, draw_odds: object, away_odds: object) -> tuple[float, float, float] | None:
+    try:
+        h = float(home_odds)
+        d = float(draw_odds)
+        a = float(away_odds)
+    except (TypeError, ValueError):
+        return None
+
+    if any(v <= 0 for v in (h, d, a)):
+        return None
+
+    implied = (1.0 / h) + (1.0 / d) + (1.0 / a)
+    return (1.0 / h) / implied, (1.0 / d) / implied, (1.0 / a) / implied
+
+
+@st.cache_data(ttl=300)
+def _load_bookie_odds_map() -> dict[tuple[str, str, str], tuple[float, float, float]]:
+    mapping: dict[tuple[str, str, str], tuple[float, float, float]] = {}
+    for row in fetch_from_football_data_csv():
+        home = normalize_team_name(row.get("home_team"))
+        away = normalize_team_name(row.get("away_team"))
+        match_date = str(row.get("date") or "")
+        if not home or not away or not match_date:
+            continue
+        triplet = _odds_to_prob_triplet(row.get("B365H"), row.get("B365D"), row.get("B365A"))
+        if triplet is not None:
+            mapping[(home, away, match_date)] = triplet
+    return mapping
+
+
+def _bookie_prob_triplet_from_row(row: pd.Series) -> tuple[float, float, float] | None:
+    odds_h = row.get("B365H")
+    odds_d = row.get("B365D")
+    odds_a = row.get("B365A")
+    if all(pd.notna(v) for v in [odds_h, odds_d, odds_a]):
+        return _odds_to_prob_triplet(odds_h, odds_d, odds_a)
+
+    bookie_map = _load_bookie_odds_map()
+    key = (
+        normalize_team_name(row.get("home_team")),
+        normalize_team_name(row.get("away_team")),
+        str(row.get("match_date") or ""),
+    )
+    return bookie_map.get(key)
+
+
 def _ndc_implied_odds(ndc_h: float, ndc_d: float, ndc_a: float) -> tuple[float, float, float]:
     margin = 1.05
     raw_h = ndc_h * margin
@@ -494,6 +541,7 @@ def build_gameweek_overview(df_fixtures: pd.DataFrame, df_predictions: pd.DataFr
             "Final Prob Hits", "Final Prob Total",
             "NDC Prob Hits", "NDC Prob Total",
             "XGB Prob Hits", "XGB Prob Total",
+            "Bookie Prob Hits", "Bookie Prob Total",
             "NDC Score Hits", "NDC Score Total",
             "Static Prob Hits", "Static Prob Total", "Static Score Hits", "Static Score Total",
         ])
@@ -516,6 +564,8 @@ def build_gameweek_overview(df_fixtures: pd.DataFrame, df_predictions: pd.DataFr
                 "NDC Prob Total": 0,
                 "XGB Prob Hits": 0,
                 "XGB Prob Total": 0,
+                "Bookie Prob Hits": 0,
+                "Bookie Prob Total": 0,
                 "NDC Score Hits": 0,
                 "NDC Score Total": 0,
                 "Static Prob Hits": 0,
@@ -532,9 +582,13 @@ def build_gameweek_overview(df_fixtures: pd.DataFrame, df_predictions: pd.DataFr
         final_prob_hits = 0
         ndc_prob_hits = 0
         xgb_prob_hits = 0
+        bookie_prob_hits = 0
         ndc_score_hits = 0
         static_prob_hits = 0
         static_score_hits = 0
+        ndc_total = 0
+        xgb_total = 0
+        bookie_total = 0
 
         for _, row in played_df.iterrows():
             actual_outcome = _actual_outcome_label(row["home_goals"], row["away_goals"])
@@ -543,18 +597,26 @@ def build_gameweek_overview(df_fixtures: pd.DataFrame, df_predictions: pd.DataFr
             final_probs = _probability_triplet(row, "predicted")
             ndc_probs = _probability_triplet(row, "ndc", fallback_prefix="predicted")
             xgb_probs = _probability_triplet(row, "xgb", fallback_prefix="predicted")
+            bookie_probs = _bookie_prob_triplet_from_row(row)
 
             if final_probs:
                 final_outcome = _predicted_outcome_label(*final_probs)
                 final_prob_hits += int(final_outcome == actual_outcome)
 
             if ndc_probs:
+                ndc_total += 1
                 ndc_outcome = _predicted_outcome_label(*ndc_probs)
                 ndc_prob_hits += int(ndc_outcome == actual_outcome)
 
             if xgb_probs:
+                xgb_total += 1
                 xgb_outcome = _predicted_outcome_label(*xgb_probs)
                 xgb_prob_hits += int(xgb_outcome == actual_outcome)
+
+            if bookie_probs:
+                bookie_total += 1
+                bookie_outcome = _predicted_outcome_label(*bookie_probs)
+                bookie_prob_hits += int(bookie_outcome == actual_outcome)
 
             ndc_candidates = _parse_scoreline_candidates(row.get("predicted_score"), top_n=3)
             ndc_score_hits += int(actual_score in ndc_candidates)
@@ -578,9 +640,11 @@ def build_gameweek_overview(df_fixtures: pd.DataFrame, df_predictions: pd.DataFr
             "Final Prob Hits": final_prob_hits,
             "Final Prob Total": total_fixtures,
             "NDC Prob Hits": ndc_prob_hits,
-            "NDC Prob Total": total_fixtures,
+            "NDC Prob Total": ndc_total,
             "XGB Prob Hits": xgb_prob_hits,
-            "XGB Prob Total": total_fixtures,
+            "XGB Prob Total": xgb_total,
+            "Bookie Prob Hits": bookie_prob_hits,
+            "Bookie Prob Total": bookie_total,
             "NDC Score Hits": ndc_score_hits,
             "NDC Score Total": total_fixtures,
             "Static Prob Hits": static_prob_hits,
@@ -1270,9 +1334,10 @@ with tab_live:
         def compute_model_metrics(df_completed):
             if df_completed.empty:
                 return {
-                    "blend": {"hits": 0, "acc": 0.0, "loss": 0.0},
-                    "xgb":   {"hits": 0, "acc": 0.0, "loss": 0.0},
-                    "ndc":   {"hits": 0, "acc": 0.0, "loss": 0.0},
+                    "blend": {"hits": 0, "acc": 0.0, "loss": 0.0, "total": 0},
+                    "xgb":   {"hits": 0, "acc": 0.0, "loss": 0.0, "total": 0},
+                    "ndc":   {"hits": 0, "acc": 0.0, "loss": 0.0, "total": 0},
+                    "bookie": {"hits": 0, "acc": 0.0, "loss": 0.0, "total": 0},
                 }
 
             def _sf(val, fallback):
@@ -1283,59 +1348,82 @@ with tab_live:
                 except (TypeError, ValueError):
                     return float(fallback)
 
-            hits_blend, hits_xgb, hits_ndc = 0, 0, 0
-            y_true, probs_blend, probs_xgb, probs_ndc = [], [], [], []
+            hits_blend, hits_xgb, hits_ndc, hits_bookie = 0, 0, 0, 0
+            y_true_blend, y_true_xgb, y_true_ndc, y_true_bookie = [], [], [], []
+            probs_blend, probs_xgb, probs_ndc, probs_bookie = [], [], [], []
 
             for _, row in df_completed.iterrows():
                 h_g = row["home_goals"]
                 a_g = row["away_goals"]
                 actual = "Home" if h_g > a_g else "Away" if h_g < a_g else "Draw"
-                target_idx = 2 if h_g > a_g else 0 if h_g < a_g else 1
-                y_true.append(target_idx)
+                actual_idx = 2 if h_g > a_g else 0 if h_g < a_g else 1
 
-                # Blended Ensemble
+                # Blended Ensemble (always present for locked rows)
                 b_h = _sf(row.get("predicted_home_prob"), 0.33)
                 b_d = _sf(row.get("predicted_draw_prob"), 0.33)
                 b_a = _sf(row.get("predicted_away_prob"), 0.34)
                 p_blend = {"Home": b_h, "Draw": b_d, "Away": b_a}
                 if max(p_blend, key=p_blend.get) == actual:
                     hits_blend += 1
+                y_true_blend.append(actual_idx)
                 probs_blend.append([b_a, b_d, b_h])
 
                 # XGBoost Classifier
-                x_h = _sf(row.get("xgb_home_prob"), b_h)
-                x_d = _sf(row.get("xgb_draw_prob"), b_d)
-                x_a = _sf(row.get("xgb_away_prob"), b_a)
-                p_xgb = {"Home": x_h, "Draw": x_d, "Away": x_a}
-                if max(p_xgb, key=p_xgb.get) == actual:
-                    hits_xgb += 1
-                probs_xgb.append([x_a, x_d, x_h])
+                x_h = row.get("xgb_home_prob")
+                x_d = row.get("xgb_draw_prob")
+                x_a = row.get("xgb_away_prob")
+                if all(pd.notna(v) for v in [x_h, x_d, x_a]):
+                    x_h = _sf(x_h, 0.33)
+                    x_d = _sf(x_d, 0.33)
+                    x_a = _sf(x_a, 0.34)
+                    p_xgb = {"Home": x_h, "Draw": x_d, "Away": x_a}
+                    if max(p_xgb, key=p_xgb.get) == actual:
+                        hits_xgb += 1
+                    y_true_xgb.append(actual_idx)
+                    probs_xgb.append([x_a, x_d, x_h])
 
                 # Neural Dixon-Coles
-                n_h = _sf(row.get("ndc_home_prob"), b_h)
-                n_d = _sf(row.get("ndc_draw_prob"), b_d)
-                n_a = _sf(row.get("ndc_away_prob"), b_a)
-                p_ndc = {"Home": n_h, "Draw": n_d, "Away": n_a}
-                if max(p_ndc, key=p_ndc.get) == actual:
-                    hits_ndc += 1
-                probs_ndc.append([n_a, n_d, n_h])
+                n_h = row.get("ndc_home_prob")
+                n_d = row.get("ndc_draw_prob")
+                n_a = row.get("ndc_away_prob")
+                if all(pd.notna(v) for v in [n_h, n_d, n_a]):
+                    n_h = _sf(n_h, 0.33)
+                    n_d = _sf(n_d, 0.33)
+                    n_a = _sf(n_a, 0.34)
+                    p_ndc = {"Home": n_h, "Draw": n_d, "Away": n_a}
+                    if max(p_ndc, key=p_ndc.get) == actual:
+                        hits_ndc += 1
+                    y_true_ndc.append(actual_idx)
+                    probs_ndc.append([n_a, n_d, n_h])
 
-            total = len(df_completed)
-            y_true = np.array(y_true)
+                # Bookmaker benchmark
+                bookie_triplet = _bookie_prob_triplet_from_row(row)
+                if bookie_triplet is not None:
+                    b_h, b_d, b_a = bookie_triplet
+                    p_bookie = {"Home": b_h, "Draw": b_d, "Away": b_a}
+                    if max(p_bookie, key=p_bookie.get) == actual:
+                        hits_bookie += 1
+                    y_true_bookie.append(actual_idx)
+                    probs_bookie.append([b_a, b_d, b_h])
 
             def _log_loss_calc(y_t, p_list):
-                arr = np.nan_to_num(np.array(p_list, dtype=np.float64), nan=0.33)
-                sums = arr.sum(axis=1, keepdims=True)
-                sums[sums == 0] = 1.0
-                arr /= sums
-                if len(np.unique(y_t)) > 1:
-                    return float(log_loss(y_t, arr))
-                return 0.0
+                if not p_list:
+                    return 0.0
+                arr = np.nan_to_num(np.array(p_list, dtype=np.float64), nan=1.0 / 3.0)
+                arr = np.clip(arr, 1e-9, None)
+                arr = arr / arr.sum(axis=1, keepdims=True)
+                return float(log_loss(np.array(y_t, dtype=int), arr, labels=[0, 1, 2]))
+
+            total_blend = len(y_true_blend)
+            total_xgb = len(y_true_xgb)
+            total_ndc = len(y_true_ndc)
+            total_bookie = len(y_true_bookie)
 
             return {
-                "blend": {"hits": hits_blend, "acc": (hits_blend / total) * 100, "loss": _log_loss_calc(y_true, probs_blend)},
-                "xgb":   {"hits": hits_xgb,   "acc": (hits_xgb / total) * 100,   "loss": _log_loss_calc(y_true, probs_xgb)},
-                "ndc":   {"hits": hits_ndc,   "acc": (hits_ndc / total) * 100,   "loss": _log_loss_calc(y_true, probs_ndc)},
+                "blend": {"hits": hits_blend, "acc": (hits_blend / total_blend) * 100 if total_blend else 0.0, "loss": _log_loss_calc(y_true_blend, probs_blend), "total": total_blend},
+                "xgb":   {"hits": hits_xgb,   "acc": (hits_xgb / total_xgb) * 100 if total_xgb else 0.0,   "loss": _log_loss_calc(y_true_xgb, probs_xgb), "total": total_xgb},
+                "ndc":   {"hits": hits_ndc,   "acc": (hits_ndc / total_ndc) * 100 if total_ndc else 0.0,   "loss": _log_loss_calc(y_true_ndc, probs_ndc), "total": total_ndc},
+                "bookie": {"hits": hits_bookie, "acc": (hits_bookie / total_bookie) * 100 if total_bookie else 0.0, "loss": _log_loss_calc(y_true_bookie, probs_bookie), "total": total_bookie},
             }
 
         model_stats = compute_model_metrics(df_completed_preds)
@@ -1347,12 +1435,13 @@ with tab_live:
 
         # Display Model Race Banner
         st.markdown('### ⚔️ 2026/27 Live Model Race & Leaderboard', unsafe_allow_html=True)
-        st.caption("Pitting the Blended Ensemble, XGBoost, and Neural Dixon-Coles head-to-head on completed 2026/27 season fixtures.")
+        st.caption("Pitting the Blended Ensemble, XGBoost, Neural Dixon-Coles, and the Bookie benchmark head-to-head on completed 2026/27 season fixtures.")
 
-        kpi1, kpi2, kpi3 = st.columns(3)
+        kpi1, kpi2, kpi3, kpi4 = st.columns(4)
         blend_info = model_stats["blend"]
         xgb_info   = model_stats["xgb"]
         ndc_info   = model_stats["ndc"]
+        bookie_info = model_stats["bookie"]
 
         kpi1.metric(
             "🔮 Blended Ensemble (50/50)",
@@ -1369,6 +1458,11 @@ with tab_live:
             f"{ndc_info['acc']:.1f}% Acc",
             delta=f"{ndc_info['hits']}/{total_completed} Correct | Loss: {ndc_info['loss']:.3f}"
         )
+        kpi4.metric(
+            "📉 Bookie Odds Benchmark",
+            f"{bookie_info['acc']:.1f}% Acc",
+            delta=f"{bookie_info['hits']}/{bookie_info['total']} Correct | Loss: {bookie_info['loss']:.3f}"
+        )
 
         st.markdown("### 🧭 Gameweek Overview", unsafe_allow_html=True)
         st.caption("Status is based on fixture dates/results: completed, in progress, or upcoming. Accuracy counts use the completed fixtures for each gameweek.")
@@ -1378,19 +1472,22 @@ with tab_live:
             "Final Prob Hits", "Final Prob Total",
             "NDC Prob Hits", "NDC Prob Total", "NDC Score Hits", "NDC Score Total",
             "XGB Prob Hits", "XGB Prob Total",
+            "Bookie Prob Hits", "Bookie Prob Total",
             "Static Prob Hits", "Static Prob Total", "Static Score Hits", "Static Score Total",
         ]].copy()
         overview_df["Final Prob"] = overview_df.apply(lambda r: _format_hits(int(r["Final Prob Hits"]), int(r["Final Prob Total"])), axis=1)
         overview_df["NDC Prob"] = overview_df.apply(lambda r: _format_hits(int(r["NDC Prob Hits"]), int(r["NDC Prob Total"])), axis=1)
         overview_df["NDC Score"] = overview_df.apply(lambda r: _format_hits(int(r["NDC Score Hits"]), int(r["NDC Score Total"])), axis=1)
         overview_df["XGB Prob"] = overview_df.apply(lambda r: _format_hits(int(r["XGB Prob Hits"]), int(r["XGB Prob Total"])), axis=1)
+        overview_df["Bookie Prob"] = overview_df.apply(lambda r: _format_hits(int(r["Bookie Prob Hits"]), int(r["Bookie Prob Total"])), axis=1)
         overview_df["Static Prob"] = overview_df.apply(lambda r: _format_hits(int(r["Static Prob Hits"]), int(r["Static Prob Total"])), axis=1)
         overview_df["Static Score"] = overview_df.apply(lambda r: _format_hits(int(r["Static Score Hits"]), int(r["Static Score Total"])), axis=1)
-        overview_df = overview_df[["Gameweek", "Status", "Played", "Fixtures", "Final Prob", "NDC Prob", "XGB Prob", "Static Prob"]].copy()
+        overview_df = overview_df[["Gameweek", "Status", "Played", "Fixtures", "Final Prob", "NDC Prob", "XGB Prob", "Bookie Prob", "Static Prob"]].copy()
         st.dataframe(overview_df, use_container_width=True, hide_index=True)
 
         st.markdown("#### Click a gameweek", unsafe_allow_html=True)
         gw_rows = [list(range(1, 14)), list(range(14, 27)), list(range(27, 39))]
+       
         for row_gws in gw_rows:
             cols = st.columns(len(row_gws))
             for col, gw in zip(cols, row_gws):
@@ -1401,8 +1498,9 @@ with tab_live:
                 final_prob = _format_hits(int(gw_row["Final Prob Hits"]), int(gw_row["Final Prob Total"]))
                 ndc_prob = _format_hits(int(gw_row["NDC Prob Hits"]), int(gw_row["NDC Prob Total"]))
                 xgb_prob = _format_hits(int(gw_row["XGB Prob Hits"]), int(gw_row["XGB Prob Total"]))
+                bookie_prob = _format_hits(int(gw_row["Bookie Prob Hits"]), int(gw_row["Bookie Prob Total"]))
                 static_prob = _format_hits(int(gw_row["Static Prob Hits"]), int(gw_row["Static Prob Total"]))
-                label = f"GW{gw}\n{gw_row['Status']}\nFinal {final_prob} | NDC {ndc_prob} | XGB {xgb_prob}"
+                label = f"GW{gw}\n{gw_row['Status']}\nFinal {final_prob} | NDC {ndc_prob} | XGB {xgb_prob} | Bookie {bookie_prob}"
                 if col.button(label, key=f"gw_button_{gw}", use_container_width=True):
                     st.session_state["tracker_gw_selected"] = gw
                     st.rerun()
@@ -1411,13 +1509,14 @@ with tab_live:
         if not selected_row.empty:
             selected_row = selected_row.iloc[0]
             st.markdown(f"### 🗓️ Gameweek {selected_gw} Summary", unsafe_allow_html=True)
-            s1, s2, s3, s4, s5, s6 = st.columns(6)
+            s1, s2, s3, s4, s5, s6, s7 = st.columns(7)
             s1.metric("Status", selected_row["Status"])
             s2.metric("Played", f"{selected_row['Played']}/{selected_row['Fixtures']}")
             s3.metric("Final Prob", _format_hits(int(selected_row["Final Prob Hits"]), int(selected_row["Final Prob Total"])))
             s4.metric("NDC Prob", _format_hits(int(selected_row["NDC Prob Hits"]), int(selected_row["NDC Prob Total"])))
             s5.metric("XGB Prob", _format_hits(int(selected_row["XGB Prob Hits"]), int(selected_row["XGB Prob Total"])))
-            s6.metric("Static Prob", _format_hits(int(selected_row["Static Prob Hits"]), int(selected_row["Static Prob Total"])))
+            s6.metric("Bookie Prob", _format_hits(int(selected_row["Bookie Prob Hits"]), int(selected_row["Bookie Prob Total"])))
+            s7.metric("Static Prob", _format_hits(int(selected_row["Static Prob Hits"]), int(selected_row["Static Prob Total"])))
         
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown(f"### 🗓️ Gameweek {selected_gw} Fixtures & Predictions")

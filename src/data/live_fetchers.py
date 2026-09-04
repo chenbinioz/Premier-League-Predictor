@@ -254,7 +254,7 @@ def fetch_from_football_data_csv() -> list[dict[str, Any]]:
             away_team = normalize_team_name(row.get("AwayTeam"))
             if not date_value or not home_team or not away_team:
                 continue
-            rows.append({
+            item = {
                 "date": date_value,
                 "home_team": home_team,
                 "away_team": away_team,
@@ -264,7 +264,11 @@ def fetch_from_football_data_csv() -> list[dict[str, Any]]:
                 "match_id": 0,
                 "home_xg": None,
                 "away_xg": None,
-            })
+            }
+            for key in ("B365H", "B365D", "B365A"):
+                if key in df.columns:
+                    item[key] = row.get(key)
+            rows.append(item)
         except Exception:
             continue
     return rows
