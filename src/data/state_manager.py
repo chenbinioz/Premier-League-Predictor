@@ -260,7 +260,7 @@ class TeamStateManager:
                  ndc_home_prob, ndc_draw_prob, ndc_away_prob,
                  xgb_home_prob, xgb_draw_prob, xgb_away_prob,
                  ndc_lambda, ndc_mu, ndc_rho, locked_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 match_id, home_prob, draw_prob, away_prob,

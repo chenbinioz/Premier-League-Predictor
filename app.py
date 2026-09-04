@@ -27,6 +27,7 @@ import streamlit as st
 import torch
 from scipy.stats import poisson
 import sqlite3
+from sklearn.metrics import log_loss
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -896,40 +897,68 @@ with tab_forecast:
         if home_team == away_team:
             st.error("Home and Away teams must be different.")
         else:
+            use_live_state = (
+                live_team_states
+                and home_team in live_team_states
+                and away_team in live_team_states
+            )
             match_vector = df_features[
                 (df_features["HomeTeam"] == home_team) &
                 (df_features["AwayTeam"] == away_team)
             ].iloc[-1:]
 
-            if match_vector.empty:
+            if not use_live_state and match_vector.empty:
                 st.error(f"No historical data found for **{home_team}** vs **{away_team}**.")
             else:
-                # XGBoost
-                X_live_xgb = match_vector[XGB_FEATURE_COLS]
-                xgb_probs  = xgb_model.predict_proba(X_live_xgb)[0]
-                xgb_home_w = float(xgb_probs[2])
-                xgb_draw   = float(xgb_probs[1])
-                xgb_away_w = float(xgb_probs[0])
+                if use_live_state:
+                    st.caption("⚡ **Live Mode**: Forecasting using real-time 2026/27 team states (Elo rating & 10-match rolling form)")
+                    snapshot = build_live_fixture_model_snapshot(home_team, away_team, live_team_states)
+                    xgb_snap = snapshot.get("xgb")
+                    ndc_snap = snapshot.get("ndc")
 
-                # NDC
-                ndc_lam, ndc_mu, ndc_rho = None, None, None
-                ndc_grid = None
-                ndc_parsed = None
+                    if xgb_snap:
+                        xgb_home_w = xgb_snap["probs"]["Home"]
+                        xgb_draw   = xgb_snap["probs"]["Draw"]
+                        xgb_away_w = xgb_snap["probs"]["Away"]
+                    else:
+                        xgb_home_w, xgb_draw, xgb_away_w = 0.33, 0.33, 0.34
 
-                if ndc_available:
-                    ndc_row = match_vector[ndc_feature_names].values.astype(np.float32)
-                    ndc_row_scaled = ndc_scaler.transform(ndc_row)
-                    X_live_ndc = torch.from_numpy(ndc_row_scaled)
+                    if ndc_snap and ndc_available:
+                        ndc_lam  = ndc_snap["lambda"]
+                        ndc_mu   = ndc_snap["mu"]
+                        ndc_rho  = ndc_snap["rho"]
+                        ndc_grid   = predict_scoreline_grid(ndc_lam, ndc_mu, ndc_rho, max_goals=6)
+                        ndc_parsed = parse_grid_outputs(ndc_grid, top_k=3)
+                    else:
+                        ndc_lam, ndc_mu, ndc_rho = None, None, None
+                        ndc_grid, ndc_parsed = None, None
+                else:
+                    # XGBoost fallback
+                    X_live_xgb = match_vector[XGB_FEATURE_COLS]
+                    xgb_probs  = xgb_model.predict_proba(X_live_xgb)[0]
+                    xgb_home_w = float(xgb_probs[2])
+                    xgb_draw   = float(xgb_probs[1])
+                    xgb_away_w = float(xgb_probs[0])
 
-                    with torch.no_grad():
-                        ndc_model.eval()
-                        lam_t, mu_t, rho_t = ndc_model(X_live_ndc)
+                    # NDC fallback
+                    ndc_lam, ndc_mu, ndc_rho = None, None, None
+                    ndc_grid = None
+                    ndc_parsed = None
 
-                    ndc_lam  = float(lam_t.item())
-                    ndc_mu   = float(mu_t.item())
-                    ndc_rho  = float(rho_t.item())
-                    ndc_grid   = predict_scoreline_grid(ndc_lam, ndc_mu, ndc_rho, max_goals=6)
-                    ndc_parsed = parse_grid_outputs(ndc_grid, top_k=3)
+                    if ndc_available:
+                        ndc_row = match_vector[ndc_feature_names].values.astype(np.float32)
+                        ndc_row_scaled = ndc_scaler.transform(ndc_row)
+                        X_live_ndc = torch.from_numpy(ndc_row_scaled)
+
+                        with torch.no_grad():
+                            ndc_model.eval()
+                            lam_t, mu_t, rho_t = ndc_model(X_live_ndc)
+
+                        ndc_lam  = float(lam_t.item())
+                        ndc_mu   = float(mu_t.item())
+                        ndc_rho  = float(rho_t.item())
+                        ndc_grid   = predict_scoreline_grid(ndc_lam, ndc_mu, ndc_rho, max_goals=6)
+                        ndc_parsed = parse_grid_outputs(ndc_grid, top_k=3)
 
                 # Match Overview Metrics
                 st.markdown(
@@ -1237,24 +1266,109 @@ with tab_live:
             predicted = max(probs, key=probs.get)
             return actual == predicted
             
-        if total_completed > 0:
-            correct_preds = df_completed_preds.apply(is_correct, axis=1).sum()
-            accuracy = (correct_preds / total_completed) * 100
-        else:
-            correct_preds = 0
-            accuracy = 0.0
+        # Head-to-head model metric calculator across completed 2026/27 matches
+        def compute_model_metrics(df_completed):
+            if df_completed.empty:
+                return {
+                    "blend": {"hits": 0, "acc": 0.0, "loss": 0.0},
+                    "xgb":   {"hits": 0, "acc": 0.0, "loss": 0.0},
+                    "ndc":   {"hits": 0, "acc": 0.0, "loss": 0.0},
+                }
 
+            def _sf(val, fallback):
+                if val is None or pd.isna(val):
+                    return float(fallback)
+                try:
+                    return float(val)
+                except (TypeError, ValueError):
+                    return float(fallback)
+
+            hits_blend, hits_xgb, hits_ndc = 0, 0, 0
+            y_true, probs_blend, probs_xgb, probs_ndc = [], [], [], []
+
+            for _, row in df_completed.iterrows():
+                h_g = row["home_goals"]
+                a_g = row["away_goals"]
+                actual = "Home" if h_g > a_g else "Away" if h_g < a_g else "Draw"
+                target_idx = 2 if h_g > a_g else 0 if h_g < a_g else 1
+                y_true.append(target_idx)
+
+                # Blended Ensemble
+                b_h = _sf(row.get("predicted_home_prob"), 0.33)
+                b_d = _sf(row.get("predicted_draw_prob"), 0.33)
+                b_a = _sf(row.get("predicted_away_prob"), 0.34)
+                p_blend = {"Home": b_h, "Draw": b_d, "Away": b_a}
+                if max(p_blend, key=p_blend.get) == actual:
+                    hits_blend += 1
+                probs_blend.append([b_a, b_d, b_h])
+
+                # XGBoost Classifier
+                x_h = _sf(row.get("xgb_home_prob"), b_h)
+                x_d = _sf(row.get("xgb_draw_prob"), b_d)
+                x_a = _sf(row.get("xgb_away_prob"), b_a)
+                p_xgb = {"Home": x_h, "Draw": x_d, "Away": x_a}
+                if max(p_xgb, key=p_xgb.get) == actual:
+                    hits_xgb += 1
+                probs_xgb.append([x_a, x_d, x_h])
+
+                # Neural Dixon-Coles
+                n_h = _sf(row.get("ndc_home_prob"), b_h)
+                n_d = _sf(row.get("ndc_draw_prob"), b_d)
+                n_a = _sf(row.get("ndc_away_prob"), b_a)
+                p_ndc = {"Home": n_h, "Draw": n_d, "Away": n_a}
+                if max(p_ndc, key=p_ndc.get) == actual:
+                    hits_ndc += 1
+                probs_ndc.append([n_a, n_d, n_h])
+
+            total = len(df_completed)
+            y_true = np.array(y_true)
+
+            def _log_loss_calc(y_t, p_list):
+                arr = np.nan_to_num(np.array(p_list, dtype=np.float64), nan=0.33)
+                sums = arr.sum(axis=1, keepdims=True)
+                sums[sums == 0] = 1.0
+                arr /= sums
+                if len(np.unique(y_t)) > 1:
+                    return float(log_loss(y_t, arr))
+                return 0.0
+
+            return {
+                "blend": {"hits": hits_blend, "acc": (hits_blend / total) * 100, "loss": _log_loss_calc(y_true, probs_blend)},
+                "xgb":   {"hits": hits_xgb,   "acc": (hits_xgb / total) * 100,   "loss": _log_loss_calc(y_true, probs_xgb)},
+                "ndc":   {"hits": hits_ndc,   "acc": (hits_ndc / total) * 100,   "loss": _log_loss_calc(y_true, probs_ndc)},
+            }
+
+        model_stats = compute_model_metrics(df_completed_preds)
         gw_overview = build_gameweek_overview(df_fixtures, df_predictions)
 
         if "tracker_gw_selected" not in st.session_state:
             st.session_state["tracker_gw_selected"] = int(selected_gw)
         selected_gw = int(st.session_state["tracker_gw_selected"])
-            
-        # Display KPI cards
+
+        # Display Model Race Banner
+        st.markdown('### ⚔️ 2026/27 Live Model Race & Leaderboard', unsafe_allow_html=True)
+        st.caption("Pitting the Blended Ensemble, XGBoost, and Neural Dixon-Coles head-to-head on completed 2026/27 season fixtures.")
+
         kpi1, kpi2, kpi3 = st.columns(3)
-        kpi1.metric("Total Matches Predicted", f"{total_predicted}")
-        kpi2.metric("Total Correct (Completed)", f"{correct_preds} / {total_completed}")
-        kpi3.metric("Overall Accuracy (%)", f"{accuracy:.1f}%")
+        blend_info = model_stats["blend"]
+        xgb_info   = model_stats["xgb"]
+        ndc_info   = model_stats["ndc"]
+
+        kpi1.metric(
+            "🔮 Blended Ensemble (50/50)",
+            f"{blend_info['acc']:.1f}% Acc",
+            delta=f"{blend_info['hits']}/{total_completed} Correct | Loss: {blend_info['loss']:.3f}"
+        )
+        kpi2.metric(
+            "⚡ XGBoost Classifier",
+            f"{xgb_info['acc']:.1f}% Acc",
+            delta=f"{xgb_info['hits']}/{total_completed} Correct | Loss: {xgb_info['loss']:.3f}"
+        )
+        kpi3.metric(
+            "🧠 Neural Dixon-Coles",
+            f"{ndc_info['acc']:.1f}% Acc",
+            delta=f"{ndc_info['hits']}/{total_completed} Correct | Loss: {ndc_info['loss']:.3f}"
+        )
 
         st.markdown("### 🧭 Gameweek Overview", unsafe_allow_html=True)
         st.caption("Status is based on fixture dates/results: completed, in progress, or upcoming. Accuracy counts use the completed fixtures for each gameweek.")

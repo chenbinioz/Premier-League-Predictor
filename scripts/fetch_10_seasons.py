@@ -1,8 +1,8 @@
 """
-Fetch 10 Seasons of EPL Data
-============================
-Downloads and concatenates 10 seasons of Premier League match data
-from Football-Data.co.uk (2016/17 through 2025/26).
+Fetch EPL Data Across Seasons
+=============================
+Downloads and concatenates seasons of Premier League match data
+from Football-Data.co.uk (2016/17 through 2026/27).
 
 Output:
     data/raw/epl_10_seasons_raw.csv
@@ -27,6 +27,7 @@ SEASONS = [
     ("2324", "2023/24"),
     ("2425", "2024/25"),
     ("2526", "2025/26"),
+    ("2627", "2026/27"),
 ]
 
 BASE_URL = "https://www.football-data.co.uk/mmz4281/{season_code}/E0.csv"

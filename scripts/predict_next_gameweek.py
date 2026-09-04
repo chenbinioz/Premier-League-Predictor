@@ -6,7 +6,7 @@ Pre-match inference pipeline for the 2026/27 EPL season.
 
 Workflow per fixture
 --------------------
-1. Fetch upcoming fixtures for the target gameweek (API-Football).
+1. Fetch upcoming fixtures for the target gameweek (Understat).
 2. Skip any fixture that already has a locked prediction in the DB.
 3. Load live team states (Elo + rolling xG/goals) from live_team_states.
 4. Build the 75-feature NDC vector and 18-feature XGBoost vector.
@@ -181,23 +181,56 @@ def build_ndc_feature_vector(
     h = home_state
     a = away_state
 
-    # Helper: use avg from state if window is non-empty, else seasonal mean
-    def _hv(key: str, fallback: float = 0.0) -> float:
-        return float(h.get(key, fallback) or fallback)
+    # Helper: calculate exact window slice average (last 3, 5, 10 matches) from state array
+    def _slice_avg(state_dict: dict, key: str, n: int, fallback: float) -> float:
+        val = state_dict.get(key)
+        if isinstance(val, str):
+            try:
+                arr = json.loads(val)
+            except Exception:
+                arr = []
+        elif isinstance(val, list):
+            arr = val
+        else:
+            arr = []
 
-    def _av(key: str, fallback: float = 0.0) -> float:
-        return float(a.get(key, fallback) or fallback)
+        if arr:
+            sub = arr[-n:]
+            return float(sum(sub) / len(sub))
+        return float(state_dict.get(f"avg_{key.replace('last_10_', '')}", fallback) or fallback)
 
-    h_elo     = _hv("current_elo", 1500.0)
-    a_elo     = _av("current_elo", 1500.0)
-    h_xg_for  = _hv("avg_xg_for",  1.5)
-    h_xg_con  = _hv("avg_xg_against", 1.2)
-    a_xg_for  = _av("avg_xg_for",  1.3)
-    a_xg_con  = _av("avg_xg_against", 1.3)
-    h_g_for   = _hv("avg_goals_for",  1.4)
-    h_g_con   = _hv("avg_goals_against", 1.2)
-    a_g_for   = _av("avg_goals_for",  1.2)
-    a_g_con   = _av("avg_goals_against", 1.3)
+    h_elo     = float(h.get("current_elo", 1500.0) or 1500.0)
+    a_elo     = float(a.get("current_elo", 1500.0) or 1500.0)
+
+    # 3-match rolling averages
+    h_g_for_3   = _slice_avg(h, "last_10_goals_for", 3, 1.4)
+    h_g_con_3   = _slice_avg(h, "last_10_goals_against", 3, 1.2)
+    h_xg_for_3  = _slice_avg(h, "last_10_xg_for", 3, 1.5)
+    h_xg_con_3  = _slice_avg(h, "last_10_xg_against", 3, 1.2)
+    a_g_for_3   = _slice_avg(a, "last_10_goals_for", 3, 1.2)
+    a_g_con_3   = _slice_avg(a, "last_10_goals_against", 3, 1.3)
+    a_xg_for_3  = _slice_avg(a, "last_10_xg_for", 3, 1.3)
+    a_xg_con_3  = _slice_avg(a, "last_10_xg_against", 3, 1.3)
+
+    # 5-match rolling averages
+    h_g_for_5   = _slice_avg(h, "last_10_goals_for", 5, 1.4)
+    h_g_con_5   = _slice_avg(h, "last_10_goals_against", 5, 1.2)
+    h_xg_for_5  = _slice_avg(h, "last_10_xg_for", 5, 1.5)
+    h_xg_con_5  = _slice_avg(h, "last_10_xg_against", 5, 1.2)
+    a_g_for_5   = _slice_avg(a, "last_10_goals_for", 5, 1.2)
+    a_g_con_5   = _slice_avg(a, "last_10_goals_against", 5, 1.3)
+    a_xg_for_5  = _slice_avg(a, "last_10_xg_for", 5, 1.3)
+    a_xg_con_5  = _slice_avg(a, "last_10_xg_against", 5, 1.3)
+
+    # 10-match rolling averages
+    h_g_for_10  = _slice_avg(h, "last_10_goals_for", 10, 1.4)
+    h_g_con_10  = _slice_avg(h, "last_10_goals_against", 10, 1.2)
+    h_xg_for_10 = _slice_avg(h, "last_10_xg_for", 10, 1.5)
+    h_xg_con_10 = _slice_avg(h, "last_10_xg_against", 10, 1.2)
+    a_g_for_10  = _slice_avg(a, "last_10_goals_for", 10, 1.2)
+    a_g_con_10  = _slice_avg(a, "last_10_goals_against", 10, 1.3)
+    a_xg_for_10 = _slice_avg(a, "last_10_xg_for", 10, 1.3)
+    a_xg_con_10 = _slice_avg(a, "last_10_xg_against", 10, 1.3)
 
     # Build lookup for all 75 features
     feature_map: dict[str, float] = {
@@ -205,11 +238,11 @@ def build_ndc_feature_vector(
         "Home_Elo":   h_elo,
         "Away_Elo":   a_elo,
 
-        # Last-match single stats (use rolling averages as proxy)
-        "Home_GoalsScored":       h_g_for,
-        "Home_GoalsConceded":     h_g_con,
-        "Home_xG_Created":        h_xg_for,
-        "Home_xG_Conceded":       h_xg_con,
+        # Last-match single stats (use 5-match rolling averages as proxy)
+        "Home_GoalsScored":       h_g_for_5,
+        "Home_GoalsConceded":     h_g_con_5,
+        "Home_xG_Created":        h_xg_for_5,
+        "Home_xG_Conceded":       h_xg_con_5,
         "Home_ShotsOnTarget":     _SEASON_MEANS["Home_ShotsOnTarget_roll5"],
         "Home_Opp_ShotsOnTarget": _SEASON_MEANS["Away_ShotsOnTarget_roll5"],
         "Home_YellowCards":       1.6,
@@ -219,10 +252,10 @@ def build_ndc_feature_vector(
         "Home_Rest_Days":         4.0,
         "Home_Congestion_Flag":   0.0,
 
-        "Away_GoalsScored":       a_g_for,
-        "Away_GoalsConceded":     a_g_con,
-        "Away_xG_Created":        a_xg_for,
-        "Away_xG_Conceded":       a_xg_con,
+        "Away_GoalsScored":       a_g_for_5,
+        "Away_GoalsConceded":     a_g_con_5,
+        "Away_xG_Created":        a_xg_for_5,
+        "Away_xG_Conceded":       a_xg_con_5,
         "Away_ShotsOnTarget":     _SEASON_MEANS["Away_ShotsOnTarget_roll5"],
         "Away_Opp_ShotsOnTarget": _SEASON_MEANS["Home_ShotsOnTarget_roll5"],
         "Away_YellowCards":       1.7,
@@ -232,33 +265,33 @@ def build_ndc_feature_vector(
         "Away_Rest_Days":         4.0,
         "Away_Congestion_Flag":   0.0,
 
-        # Rolling stats — xG and goals from live state
-        "Home_GoalsScored_roll3":   h_g_for,
-        "Home_GoalsConceded_roll3": h_g_con,
-        "Home_xG_Created_roll3":    h_xg_for,
-        "Home_xG_Conceded_roll3":   h_xg_con,
-        "Away_GoalsScored_roll3":   a_g_for,
-        "Away_GoalsConceded_roll3": a_g_con,
-        "Away_xG_Created_roll3":    a_xg_for,
-        "Away_xG_Conceded_roll3":   a_xg_con,
+        # Rolling stats — xG and goals from live state slices
+        "Home_GoalsScored_roll3":   h_g_for_3,
+        "Home_GoalsConceded_roll3": h_g_con_3,
+        "Home_xG_Created_roll3":    h_xg_for_3,
+        "Home_xG_Conceded_roll3":   h_xg_con_3,
+        "Away_GoalsScored_roll3":   a_g_for_3,
+        "Away_GoalsConceded_roll3": a_g_con_3,
+        "Away_xG_Created_roll3":    a_xg_for_3,
+        "Away_xG_Conceded_roll3":   a_xg_con_3,
 
-        "Home_GoalsScored_roll5":   h_g_for,
-        "Home_GoalsConceded_roll5": h_g_con,
-        "Home_xG_Created_roll5":    h_xg_for,
-        "Home_xG_Conceded_roll5":   h_xg_con,
-        "Away_GoalsScored_roll5":   a_g_for,
-        "Away_GoalsConceded_roll5": a_g_con,
-        "Away_xG_Created_roll5":    a_xg_for,
-        "Away_xG_Conceded_roll5":   a_xg_con,
+        "Home_GoalsScored_roll5":   h_g_for_5,
+        "Home_GoalsConceded_roll5": h_g_con_5,
+        "Home_xG_Created_roll5":    h_xg_for_5,
+        "Home_xG_Conceded_roll5":   h_xg_con_5,
+        "Away_GoalsScored_roll5":   a_g_for_5,
+        "Away_GoalsConceded_roll5": a_g_con_5,
+        "Away_xG_Created_roll5":    a_xg_for_5,
+        "Away_xG_Conceded_roll5":   a_xg_con_5,
 
-        "Home_GoalsScored_roll10":   h_g_for,
-        "Home_GoalsConceded_roll10": h_g_con,
-        "Home_xG_Created_roll10":    h_xg_for,
-        "Home_xG_Conceded_roll10":   h_xg_con,
-        "Away_GoalsScored_roll10":   a_g_for,
-        "Away_GoalsConceded_roll10": a_g_con,
-        "Away_xG_Created_roll10":    a_xg_for,
-        "Away_xG_Conceded_roll10":   a_xg_con,
+        "Home_GoalsScored_roll10":   h_g_for_10,
+        "Home_GoalsConceded_roll10": h_g_con_10,
+        "Home_xG_Created_roll10":    h_xg_for_10,
+        "Home_xG_Conceded_roll10":   h_xg_con_10,
+        "Away_GoalsScored_roll10":   a_g_for_10,
+        "Away_GoalsConceded_roll10": a_g_con_10,
+        "Away_xG_Created_roll10":    a_xg_for_10,
+        "Away_xG_Conceded_roll10":   a_xg_con_10,
 
         # Rolling shots / corners / fouls — seasonal means
         "Home_ShotsOnTarget_roll3":  _SEASON_MEANS["Home_ShotsOnTarget_roll3"],
@@ -281,10 +314,10 @@ def build_ndc_feature_vector(
         "Away_Fouls_roll10":         _SEASON_MEANS["Away_Fouls_roll10"],
 
         # Venue-split xG — fallback to overall rolling
-        "Home_xG_Created_Venue_roll5":  h_xg_for,
-        "Home_xG_Conceded_Venue_roll5": h_xg_con,
-        "Away_xG_Created_Venue_roll5":  a_xg_for,
-        "Away_xG_Conceded_Venue_roll5": a_xg_con,
+        "Home_xG_Created_Venue_roll5":  h_xg_for_5,
+        "Home_xG_Conceded_Venue_roll5": h_xg_con_5,
+        "Away_xG_Created_Venue_roll5":  a_xg_for_5,
+        "Away_xG_Conceded_Venue_roll5": a_xg_con_5,
 
         # Bookie odds proxy (from NDC prior or caller-supplied)
         "B365H": 1.0 / bookie_h if bookie_h > 0 else 3.0,
@@ -309,34 +342,64 @@ def build_xgb_feature_vector(
 
     Returns np.ndarray of shape (1, 18).
     """
-    h_elo    = float(home_state.get("current_elo", 1500.0))
-    a_elo    = float(away_state.get("current_elo", 1500.0))
-    h_xg_for = float(home_state.get("avg_xg_for",  1.5) or 1.5)
-    h_xg_con = float(home_state.get("avg_xg_against", 1.2) or 1.2)
-    a_xg_for = float(away_state.get("avg_xg_for",  1.3) or 1.3)
-    a_xg_con = float(away_state.get("avg_xg_against", 1.3) or 1.3)
+    h = home_state
+    a = away_state
+
+    def _slice_avg(state_dict: dict, key: str, n: int, fallback: float) -> float:
+        val = state_dict.get(key)
+        if isinstance(val, str):
+            try:
+                arr = json.loads(val)
+            except Exception:
+                arr = []
+        elif isinstance(val, list):
+            arr = val
+        else:
+            arr = []
+
+        if arr:
+            sub = arr[-n:]
+            return float(sum(sub) / len(sub))
+        return float(state_dict.get(f"avg_{key.replace('last_10_', '')}", fallback) or fallback)
+
+    h_elo     = float(h.get("current_elo", 1500.0) or 1500.0)
+    a_elo     = float(a.get("current_elo", 1500.0) or 1500.0)
+
+    h_xg_for_3  = _slice_avg(h, "last_10_xg_for", 3, 1.5)
+    h_xg_con_3  = _slice_avg(h, "last_10_xg_against", 3, 1.2)
+    a_xg_for_3  = _slice_avg(a, "last_10_xg_for", 3, 1.3)
+    a_xg_con_3  = _slice_avg(a, "last_10_xg_against", 3, 1.3)
+
+    h_xg_for_5  = _slice_avg(h, "last_10_xg_for", 5, 1.5)
+    h_xg_con_5  = _slice_avg(h, "last_10_xg_against", 5, 1.2)
+    a_xg_for_5  = _slice_avg(a, "last_10_xg_for", 5, 1.3)
+    a_xg_con_5  = _slice_avg(a, "last_10_xg_against", 5, 1.3)
+
+    h_xg_for_10 = _slice_avg(h, "last_10_xg_for", 10, 1.5)
+    h_xg_con_10 = _slice_avg(h, "last_10_xg_against", 10, 1.2)
+    a_xg_for_10 = _slice_avg(a, "last_10_xg_for", 10, 1.3)
+    a_xg_con_10 = _slice_avg(a, "last_10_xg_against", 10, 1.3)
 
     h_cor = _SEASON_MEANS["Home_Corners_roll5"]
     a_cor = _SEASON_MEANS["Away_Corners_roll5"]
     h_foul = _SEASON_MEANS["Home_Fouls_roll5"]
     a_foul = _SEASON_MEANS["Away_Fouls_roll5"]
 
-    # Venue xG splits — use overall rolling as proxy
-    h_venue_xg_for = float(home_state.get("avg_xg_for",  1.7) or 1.7)
-    a_venue_xg_con = float(away_state.get("avg_xg_against", 1.5) or 1.5)
+    h_venue_xg_for = h_xg_for_5
+    a_venue_xg_con = a_xg_con_5
 
-    # Derived differentials (mirrors app.py derivation logic)
-    elo_diff             = h_elo - a_elo
-    xg_attack_diff_roll3 = h_xg_for - a_xg_con
-    xg_defense_diff_roll3 = a_xg_for - h_xg_con
-    xg_attack_diff_roll5 = h_xg_for - a_xg_con
-    xg_defense_diff_roll5 = a_xg_for - h_xg_con
-    xg_attack_diff_roll10 = h_xg_for - a_xg_con
-    xg_defense_diff_roll10 = a_xg_for - h_xg_con
-    corner_diff_roll5    = h_cor - a_cor
-    foul_diff_roll5      = h_foul - a_foul
-    venue_xg_attack_diff = h_venue_xg_for - a_venue_xg_con
-    expected_match_xg    = h_xg_for + a_xg_for
+    # Derived differentials
+    elo_diff              = h_elo - a_elo
+    xg_attack_diff_roll3  = h_xg_for_3 - a_xg_con_3
+    xg_defense_diff_roll3 = a_xg_for_3 - h_xg_con_3
+    xg_attack_diff_roll5  = h_xg_for_5 - a_xg_con_5
+    xg_defense_diff_roll5 = a_xg_for_5 - h_xg_con_5
+    xg_attack_diff_roll10 = h_xg_for_10 - a_xg_con_10
+    xg_defense_diff_roll10= a_xg_for_10 - h_xg_con_10
+    corner_diff_roll5     = h_cor - a_cor
+    foul_diff_roll5       = h_foul - a_foul
+    venue_xg_attack_diff  = h_venue_xg_for - a_venue_xg_con
+    expected_match_xg     = h_xg_for_5 + a_xg_for_5
 
     vec = np.array([
         elo_diff,
@@ -477,7 +540,7 @@ def predict_gameweek(
             ]
         else:
             fixtures = fetch_upcoming_fixtures(gameweek)
-            logger.info("Fetched %d fixtures from API-Football for GW%d.", len(fixtures), gameweek)
+            logger.info("Fetched %d fixtures from Understat for GW%d.", len(fixtures), gameweek)
 
             # Upsert fixtures into DB
             existing_fix = {

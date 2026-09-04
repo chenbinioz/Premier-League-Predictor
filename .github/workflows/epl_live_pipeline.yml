@@ -2,27 +2,25 @@ name: EPL 2026/27 Live Predictive Pipeline
 
 on:
   schedule:
-    - cron: '0 20 * * 4' # Thursday at 20:00 UTC (Pre-match predictions)
-    - cron: '0 10 * * 1' # Monday at 10:00 UTC (Post-match state updates)
+    - cron: '0 4 * * *' # Daily at 04:00 UTC
   workflow_dispatch:
     inputs:
       action:
         description: 'Action to trigger manually'
         required: true
-        default: 'predict'
+        default: 'both'
         type: choice
         options:
-          - predict
           - update
+          - predict
           - both
 
 jobs:
   run-pipeline:
     runs-on: ubuntu-latest
     env:
-      RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-      API_FOOTBALL_SEASON: '2026'
-      API_FOOTBALL_LEAGUE_ID: '39'
+      UNDERSTAT_SEASON: '2026'
+      UNDERSTAT_LEAGUE: 'EPL'
       LIVE_DB_PATH: 'data/live/epl_2627.db'
 
     steps:
@@ -40,22 +38,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Thursday Prediction Pipeline
+      - name: Run Live State & Fixture Update Pipeline
         if: |
-          github.event.schedule == '0 20 * * 4' || 
-          (github.event_name == 'workflow_dispatch' && (inputs.action == 'predict' || inputs.action == 'both'))
-        run: |
-          python scripts/predict_next_gameweek.py --auto
-
-      - name: Run Monday Update Pipeline
-        if: |
-          github.event.schedule == '0 10 * * 1' || 
+          github.event_name == 'schedule' || 
           (github.event_name == 'workflow_dispatch' && (inputs.action == 'update' || inputs.action == 'both'))
         run: |
           python scripts/update_live_state.py
 
+      - name: Run Pre-Match Prediction Pipeline
+        if: |
+          github.event_name == 'schedule' || 
+          (github.event_name == 'workflow_dispatch' && (inputs.action == 'predict' || inputs.action == 'both'))
+        run: |
+          python scripts/predict_next_gameweek.py --auto
+
       - name: Commit and Push Database Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "auto: update 2026/27 predictions and live states"
+          commit_message: "auto: daily update of 2026/27 fixture results, live states, and predictions"
           file_pattern: "data/live/epl_2627.db"
+

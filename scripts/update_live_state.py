@@ -27,13 +27,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY", "").strip()
-if not RAPIDAPI_KEY:
-    logger.warning(
-        "RAPIDAPI_KEY is not configured. The 26/27 tracker will remain on the local seeded data only. "
-        "Run this script with a valid API-Football RapidAPI key to refresh results."
-    )
-
 DEFAULT_DB_PATH = REPO_ROOT / "data" / "live" / "epl_2627.db"
 
 def auto_discover_gameweeks_to_update(db_path: Path) -> list[int]:
@@ -57,7 +50,7 @@ def auto_discover_gameweeks_to_update(db_path: Path) -> list[int]:
 def update_gameweek_results(gameweek: int, db_path: Path, dry_run: bool = False):
     logger.info(f"🔄 Processing updates for Gameweek {gameweek}...")
     
-    # 1. Fetch results from API-Football
+    # 1. Fetch results from Understat / Football-Data.co.uk
     try:
         results = fetch_weekend_results(gameweek)
     except Exception as e:
@@ -65,7 +58,7 @@ def update_gameweek_results(gameweek: int, db_path: Path, dry_run: bool = False)
         return
         
     if not results:
-        logger.warning(f"No completed results returned from API for GW{gameweek}.")
+        logger.warning(f"No completed results returned for GW{gameweek}.")
         return
         
     # Build lookup map: (home_team, away_team) -> result
