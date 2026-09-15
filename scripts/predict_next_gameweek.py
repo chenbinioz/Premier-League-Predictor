@@ -36,6 +36,7 @@ import json
 import logging
 import os
 import sys
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Optional
 
@@ -120,6 +121,64 @@ XGB_FEATURE_COLS = [
 ]
 
 
+# ── Rest-day computation ─────────────────────────────────────────────────────
+
+def _compute_rest_days(
+    conn: Any,
+    team: str,
+    match_date_str: str,
+    default: float = 7.0,
+) -> tuple[float, int]:
+    """
+    Query fixtures_26_27 for the most recent COMPLETED fixture played by *team*
+    strictly before *match_date_str* (YYYY-MM-DD), and return:
+        (rest_days: float, congestion_flag: int)
+
+    rest_days      = days since last completed match (capped at 21 to avoid
+                     season-start outliers inflating the feature).
+    congestion_flag = 1 if rest_days < 4 else 0.
+
+    Falls back to *default* if no prior completed fixture exists (e.g. GW1).
+    """
+    try:
+        target_date = datetime.strptime(match_date_str, "%Y-%m-%d").date()
+    except (ValueError, TypeError):
+        return default, 0
+
+    try:
+        cur = conn.execute(
+            """
+            SELECT match_date
+            FROM   fixtures_26_27
+            WHERE  (home_team = ? OR away_team = ?)
+              AND  status = 'completed'
+              AND  match_date < ?
+            ORDER BY match_date DESC
+            LIMIT 1
+            """,
+            (team, team, match_date_str),
+        )
+        row = cur.fetchone()
+    except Exception as exc:
+        logger.debug("rest_days query failed for %s: %s", team, exc)
+        return default, 0
+
+    if row is None:
+        return default, 0
+
+    try:
+        last_date_str = row[0] if isinstance(row, (list, tuple)) else row["match_date"]
+        last_date = datetime.strptime(last_date_str, "%Y-%m-%d").date()
+        rest_days = float((target_date - last_date).days)
+        # Cap at 21 to avoid pre-season gaps dominating
+        rest_days = min(rest_days, 21.0)
+        congestion = 1 if rest_days < 4 else 0
+        return rest_days, congestion
+    except Exception as exc:
+        logger.debug("rest_days parse failed for %s: %s", team, exc)
+        return default, 0
+
+
 # ── Model loading ─────────────────────────────────────────────────────────────
 
 def _load_ndc() -> tuple[NeuralDixonColes, Any, list[str]] | tuple[None, None, None]:
@@ -161,19 +220,28 @@ def build_ndc_feature_vector(
     bookie_h: float = 0.40,
     bookie_d: float = 0.27,
     bookie_a: float = 0.33,
+    home_rest_days: float = 7.0,
+    away_rest_days: float = 7.0,
+    home_congestion: int = 0,
+    away_congestion: int = 0,
 ) -> np.ndarray:
     """
     Construct the 75-element feature vector expected by the NDC model.
 
     Features tracked in live_team_states are read directly.
-    Features not tracked (shots on target, corners, fouls, rest, venue splits)
+    Features not tracked (shots on target, corners, fouls, venue splits)
     are imputed from seasonal means or sensible defaults.
+    Rest days and congestion flags are now computed from the fixtures table.
 
     Args:
-        home_state:    Dict from TeamStateManager.get_team_state().
-        away_state:    Dict from TeamStateManager.get_team_state().
-        feature_names: Ordered list from ndc_feature_names.json.
-        bookie_h/d/a:  Prior 1X2 odds fractions (sum to 1.0).
+        home_state:      Dict from TeamStateManager.get_team_state().
+        away_state:      Dict from TeamStateManager.get_team_state().
+        feature_names:   Ordered list from ndc_feature_names.json.
+        bookie_h/d/a:    Prior 1X2 odds fractions (sum to 1.0).
+        home_rest_days:  Days since home team's last completed match.
+        away_rest_days:  Days since away team's last completed match.
+        home_congestion: 1 if home team has < 4 days rest, else 0.
+        away_congestion: 1 if away team has < 4 days rest, else 0.
 
     Returns:
         np.ndarray of shape (1, len(feature_names)), dtype float32.
@@ -249,8 +317,8 @@ def build_ndc_feature_vector(
         "Home_RedCards":          0.05,
         "Home_Corners":           _SEASON_MEANS["Home_Corners_roll5"],
         "Home_Fouls":             _SEASON_MEANS["Home_Fouls_roll5"],
-        "Home_Rest_Days":         4.0,
-        "Home_Congestion_Flag":   0.0,
+        "Home_Rest_Days":         home_rest_days,
+        "Home_Congestion_Flag":   float(home_congestion),
 
         "Away_GoalsScored":       a_g_for_5,
         "Away_GoalsConceded":     a_g_con_5,
@@ -262,8 +330,8 @@ def build_ndc_feature_vector(
         "Away_RedCards":          0.05,
         "Away_Corners":           _SEASON_MEANS["Away_Corners_roll5"],
         "Away_Fouls":             _SEASON_MEANS["Away_Fouls_roll5"],
-        "Away_Rest_Days":         4.0,
-        "Away_Congestion_Flag":   0.0,
+        "Away_Rest_Days":         away_rest_days,
+        "Away_Congestion_Flag":   float(away_congestion),
 
         # Rolling stats — xG and goals from live state slices
         "Home_GoalsScored_roll3":   h_g_for_3,
@@ -336,9 +404,19 @@ def build_xgb_feature_vector(
     bookie_h: float,
     bookie_d: float,
     bookie_a: float,
+    home_rest_days: float = 7.0,
+    away_rest_days: float = 7.0,
+    home_congestion: int = 0,
+    away_congestion: int = 0,
 ) -> np.ndarray:
     """
     Build the 18-element XGBoost feature vector from live team states.
+
+    Args:
+        home_rest_days:  Days since home team's last completed match.
+        away_rest_days:  Days since away team's last completed match.
+        home_congestion: 1 if home team has < 4 days rest, else 0.
+        away_congestion: 1 if away team has < 4 days rest, else 0.
 
     Returns np.ndarray of shape (1, 18).
     """
@@ -401,6 +479,9 @@ def build_xgb_feature_vector(
     venue_xg_attack_diff  = h_venue_xg_for - a_venue_xg_con
     expected_match_xg     = h_xg_for_5 + a_xg_for_5
 
+    rest_diff       = home_rest_days - away_rest_days
+    congestion_diff = float(home_congestion) - float(away_congestion)
+
     vec = np.array([
         elo_diff,
         h_elo, a_elo,
@@ -411,8 +492,8 @@ def build_xgb_feature_vector(
         foul_diff_roll5,
         venue_xg_attack_diff,
         expected_match_xg,
-        0.0,   # Rest_Diff         — not tracked, use 0
-        0.0,   # Congestion_Diff   — not tracked, use 0
+        rest_diff,         # Rest_Diff — computed from fixture schedule
+        congestion_diff,   # Congestion_Diff — computed from fixture schedule
         bookie_h, bookie_d, bookie_a,
     ], dtype=np.float32)
     return vec.reshape(1, -1)
@@ -592,6 +673,20 @@ def predict_gameweek(
                 logger.warning("Team state not found: %s — skipping fixture.", e)
                 continue
 
+            # ── Rest-day computation from fixture schedule ──────────────────────
+            match_date_str = fix.get("match_date", "")
+            home_rest, home_cong = _compute_rest_days(
+                sm._conn, home, match_date_str
+            )
+            away_rest, away_cong = _compute_rest_days(
+                sm._conn, away, match_date_str
+            )
+            logger.info(
+                "  Rest: %s %.0fd (cong=%d) | %s %.0fd (cong=%d)",
+                home, home_rest, home_cong,
+                away, away_rest, away_cong,
+            )
+
             # ── NDC inference ──────────────────────────────────────────────────
             ndc_result = None
             bookie_h, bookie_d, bookie_a = 0.40, 0.27, 0.33  # neutral prior
@@ -600,6 +695,8 @@ def predict_gameweek(
                 ndc_vec    = build_ndc_feature_vector(
                     home_state, away_state, ndc_feature_names,
                     bookie_h=bookie_h, bookie_d=bookie_d, bookie_a=bookie_a,
+                    home_rest_days=home_rest, away_rest_days=away_rest,
+                    home_congestion=home_cong, away_congestion=away_cong,
                 )
                 ndc_result = run_ndc_inference(ndc_model, ndc_scaler, ndc_vec)
                 ndc_p      = ndc_result["parsed"]
@@ -614,7 +711,9 @@ def predict_gameweek(
             xgb_h, xgb_d, xgb_a = 0.40, 0.27, 0.33  # fallback
             if xgb_ok:
                 xgb_vec        = build_xgb_feature_vector(
-                    home_state, away_state, bookie_h, bookie_d, bookie_a
+                    home_state, away_state, bookie_h, bookie_d, bookie_a,
+                    home_rest_days=home_rest, away_rest_days=away_rest,
+                    home_congestion=home_cong, away_congestion=away_cong,
                 )
                 xgb_h, xgb_d, xgb_a = run_xgb_inference(xgb_model, xgb_vec)
 

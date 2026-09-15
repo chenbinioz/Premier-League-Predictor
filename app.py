@@ -19,6 +19,7 @@ os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 import json
 import re
 import sys
+import subprocess
 import joblib
 import numpy as np
 import pandas as pd
@@ -491,17 +492,26 @@ def _odds_to_prob_triplet(home_odds: object, draw_odds: object, away_odds: objec
 
 
 @st.cache_data(ttl=300)
-def _load_bookie_odds_map() -> dict[tuple[str, str, str], tuple[float, float, float]]:
-    mapping: dict[tuple[str, str, str], tuple[float, float, float]] = {}
+def _load_bookie_odds_map() -> dict[tuple, tuple[float, float, float]]:
+    mapping: dict[tuple, tuple[float, float, float]] = {}
     for row in fetch_from_football_data_csv():
         home = normalize_team_name(row.get("home_team"))
         away = normalize_team_name(row.get("away_team"))
-        match_date = str(row.get("date") or "")
-        if not home or not away or not match_date:
+        raw_date = row.get("date") or ""
+        date_str = ""
+        if raw_date:
+            try:
+                date_str = pd.to_datetime(raw_date, dayfirst=True).strftime("%Y-%m-%d")
+            except Exception:
+                date_str = str(raw_date)
+
+        if not home or not away:
             continue
         triplet = _odds_to_prob_triplet(row.get("B365H"), row.get("B365D"), row.get("B365A"))
         if triplet is not None:
-            mapping[(home, away, match_date)] = triplet
+            if date_str:
+                mapping[(home, away, date_str)] = triplet
+            mapping[(home, away)] = triplet
     return mapping
 
 
@@ -513,12 +523,19 @@ def _bookie_prob_triplet_from_row(row: pd.Series) -> tuple[float, float, float] 
         return _odds_to_prob_triplet(odds_h, odds_d, odds_a)
 
     bookie_map = _load_bookie_odds_map()
-    key = (
-        normalize_team_name(row.get("home_team")),
-        normalize_team_name(row.get("away_team")),
-        str(row.get("match_date") or ""),
-    )
-    return bookie_map.get(key)
+    home = normalize_team_name(row.get("home_team"))
+    away = normalize_team_name(row.get("away_team"))
+    raw_date = row.get("match_date") or ""
+    date_str = ""
+    if raw_date:
+        try:
+            date_str = pd.to_datetime(raw_date).strftime("%Y-%m-%d")
+        except Exception:
+            date_str = str(raw_date)
+
+    if (home, away, date_str) in bookie_map:
+        return bookie_map[(home, away, date_str)]
+    return bookie_map.get((home, away))
 
 
 def _ndc_implied_odds(ndc_h: float, ndc_d: float, ndc_a: float) -> tuple[float, float, float]:
@@ -678,15 +695,39 @@ def render_fixture_card(row: pd.Series) -> None:
         unsafe_allow_html=True,
     )
 
-    xgb_snapshot = live_snapshot["xgb"]
-    ndc_snapshot = live_snapshot["ndc"]
+    # Use locked predictions if available in row, otherwise fallback to live snapshot
+    xgb_probs = None
+    if pd.notna(row.get("xgb_home_prob")):
+        xgb_probs = {
+            "Home": float(row["xgb_home_prob"]),
+            "Draw": float(row["xgb_draw_prob"]),
+            "Away": float(row["xgb_away_prob"])
+        }
+    elif live_snapshot["xgb"]:
+        xgb_probs = live_snapshot["xgb"]["probs"]
+
+    ndc_probs = None
+    ndc_top3 = []
+    if pd.notna(row.get("ndc_home_prob")):
+        ndc_probs = {
+            "Home": float(row["ndc_home_prob"]),
+            "Draw": float(row["ndc_draw_prob"]),
+            "Away": float(row["ndc_away_prob"])
+        }
+        if pd.notna(row.get("predicted_score")):
+            ndc_top3 = [str(row["predicted_score"])]
+    elif live_snapshot["ndc"]:
+        ndc_probs = live_snapshot["ndc"]["probs"]
+        ndc_top3 = live_snapshot["ndc"]["top3"]
+
     static_summary = _static_dc_summary(home_team, away_team, top_n=3)
 
-    prob_cols = st.columns(2)
+    bookie_triplet = _bookie_prob_triplet_from_row(row)
+
+    prob_cols = st.columns(3)
     with prob_cols[0]:
         st.markdown("**XGBoost probabilities**")
-        if xgb_snapshot:
-            xgb_probs = xgb_snapshot["probs"]
+        if xgb_probs:
             xgb_outcome = max(xgb_probs, key=xgb_probs.get)
             st.caption(f"Outcome: {xgb_outcome} ({xgb_probs[xgb_outcome]*100:.1f}%)")
             st.caption(
@@ -697,17 +738,29 @@ def render_fixture_card(row: pd.Series) -> None:
 
     with prob_cols[1]:
         st.markdown("**Neural Dixon-Coles probabilities**")
-        if ndc_snapshot:
-            ndc_probs = ndc_snapshot["probs"]
+        if ndc_probs:
             ndc_outcome = max(ndc_probs, key=ndc_probs.get)
-            ndc_top3 = ndc_snapshot["top3"]
             st.caption(f"Outcome: {ndc_outcome} ({ndc_probs[ndc_outcome]*100:.1f}%)")
-            st.caption(f"NDC top 3: {' • '.join(ndc_top3)}")
+            if ndc_top3:
+                st.caption(f"NDC top 3: {' • '.join(ndc_top3)}")
             st.caption(
                 f"H {ndc_probs['Home']*100:.0f}% | D {ndc_probs['Draw']*100:.0f}% | A {ndc_probs['Away']*100:.0f}%"
             )
         else:
             st.caption("NDC snapshot unavailable")
+
+    with prob_cols[2]:
+        st.markdown("**Bookmaker Benchmark**")
+        if bookie_triplet:
+            b_h, b_d, b_a = bookie_triplet
+            b_probs = {"Home": b_h, "Draw": b_d, "Away": b_a}
+            b_outcome = max(b_probs, key=b_probs.get)
+            st.caption(f"Outcome: {b_outcome} ({b_probs[b_outcome]*100:.1f}%)")
+            st.caption(
+                f"H {b_h*100:.0f}% | D {b_d*100:.0f}% | A {b_a*100:.0f}%"
+            )
+        else:
+            st.caption("Bookie odds unavailable")
 
     if static_summary:
         st.caption(f"Static DC top 3: {' • '.join(static_summary['scorelines'][:3])}")
@@ -717,13 +770,12 @@ def render_fixture_card(row: pd.Series) -> None:
     if status == "completed":
         h_g = int(row["home_goals"])
         a_g = int(row["away_goals"])
-        actual_outcome = home_team if h_g > a_g else away_team if h_g < a_g else "Draw"
+        actual_outcome = "Home" if h_g > a_g else "Away" if h_g < a_g else "Draw"
         actual_score = f"{h_g} - {a_g}"
 
-        if xgb_snapshot:
-            xgb_probs = xgb_snapshot["probs"]
+        if xgb_probs:
             xgb_outcome = max(xgb_probs, key=xgb_probs.get)
-            xgb_prob_correct = xgb_outcome == actual_outcome
+            xgb_prob_correct = (xgb_outcome == actual_outcome)
             st.markdown(
                 f"<div style='margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.45rem;'>"
                 f"<span style='padding: 0.35rem 0.65rem; border-radius: 999px; background: {'#d1fae5' if xgb_prob_correct else '#fee2e2'}; color: {'#065f46' if xgb_prob_correct else '#991b1b'}; font-weight: 700;'>XGBoost Prob {'✅' if xgb_prob_correct else '❌'}</span>"
@@ -731,15 +783,26 @@ def render_fixture_card(row: pd.Series) -> None:
                 unsafe_allow_html=True,
             )
 
-        if ndc_snapshot:
-            ndc_probs = ndc_snapshot["probs"]
+        if ndc_probs:
             ndc_outcome = max(ndc_probs, key=ndc_probs.get)
-            ndc_prob_correct = ndc_outcome == actual_outcome
-            ndc_score_correct = actual_score in ndc_snapshot["top3"]
+            ndc_prob_correct = (ndc_outcome == actual_outcome)
+            ndc_score_correct = actual_score in ndc_top3 if ndc_top3 else False
             st.markdown(
                 f"<div style='margin-top: 0.35rem; display: flex; flex-wrap: wrap; gap: 0.45rem;'>"
                 f"<span style='padding: 0.35rem 0.65rem; border-radius: 999px; background: {'#d1fae5' if ndc_prob_correct else '#fee2e2'}; color: {'#065f46' if ndc_prob_correct else '#991b1b'}; font-weight: 700;'>NDC Prob {'✅' if ndc_prob_correct else '❌'}</span>"
                 f"<span style='padding: 0.35rem 0.65rem; border-radius: 999px; background: {'#d1fae5' if ndc_score_correct else '#fee2e2'}; color: {'#065f46' if ndc_score_correct else '#991b1b'}; font-weight: 700;'>NDC Score {'✅' if ndc_score_correct else '❌'}</span>"
+                f"</div>",
+                unsafe_allow_html=True,
+            )
+
+        if bookie_triplet:
+            b_h, b_d, b_a = bookie_triplet
+            b_probs = {"Home": b_h, "Draw": b_d, "Away": b_a}
+            b_outcome = max(b_probs, key=b_probs.get)
+            b_prob_correct = (b_outcome == actual_outcome)
+            st.markdown(
+                f"<div style='margin-top: 0.35rem; display: flex; flex-wrap: wrap; gap: 0.45rem;'>"
+                f"<span style='padding: 0.35rem 0.65rem; border-radius: 999px; background: {'#d1fae5' if b_prob_correct else '#fee2e2'}; color: {'#065f46' if b_prob_correct else '#991b1b'}; font-weight: 700;'>Bookie Prob {'✅' if b_prob_correct else '❌'}</span>"
                 f"</div>",
                 unsafe_allow_html=True,
             )
@@ -752,7 +815,7 @@ def render_fixture_card(row: pd.Series) -> None:
                 "Away": static_parsed["away_win"] / 100.0,
             }
             static_outcome = max(static_probs, key=static_probs.get)
-            static_prob_correct = static_outcome == actual_outcome
+            static_prob_correct = (static_outcome == actual_outcome)
             static_score_correct = actual_score in static_summary["scorelines"]
             st.markdown(
                 f"<div style='margin-top: 0.35rem; display: flex; flex-wrap: wrap; gap: 0.45rem;'>"
@@ -927,6 +990,37 @@ selected_gw = st.sidebar.selectbox(
     index=int(default_gw - 1),
     key="tracker_gameweek"
 )
+
+# Sidebar expander for live data pipeline & git sync
+with st.sidebar.expander("⚡ Pipeline & Data Sync", expanded=False):
+    st.caption("Fetch live match results, update team states, and sync GitHub repo.")
+    
+    if st.button("📥 Pull Latest from GitHub", help="Fetch and fast-forward latest data commits from remote main", use_container_width=True):
+        with st.spinner("Executing git pull origin main..."):
+            try:
+                res = subprocess.run(["git", "pull", "origin", "main"], capture_output=True, text=True, timeout=30)
+                if res.returncode == 0:
+                    st.success("Successfully pulled latest commits!")
+                    st.cache_data.clear()
+                    st.rerun()
+                else:
+                    st.error(f"Git pull failed: {res.stderr or res.stdout}")
+            except Exception as e:
+                st.error(f"Failed to execute git pull: {e}")
+                
+    if st.button("🔄 Run Live Update Pipeline", help="Fetch latest Understat results and recalculate pre-match predictions", use_container_width=True):
+        with st.spinner("Running live state update & prediction engine..."):
+            try:
+                res1 = subprocess.run([sys.executable, "scripts/update_live_state.py"], capture_output=True, text=True, timeout=120)
+                res2 = subprocess.run([sys.executable, "scripts/predict_next_gameweek.py", "--auto"], capture_output=True, text=True, timeout=120)
+                if res1.returncode == 0 and res2.returncode == 0:
+                    st.success("Live states and predictions recalculated!")
+                    st.cache_data.clear()
+                    st.rerun()
+                else:
+                    st.error(f"Pipeline failed:\n{res1.stderr or res1.stdout}\n{res2.stderr or res2.stdout}")
+            except Exception as e:
+                st.error(f"Failed to execute live pipeline: {e}")
 
 # ---------------------------------------------------------------------------
 # Navigation Tabs
