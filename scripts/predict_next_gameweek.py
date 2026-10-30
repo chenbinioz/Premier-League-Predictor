@@ -79,8 +79,18 @@ NDC_MODEL_PATH       = REPO_ROOT / "models" / "bin" / "neural_dixon_coles.pt"
 NDC_SCALER_PATH      = REPO_ROOT / "models" / "bin" / "ndc_scaler.joblib"
 NDC_FEATURES_PATH    = REPO_ROOT / "models" / "bin" / "ndc_feature_names.json"
 XGB_MODEL_PATH       = REPO_ROOT / "models" / "calibrated_xgb_outcome.pkl"
+BLEND_WEIGHTS_PATH   = REPO_ROOT / "models" / "bin" / "blend_weights.json"
+BLEND_STACKER_PATH   = REPO_ROOT / "models" / "bin" / "blend_stacker.joblib"
 
-# ── Seasonal mean imputation constants ────────────────────────────────────────
+
+def _load_blend_config() -> dict[str, Any] | None:
+    """Load learned optimal blend weights if available."""
+    if BLEND_WEIGHTS_PATH.exists():
+        try:
+            return json.loads(BLEND_WEIGHTS_PATH.read_text())
+        except Exception as exc:
+            logger.debug("Failed to read blend weights from %s: %s", BLEND_WEIGHTS_PATH, exc)
+    return None
 # Pre-computed from last 2 seasons of epl_model_features.csv.
 # Used for features not tracked in live_team_states (shots, corners, fouls).
 _SEASON_MEANS: dict[str, float] = {
@@ -300,6 +310,37 @@ def build_ndc_feature_vector(
     a_xg_for_10 = _slice_avg(a, "last_10_xg_for", 10, 1.3)
     a_xg_con_10 = _slice_avg(a, "last_10_xg_against", 10, 1.3)
 
+    # Shots on target (for and against/opp)
+    h_sot_for_3  = _slice_avg(h, "last_10_sot_for", 3, _SEASON_MEANS["Home_ShotsOnTarget_roll3"])
+    h_sot_con_3  = _slice_avg(h, "last_10_sot_against", 3, _SEASON_MEANS["Away_ShotsOnTarget_roll3"])
+    h_sot_for_5  = _slice_avg(h, "last_10_sot_for", 5, _SEASON_MEANS["Home_ShotsOnTarget_roll5"])
+    h_sot_con_5  = _slice_avg(h, "last_10_sot_against", 5, _SEASON_MEANS["Away_ShotsOnTarget_roll5"])
+    h_sot_for_10 = _slice_avg(h, "last_10_sot_for", 10, _SEASON_MEANS["Home_ShotsOnTarget_roll10"])
+    h_sot_con_10 = _slice_avg(h, "last_10_sot_against", 10, _SEASON_MEANS["Away_ShotsOnTarget_roll10"])
+
+    a_sot_for_3  = _slice_avg(a, "last_10_sot_for", 3, _SEASON_MEANS["Away_ShotsOnTarget_roll3"])
+    a_sot_con_3  = _slice_avg(a, "last_10_sot_against", 3, _SEASON_MEANS["Home_ShotsOnTarget_roll3"])
+    a_sot_for_5  = _slice_avg(a, "last_10_sot_for", 5, _SEASON_MEANS["Away_ShotsOnTarget_roll5"])
+    a_sot_con_5  = _slice_avg(a, "last_10_sot_against", 5, _SEASON_MEANS["Home_ShotsOnTarget_roll5"])
+    a_sot_for_10 = _slice_avg(a, "last_10_sot_for", 10, _SEASON_MEANS["Away_ShotsOnTarget_roll10"])
+    a_sot_con_10 = _slice_avg(a, "last_10_sot_against", 10, _SEASON_MEANS["Home_ShotsOnTarget_roll10"])
+
+    # Corners
+    h_cor_for_3  = _slice_avg(h, "last_10_corners_for", 3, _SEASON_MEANS["Home_Corners_roll3"])
+    h_cor_for_5  = _slice_avg(h, "last_10_corners_for", 5, _SEASON_MEANS["Home_Corners_roll5"])
+    h_cor_for_10 = _slice_avg(h, "last_10_corners_for", 10, _SEASON_MEANS["Home_Corners_roll10"])
+    a_cor_for_3  = _slice_avg(a, "last_10_corners_for", 3, _SEASON_MEANS["Away_Corners_roll3"])
+    a_cor_for_5  = _slice_avg(a, "last_10_corners_for", 5, _SEASON_MEANS["Away_Corners_roll5"])
+    a_cor_for_10 = _slice_avg(a, "last_10_corners_for", 10, _SEASON_MEANS["Away_Corners_roll10"])
+
+    # Fouls
+    h_foul_for_3  = _slice_avg(h, "last_10_fouls_for", 3, _SEASON_MEANS["Home_Fouls_roll3"])
+    h_foul_for_5  = _slice_avg(h, "last_10_fouls_for", 5, _SEASON_MEANS["Home_Fouls_roll5"])
+    h_foul_for_10 = _slice_avg(h, "last_10_fouls_for", 10, _SEASON_MEANS["Home_Fouls_roll10"])
+    a_foul_for_3  = _slice_avg(a, "last_10_fouls_for", 3, _SEASON_MEANS["Away_Fouls_roll3"])
+    a_foul_for_5  = _slice_avg(a, "last_10_fouls_for", 5, _SEASON_MEANS["Away_Fouls_roll5"])
+    a_foul_for_10 = _slice_avg(a, "last_10_fouls_for", 10, _SEASON_MEANS["Away_Fouls_roll10"])
+
     # Build lookup for all 75 features
     feature_map: dict[str, float] = {
         # Elo
@@ -311,12 +352,12 @@ def build_ndc_feature_vector(
         "Home_GoalsConceded":     h_g_con_5,
         "Home_xG_Created":        h_xg_for_5,
         "Home_xG_Conceded":       h_xg_con_5,
-        "Home_ShotsOnTarget":     _SEASON_MEANS["Home_ShotsOnTarget_roll5"],
-        "Home_Opp_ShotsOnTarget": _SEASON_MEANS["Away_ShotsOnTarget_roll5"],
+        "Home_ShotsOnTarget":     h_sot_for_5,
+        "Home_Opp_ShotsOnTarget": h_sot_con_5,
         "Home_YellowCards":       1.6,
         "Home_RedCards":          0.05,
-        "Home_Corners":           _SEASON_MEANS["Home_Corners_roll5"],
-        "Home_Fouls":             _SEASON_MEANS["Home_Fouls_roll5"],
+        "Home_Corners":           h_cor_for_5,
+        "Home_Fouls":             h_foul_for_5,
         "Home_Rest_Days":         home_rest_days,
         "Home_Congestion_Flag":   float(home_congestion),
 
@@ -324,12 +365,12 @@ def build_ndc_feature_vector(
         "Away_GoalsConceded":     a_g_con_5,
         "Away_xG_Created":        a_xg_for_5,
         "Away_xG_Conceded":       a_xg_con_5,
-        "Away_ShotsOnTarget":     _SEASON_MEANS["Away_ShotsOnTarget_roll5"],
-        "Away_Opp_ShotsOnTarget": _SEASON_MEANS["Home_ShotsOnTarget_roll5"],
+        "Away_ShotsOnTarget":     a_sot_for_5,
+        "Away_Opp_ShotsOnTarget": a_sot_con_5,
         "Away_YellowCards":       1.7,
         "Away_RedCards":          0.05,
-        "Away_Corners":           _SEASON_MEANS["Away_Corners_roll5"],
-        "Away_Fouls":             _SEASON_MEANS["Away_Fouls_roll5"],
+        "Away_Corners":           a_cor_for_5,
+        "Away_Fouls":             a_foul_for_5,
         "Away_Rest_Days":         away_rest_days,
         "Away_Congestion_Flag":   float(away_congestion),
 
@@ -361,25 +402,25 @@ def build_ndc_feature_vector(
         "Away_xG_Created_roll10":    a_xg_for_10,
         "Away_xG_Conceded_roll10":   a_xg_con_10,
 
-        # Rolling shots / corners / fouls — seasonal means
-        "Home_ShotsOnTarget_roll3":  _SEASON_MEANS["Home_ShotsOnTarget_roll3"],
-        "Away_ShotsOnTarget_roll3":  _SEASON_MEANS["Away_ShotsOnTarget_roll3"],
-        "Home_Corners_roll3":        _SEASON_MEANS["Home_Corners_roll3"],
-        "Away_Corners_roll3":        _SEASON_MEANS["Away_Corners_roll3"],
-        "Home_Fouls_roll3":          _SEASON_MEANS["Home_Fouls_roll3"],
-        "Away_Fouls_roll3":          _SEASON_MEANS["Away_Fouls_roll3"],
-        "Home_ShotsOnTarget_roll5":  _SEASON_MEANS["Home_ShotsOnTarget_roll5"],
-        "Away_ShotsOnTarget_roll5":  _SEASON_MEANS["Away_ShotsOnTarget_roll5"],
-        "Home_Corners_roll5":        _SEASON_MEANS["Home_Corners_roll5"],
-        "Away_Corners_roll5":        _SEASON_MEANS["Away_Corners_roll5"],
-        "Home_Fouls_roll5":          _SEASON_MEANS["Home_Fouls_roll5"],
-        "Away_Fouls_roll5":          _SEASON_MEANS["Away_Fouls_roll5"],
-        "Home_ShotsOnTarget_roll10": _SEASON_MEANS["Home_ShotsOnTarget_roll10"],
-        "Away_ShotsOnTarget_roll10": _SEASON_MEANS["Away_ShotsOnTarget_roll10"],
-        "Home_Corners_roll10":       _SEASON_MEANS["Home_Corners_roll10"],
-        "Away_Corners_roll10":       _SEASON_MEANS["Away_Corners_roll10"],
-        "Home_Fouls_roll10":         _SEASON_MEANS["Home_Fouls_roll10"],
-        "Away_Fouls_roll10":         _SEASON_MEANS["Away_Fouls_roll10"],
+        # Rolling shots / corners / fouls — tracked from live state (fallback: seasonal means)
+        "Home_ShotsOnTarget_roll3":  h_sot_for_3,
+        "Away_ShotsOnTarget_roll3":  a_sot_for_3,
+        "Home_Corners_roll3":        h_cor_for_3,
+        "Away_Corners_roll3":        a_cor_for_3,
+        "Home_Fouls_roll3":          h_foul_for_3,
+        "Away_Fouls_roll3":          a_foul_for_3,
+        "Home_ShotsOnTarget_roll5":  h_sot_for_5,
+        "Away_ShotsOnTarget_roll5":  a_sot_for_5,
+        "Home_Corners_roll5":        h_cor_for_5,
+        "Away_Corners_roll5":        a_cor_for_5,
+        "Home_Fouls_roll5":          h_foul_for_5,
+        "Away_Fouls_roll5":          a_foul_for_5,
+        "Home_ShotsOnTarget_roll10": h_sot_for_10,
+        "Away_ShotsOnTarget_roll10": a_sot_for_10,
+        "Home_Corners_roll10":       h_cor_for_10,
+        "Away_Corners_roll10":       a_cor_for_10,
+        "Home_Fouls_roll10":         h_foul_for_10,
+        "Away_Fouls_roll10":         a_foul_for_10,
 
         # Venue-split xG — fallback to overall rolling
         "Home_xG_Created_Venue_roll5":  h_xg_for_5,
@@ -458,10 +499,11 @@ def build_xgb_feature_vector(
     a_xg_for_10 = _slice_avg(a, "last_10_xg_for", 10, 1.3)
     a_xg_con_10 = _slice_avg(a, "last_10_xg_against", 10, 1.3)
 
-    h_cor = _SEASON_MEANS["Home_Corners_roll5"]
-    a_cor = _SEASON_MEANS["Away_Corners_roll5"]
-    h_foul = _SEASON_MEANS["Home_Fouls_roll5"]
-    a_foul = _SEASON_MEANS["Away_Fouls_roll5"]
+    # Tracked corners & fouls (fallback to seasonal means)
+    h_cor  = _slice_avg(h, "last_10_corners_for", 5, _SEASON_MEANS["Home_Corners_roll5"])
+    a_cor  = _slice_avg(a, "last_10_corners_for", 5, _SEASON_MEANS["Away_Corners_roll5"])
+    h_foul = _slice_avg(h, "last_10_fouls_for", 5, _SEASON_MEANS["Home_Fouls_roll5"])
+    a_foul = _slice_avg(a, "last_10_fouls_for", 5, _SEASON_MEANS["Away_Fouls_roll5"])
 
     h_venue_xg_for = h_xg_for_5
     a_venue_xg_con = a_xg_con_5
@@ -539,14 +581,43 @@ def run_xgb_inference(
 def _blend_probs(
     ndc_h: float, ndc_d: float, ndc_a: float,
     xgb_h: float, xgb_d: float, xgb_a: float,
-    alpha: float,
+    alpha: float | dict[str, float] | None = None,
 ) -> tuple[float, float, float]:
-    """Weighted average of NDC and XGBoost 1X2 probabilities."""
-    h = alpha * ndc_h + (1 - alpha) * xgb_h
-    d = alpha * ndc_d + (1 - alpha) * xgb_d
-    a = alpha * ndc_a + (1 - alpha) * xgb_a
+    """
+    Weighted average of NDC and XGBoost 1X2 probabilities.
+
+    Supports:
+      - float alpha: P_blend = alpha * NDC + (1 - alpha) * XGB
+      - dict alpha:  Class-wise weights e.g. {'away_ndc_weight': 0.6074, ...}
+      - None:        Automatically loads learned classwise weights from blend_weights.json
+    """
+    if isinstance(alpha, (float, int)):
+        a_val = float(alpha)
+        h = a_val * ndc_h + (1.0 - a_val) * xgb_h
+        d = a_val * ndc_d + (1.0 - a_val) * xgb_d
+        a = a_val * ndc_a + (1.0 - a_val) * xgb_a
+    else:
+        cw = alpha if isinstance(alpha, dict) else None
+        if cw is None:
+            cfg = _load_blend_config()
+            if cfg and "classwise_blend" in cfg:
+                cw = cfg["classwise_blend"]
+
+        if cw:
+            alpha_h = float(cw.get("home_ndc_weight", 0.5764))
+            alpha_d = float(cw.get("draw_ndc_weight", 1.0))
+            alpha_a = float(cw.get("away_ndc_weight", 0.6074))
+        else:
+            alpha_h, alpha_d, alpha_a = 0.5, 0.5, 0.5
+
+        h = alpha_h * ndc_h + (1.0 - alpha_h) * xgb_h
+        d = alpha_d * ndc_d + (1.0 - alpha_d) * xgb_d
+        a = alpha_a * ndc_a + (1.0 - alpha_a) * xgb_a
+
     total = h + d + a
-    return h / total, d / total, a / total
+    if total > 0:
+        return h / total, d / total, a / total
+    return 1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0
 
 
 # ── Prediction derivation ─────────────────────────────────────────────────────
@@ -584,10 +655,27 @@ def predict_gameweek(
     db_path:  Path,
     dry_run:  bool,
     no_fetch: bool,
-    blend:    float,
+    blend:    Optional[float] = None,
     force:    bool = False,
 ) -> None:
     """Main prediction loop for a given gameweek."""
+
+    # ── Resolve blend weights ──────────────────────────────────────────────────
+    if blend is not None:
+        blend_param = blend
+        blend_desc = f"Manual Scalar (NDC×{blend:.0%} + XGB×{1-blend:.0%})"
+    else:
+        cfg = _load_blend_config()
+        if cfg and "classwise_blend" in cfg:
+            cw = cfg["classwise_blend"]
+            blend_param = cw
+            blend_desc = (
+                f"Optimized Class-Wise (NDC: Away={cw['away_ndc_weight']:.1%}, "
+                f"Draw={cw['draw_ndc_weight']:.1%}, Home={cw['home_ndc_weight']:.1%})"
+            )
+        else:
+            blend_param = 0.5
+            blend_desc = "Default 50/50"
 
     # ── Load models ────────────────────────────────────────────────────────────
     ndc_model, ndc_scaler, ndc_feature_names = _load_ndc()
@@ -722,7 +810,7 @@ def predict_gameweek(
                 final_h, final_d, final_a = _blend_probs(
                     ndc_h, ndc_d, ndc_a,
                     xgb_h, xgb_d, xgb_a,
-                    alpha=blend,
+                    alpha=blend_param,
                 )
             elif ndc_ok:
                 final_h, final_d, final_a = ndc_h, ndc_d, ndc_a
@@ -787,7 +875,7 @@ def predict_gameweek(
                 f"  {r['Score']:>8}  {r['λ']:>5} {r['μ']:>5}"
             )
         print(f"{'━' * 86}")
-        print(f"  Blend: NDC×{blend:.0%} + XGB×{1-blend:.0%} | "
+        print(f"  Blend: {blend_desc} | "
               f"NDC={'✓' if ndc_ok else '✗'} | XGB={'✓' if xgb_ok else '✗'}")
         print(f"{'━' * 86}\n")
 
@@ -863,8 +951,8 @@ def _parse_args() -> argparse.Namespace:
         help="Skip API-Football call; use pending fixtures already in the DB.",
     )
     parser.add_argument(
-        "--blend", type=float, default=0.5,
-        help="Weight on NDC vs XGBoost (0=XGBoost only, 1=NDC only).",
+        "--blend", type=float, default=None,
+        help="Weight on NDC vs XGBoost (0=XGB only, 1=NDC only). If omitted, uses optimal learned blend weights from models/bin/blend_weights.json.",
     )
     parser.add_argument(
         "--force", action="store_true",

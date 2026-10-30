@@ -12,15 +12,21 @@ DROP TABLE IF EXISTS fixtures_26_27;
 --    Stores the full 380-match schedule and progressive results.
 -- ─────────────────────────────────────────────────────────────
 CREATE TABLE fixtures_26_27 (
-    match_id        INTEGER PRIMARY KEY AUTOINCREMENT,
-    gameweek        INTEGER NOT NULL,
-    match_date      TEXT    NOT NULL,
-    home_team       TEXT    NOT NULL,
-    away_team       TEXT    NOT NULL,
-    status          TEXT    NOT NULL DEFAULT 'pending'
-                    CHECK (status IN ('pending', 'completed')),
-    home_goals      INTEGER,
-    away_goals      INTEGER
+    match_id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    gameweek             INTEGER NOT NULL,
+    match_date           TEXT    NOT NULL,
+    home_team            TEXT    NOT NULL,
+    away_team            TEXT    NOT NULL,
+    status               TEXT    NOT NULL DEFAULT 'pending'
+                         CHECK (status IN ('pending', 'completed')),
+    home_goals           INTEGER,
+    away_goals           INTEGER,
+    home_shots_on_target INTEGER,
+    away_shots_on_target INTEGER,
+    home_corners         INTEGER,
+    away_corners         INTEGER,
+    home_fouls           INTEGER,
+    away_fouls           INTEGER
 );
 
 CREATE INDEX idx_fixtures_date   ON fixtures_26_27 (match_date);
@@ -31,17 +37,29 @@ CREATE INDEX idx_fixtures_gw     ON fixtures_26_27 (gameweek);
 --    One row per team. Rolling arrays stored as JSON strings.
 -- ─────────────────────────────────────────────────────────────
 CREATE TABLE live_team_states (
-    team_name             TEXT    PRIMARY KEY,
-    current_elo           REAL    NOT NULL DEFAULT 1500.0,
-    last_10_xg_for        TEXT    NOT NULL DEFAULT '[]',
-    last_10_xg_against    TEXT    NOT NULL DEFAULT '[]',
-    last_10_goals_for     TEXT    NOT NULL DEFAULT '[]',
-    last_10_goals_against TEXT    NOT NULL DEFAULT '[]',
-    avg_xg_for            REAL    NOT NULL DEFAULT 0.0,
-    avg_xg_against        REAL    NOT NULL DEFAULT 0.0,
-    avg_goals_for         REAL    NOT NULL DEFAULT 0.0,
-    avg_goals_against     REAL    NOT NULL DEFAULT 0.0,
-    last_updated          TEXT    NOT NULL DEFAULT (datetime('now'))
+    team_name               TEXT    PRIMARY KEY,
+    current_elo             REAL    NOT NULL DEFAULT 1500.0,
+    last_10_xg_for          TEXT    NOT NULL DEFAULT '[]',
+    last_10_xg_against      TEXT    NOT NULL DEFAULT '[]',
+    last_10_goals_for       TEXT    NOT NULL DEFAULT '[]',
+    last_10_goals_against   TEXT    NOT NULL DEFAULT '[]',
+    last_10_sot_for         TEXT    NOT NULL DEFAULT '[]',
+    last_10_sot_against     TEXT    NOT NULL DEFAULT '[]',
+    last_10_corners_for     TEXT    NOT NULL DEFAULT '[]',
+    last_10_corners_against TEXT    NOT NULL DEFAULT '[]',
+    last_10_fouls_for       TEXT    NOT NULL DEFAULT '[]',
+    last_10_fouls_against   TEXT    NOT NULL DEFAULT '[]',
+    avg_xg_for              REAL    NOT NULL DEFAULT 0.0,
+    avg_xg_against          REAL    NOT NULL DEFAULT 0.0,
+    avg_goals_for           REAL    NOT NULL DEFAULT 0.0,
+    avg_goals_against       REAL    NOT NULL DEFAULT 0.0,
+    avg_sot_for             REAL    NOT NULL DEFAULT 0.0,
+    avg_sot_against         REAL    NOT NULL DEFAULT 0.0,
+    avg_corners_for         REAL    NOT NULL DEFAULT 0.0,
+    avg_corners_against     REAL    NOT NULL DEFAULT 0.0,
+    avg_fouls_for           REAL    NOT NULL DEFAULT 0.0,
+    avg_fouls_against       REAL    NOT NULL DEFAULT 0.0,
+    last_updated            TEXT    NOT NULL DEFAULT (datetime('now'))
 );
 
 -- ── 3. predictions_26_27 ────────────────────────────────────

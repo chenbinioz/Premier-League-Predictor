@@ -260,10 +260,16 @@ def fetch_from_football_data_csv() -> list[dict[str, Any]]:
                 "away_team": away_team,
                 "home_goals": _safe_int(row.get("FTHG")) or 0,
                 "away_goals": _safe_int(row.get("FTAG")) or 0,
+                "home_sot": _safe_int(row.get("HST")),
+                "away_sot": _safe_int(row.get("AST")),
+                "home_corners": _safe_int(row.get("HC")),
+                "away_corners": _safe_int(row.get("AC")),
+                "home_fouls": _safe_int(row.get("HF")),
+                "away_fouls": _safe_int(row.get("AF")),
                 "status": "completed",
                 "match_id": 0,
-                "home_xg": None,
-                "away_xg": None,
+                "home_xg": _safe_float(row.get("HxG")),
+                "away_xg": _safe_float(row.get("AxG")),
             }
             for key in ("B365H", "B365D", "B365A"):
                 if key in df.columns:
@@ -305,13 +311,18 @@ def fetch_upcoming_fixtures(gameweek: int) -> list[dict[str, Any]]:
 
 
 def fetch_weekend_results(gameweek: int) -> list[dict[str, Any]]:
-    """Return completed results for the requested gameweek from Understat.
+    """Return completed results for the requested gameweek from Understat / football-data CSV.
 
     Returns a list of dicts with values suitable for live-state updates. Includes both
-    "match_date" and "date" for compatibility with the existing pipeline.
+    "match_date" and "date" for compatibility with the existing pipeline, plus
+    shots on target, corners, and fouls.
     """
     if gameweek < 1:
         return []
+
+    # Pre-fetch football-data CSV to enrich Understat with shots, corners, and fouls
+    csv_rows = fetch_from_football_data_csv()
+    csv_map = {(r["home_team"], r["away_team"]): r for r in csv_rows}
 
     rows = _read_understat_matches()
     if rows:
@@ -319,24 +330,33 @@ def fetch_weekend_results(gameweek: int) -> list[dict[str, Any]]:
         results: list[dict[str, Any]] = []
         for row in rows:
             if row.get("is_result") and row.get("gameweek") == gameweek:
+                home_team = row["home_team"]
+                away_team = row["away_team"]
+                csv_item = csv_map.get((home_team, away_team), {})
+
                 results.append({
                     "match_id": int(row["match_id"]),
                     "api_match_id": int(row["match_id"]),
                     "gameweek": int(row["gameweek"]),
                     "match_date": row["match_date"],
                     "date": row["match_date"],
-                    "home_team": row["home_team"],
-                    "away_team": row["away_team"],
+                    "home_team": home_team,
+                    "away_team": away_team,
                     "home_goals": int(row["home_goals"] or 0),
                     "away_goals": int(row["away_goals"] or 0),
-                    "home_xg": float(row["home_xg"]) if row.get("home_xg") is not None else 0.0,
-                    "away_xg": float(row["away_xg"]) if row.get("away_xg") is not None else 0.0,
+                    "home_xg": float(row["home_xg"]) if row.get("home_xg") is not None else float(csv_item.get("home_xg") or row.get("home_goals") or 0.0),
+                    "away_xg": float(row["away_xg"]) if row.get("away_xg") is not None else float(csv_item.get("away_xg") or row.get("away_goals") or 0.0),
+                    "home_sot": csv_item.get("home_sot"),
+                    "away_sot": csv_item.get("away_sot"),
+                    "home_corners": csv_item.get("home_corners"),
+                    "away_corners": csv_item.get("away_corners"),
+                    "home_fouls": csv_item.get("home_fouls"),
+                    "away_fouls": csv_item.get("away_fouls"),
                     "status": "completed",
                 })
         if results:
             return results
 
-    csv_rows = fetch_from_football_data_csv()
     if not csv_rows:
         return []
 
@@ -358,6 +378,12 @@ def fetch_weekend_results(gameweek: int) -> list[dict[str, Any]]:
                 "away_goals": int(row.get("away_goals") or 0),
                 "home_xg": float(row.get("home_xg") or 0.0),
                 "away_xg": float(row.get("away_xg") or 0.0),
+                "home_sot": row.get("home_sot"),
+                "away_sot": row.get("away_sot"),
+                "home_corners": row.get("home_corners"),
+                "away_corners": row.get("away_corners"),
+                "home_fouls": row.get("home_fouls"),
+                "away_fouls": row.get("away_fouls"),
                 "status": "completed",
             })
     return results

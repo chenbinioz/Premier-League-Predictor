@@ -72,13 +72,19 @@ def _load_final_elo_dict() -> dict[str, float]:
     return elo_dict
 
 
-def _team_last_10_stats(df: pd.DataFrame, team: str) -> tuple[list[float], list[float], list[float], list[float]]:
-    """Return the most recent 10 xG and goal values for a team from the prior season."""
+def _team_last_10_stats(df: pd.DataFrame, team: str) -> dict[str, list]:
+    """Return the most recent 10 stats for a team from the prior season."""
     rows = df[(df["HomeTeam"] == team) | (df["AwayTeam"] == team)].copy().sort_values("Date")
     xg_for: list[float] = []
     xg_against: list[float] = []
     goals_for: list[float] = []
     goals_against: list[float] = []
+    sot_for: list[float] = []
+    sot_against: list[float] = []
+    corners_for: list[float] = []
+    corners_against: list[float] = []
+    fouls_for: list[float] = []
+    fouls_against: list[float] = []
 
     for _, row in rows.iterrows():
         if row["HomeTeam"] == team:
@@ -86,21 +92,39 @@ def _team_last_10_stats(df: pd.DataFrame, team: str) -> tuple[list[float], list[
             xg_against.append(float(row["Home_xG_Conceded"]))
             goals_for.append(int(row["FTHG"]))
             goals_against.append(int(row["FTAG"]))
+            sot_for.append(float(row.get("Home_ShotsOnTarget", 4.35)))
+            sot_against.append(float(row.get("Home_Opp_ShotsOnTarget", 4.45)))
+            corners_for.append(float(row.get("Home_Corners", 5.05)))
+            corners_against.append(float(row.get("Away_Corners", 5.11)))
+            fouls_for.append(float(row.get("Home_Fouls", 10.95)))
+            fouls_against.append(float(row.get("Away_Fouls", 10.88)))
         else:
             xg_for.append(float(row["Away_xG_Created"]))
             xg_against.append(float(row["Away_xG_Conceded"]))
             goals_for.append(int(row["FTAG"]))
             goals_against.append(int(row["FTHG"]))
+            sot_for.append(float(row.get("Away_ShotsOnTarget", 4.45)))
+            sot_against.append(float(row.get("Away_Opp_ShotsOnTarget", 4.35)))
+            corners_for.append(float(row.get("Away_Corners", 5.11)))
+            corners_against.append(float(row.get("Home_Corners", 5.05)))
+            fouls_for.append(float(row.get("Away_Fouls", 10.88)))
+            fouls_against.append(float(row.get("Home_Fouls", 10.95)))
 
-    return (
-        xg_for[-10:],
-        xg_against[-10:],
-        goals_for[-10:],
-        goals_against[-10:],
-    )
+    return {
+        "xg_for": xg_for[-10:],
+        "xg_against": xg_against[-10:],
+        "goals_for": goals_for[-10:],
+        "goals_against": goals_against[-10:],
+        "sot_for": sot_for[-10:],
+        "sot_against": sot_against[-10:],
+        "corners_for": corners_for[-10:],
+        "corners_against": corners_against[-10:],
+        "fouls_for": fouls_for[-10:],
+        "fouls_against": fouls_against[-10:],
+    }
 
 
-def _load_final_season_team_stats() -> dict[str, dict[str, float | list[float]]]:
+def _load_final_season_team_stats() -> dict[str, dict[str, Any]]:
     """Create realistic start-of-season team states from the prior season's final match stats."""
     if not FEATURES_PATH.exists():
         raise FileNotFoundError(
@@ -112,27 +136,40 @@ def _load_final_season_team_stats() -> dict[str, dict[str, float | list[float]]]
     if df.empty:
         return {}
 
-    seasons = sorted(df["Season"].unique().tolist())
-    last_season = seasons[-1]
+    # Target 2025/26 as the prior season boundary baseline
+    seasons = sorted([s for s in df["Season"].unique().tolist() if s != "2026/27"])
+    last_season = seasons[-1] if seasons else sorted(df["Season"].unique().tolist())[-1]
     df_last = df[df["Season"] == last_season].sort_values("Date").reset_index(drop=True)
 
     teams = sorted(set(df_last["HomeTeam"].unique()) | set(df_last["AwayTeam"].unique()))
-    stats: dict[str, dict[str, float | list[float]]] = {}
+    stats: dict[str, dict[str, Any]] = {}
 
     for team in teams:
-        xg_for, xg_against, goals_for, goals_against = _team_last_10_stats(df_last, team)
-        if not xg_for:
+        res = _team_last_10_stats(df_last, team)
+        if not res["xg_for"]:
             continue
 
         stats[team] = {
-            "last_10_xg_for": xg_for,
-            "last_10_xg_against": xg_against,
-            "last_10_goals_for": goals_for,
-            "last_10_goals_against": goals_against,
-            "avg_xg_for": float(sum(xg_for) / len(xg_for)),
-            "avg_xg_against": float(sum(xg_against) / len(xg_against)),
-            "avg_goals_for": float(sum(goals_for) / len(goals_for)),
-            "avg_goals_against": float(sum(goals_against) / len(goals_against)),
+            "last_10_xg_for": res["xg_for"],
+            "last_10_xg_against": res["xg_against"],
+            "last_10_goals_for": res["goals_for"],
+            "last_10_goals_against": res["goals_against"],
+            "last_10_sot_for": res["sot_for"],
+            "last_10_sot_against": res["sot_against"],
+            "last_10_corners_for": res["corners_for"],
+            "last_10_corners_against": res["corners_against"],
+            "last_10_fouls_for": res["fouls_for"],
+            "last_10_fouls_against": res["fouls_against"],
+            "avg_xg_for": float(sum(res["xg_for"]) / len(res["xg_for"])),
+            "avg_xg_against": float(sum(res["xg_against"]) / len(res["xg_against"])),
+            "avg_goals_for": float(sum(res["goals_for"]) / len(res["goals_for"])),
+            "avg_goals_against": float(sum(res["goals_against"]) / len(res["goals_against"])),
+            "avg_sot_for": float(sum(res["sot_for"]) / len(res["sot_for"])) if res["sot_for"] else 4.35,
+            "avg_sot_against": float(sum(res["sot_against"]) / len(res["sot_against"])) if res["sot_against"] else 4.45,
+            "avg_corners_for": float(sum(res["corners_for"]) / len(res["corners_for"])) if res["corners_for"] else 5.05,
+            "avg_corners_against": float(sum(res["corners_against"]) / len(res["corners_against"])) if res["corners_against"] else 5.11,
+            "avg_fouls_for": float(sum(res["fouls_for"]) / len(res["fouls_for"])) if res["fouls_for"] else 10.95,
+            "avg_fouls_against": float(sum(res["fouls_against"]) / len(res["fouls_against"])) if res["fouls_against"] else 10.88,
         }
 
     return stats
@@ -178,6 +215,12 @@ def _seed_team_states(conn: sqlite3.Connection, team_elos: dict[str, float]) -> 
         xg_against = stats.get("last_10_xg_against", []) or [1.3] * 5
         goals_for = stats.get("last_10_goals_for", []) or [1.4] * 5
         goals_against = stats.get("last_10_goals_against", []) or [1.3] * 5
+        sot_for = stats.get("last_10_sot_for", []) or [4.35] * 5
+        sot_against = stats.get("last_10_sot_against", []) or [4.45] * 5
+        corners_for = stats.get("last_10_corners_for", []) or [5.05] * 5
+        corners_against = stats.get("last_10_corners_against", []) or [5.11] * 5
+        fouls_for = stats.get("last_10_fouls_for", []) or [10.95] * 5
+        fouls_against = stats.get("last_10_fouls_against", []) or [10.88] * 5
 
         rows.append((
             team,
@@ -186,10 +229,22 @@ def _seed_team_states(conn: sqlite3.Connection, team_elos: dict[str, float]) -> 
             json.dumps(xg_against[-10:]),
             json.dumps(goals_for[-10:]),
             json.dumps(goals_against[-10:]),
+            json.dumps(sot_for[-10:]),
+            json.dumps(sot_against[-10:]),
+            json.dumps(corners_for[-10:]),
+            json.dumps(corners_against[-10:]),
+            json.dumps(fouls_for[-10:]),
+            json.dumps(fouls_against[-10:]),
             float(stats.get("avg_xg_for", 1.4)),
             float(stats.get("avg_xg_against", 1.3)),
             float(stats.get("avg_goals_for", 1.4)),
             float(stats.get("avg_goals_against", 1.3)),
+            float(stats.get("avg_sot_for", 4.35)),
+            float(stats.get("avg_sot_against", 4.45)),
+            float(stats.get("avg_corners_for", 5.05)),
+            float(stats.get("avg_corners_against", 5.11)),
+            float(stats.get("avg_fouls_for", 10.95)),
+            float(stats.get("avg_fouls_against", 10.88)),
         ))
 
     conn.executemany(
@@ -198,8 +253,13 @@ def _seed_team_states(conn: sqlite3.Connection, team_elos: dict[str, float]) -> 
             (team_name, current_elo,
              last_10_xg_for, last_10_xg_against,
              last_10_goals_for, last_10_goals_against,
-             avg_xg_for, avg_xg_against, avg_goals_for, avg_goals_against)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             last_10_sot_for, last_10_sot_against,
+             last_10_corners_for, last_10_corners_against,
+             last_10_fouls_for, last_10_fouls_against,
+             avg_xg_for, avg_xg_against, avg_goals_for, avg_goals_against,
+             avg_sot_for, avg_sot_against, avg_corners_for, avg_corners_against,
+             avg_fouls_for, avg_fouls_against)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         rows,
     )

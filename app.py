@@ -20,6 +20,7 @@ import json
 import re
 import sys
 import subprocess
+from pathlib import Path
 import joblib
 import numpy as np
 import pandas as pd
@@ -33,8 +34,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Path setup so we can import the models package
-REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, REPO_ROOT)
+REPO_ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(REPO_ROOT))
 
 from models.neural_dixon_coles import (
     NeuralDixonColes,
@@ -1537,8 +1538,10 @@ with tab_live:
         ndc_info   = model_stats["ndc"]
         bookie_info = model_stats["bookie"]
 
+        blend_weights_file = REPO_ROOT / "models" / "bin" / "blend_weights.json"
+        blend_title = "🔮 Blended Ensemble (Optimized)" if blend_weights_file.exists() else "🔮 Blended Ensemble (50/50)"
         kpi1.metric(
-            "🔮 Blended Ensemble (50/50)",
+            blend_title,
             f"{blend_info['acc']:.1f}% Acc",
             delta=f"{blend_info['hits']}/{total_completed} Correct | Loss: {blend_info['loss']:.3f}"
         )

@@ -102,10 +102,25 @@ def update_gameweek_results(gameweek: int, db_path: Path, dry_run: bool = False)
                 home_xg = float(home_goals)
                 away_xg = float(away_goals)
                 
+            home_sot = res.get("home_sot")
+            away_sot = res.get("away_sot")
+            home_corners = res.get("home_corners")
+            away_corners = res.get("away_corners")
+            home_fouls = res.get("home_fouls")
+            away_fouls = res.get("away_fouls")
+
             if dry_run:
-                logger.info(f"[DRY RUN] Would update: Match {match_id}: {home} {home_goals} - {away_goals} {away} (xG: {home_xg:.2f} - {away_xg:.2f})")
+                logger.info(
+                    f"[DRY RUN] Would update: Match {match_id}: {home} {home_goals} - {away_goals} {away} "
+                    f"(xG: {home_xg:.2f} - {away_xg:.2f}, SoT: {home_sot} - {away_sot}, "
+                    f"Corners: {home_corners} - {away_corners}, Fouls: {home_fouls} - {away_fouls})"
+                )
             else:
-                logger.info(f"Applying update: Match {match_id}: {home} {home_goals} - {away_goals} {away} (xG: {home_xg:.2f} - {away_xg:.2f})")
+                logger.info(
+                    f"Applying update: Match {match_id}: {home} {home_goals} - {away_goals} {away} "
+                    f"(xG: {home_xg:.2f} - {away_xg:.2f}, SoT: {home_sot} - {away_sot}, "
+                    f"Corners: {home_corners} - {away_corners}, Fouls: {home_fouls} - {away_fouls})"
+                )
                 sm.update_after_match(
                     match_id=match_id,
                     home_team=home,
@@ -113,7 +128,13 @@ def update_gameweek_results(gameweek: int, db_path: Path, dry_run: bool = False)
                     home_goals=home_goals,
                     away_goals=away_goals,
                     home_xg=home_xg,
-                    away_xg=away_xg
+                    away_xg=away_xg,
+                    home_sot=home_sot,
+                    away_sot=away_sot,
+                    home_corners=home_corners,
+                    away_corners=away_corners,
+                    home_fouls=home_fouls,
+                    away_fouls=away_fouls,
                 )
                 updated_count += 1
                 

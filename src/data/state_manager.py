@@ -71,7 +71,8 @@ class TeamStateManager:
         self._ensure_prediction_columns()
 
     def _ensure_prediction_columns(self) -> None:
-        """Add newer per-model probability columns to legacy live databases."""
+        """Add newer per-model probability columns and shots/corners/fouls tracking columns to live databases."""
+        # 1. predictions_26_27
         cur = self._conn.execute("PRAGMA table_info(predictions_26_27)")
         existing = {row[1] for row in cur.fetchall()}
         required = {
@@ -87,6 +88,47 @@ class TeamStateManager:
                 self._conn.execute(
                     f"ALTER TABLE predictions_26_27 ADD COLUMN {column_name} {column_type}"
                 )
+
+        # 2. live_team_states (shots on target, corners, fouls)
+        cur = self._conn.execute("PRAGMA table_info(live_team_states)")
+        existing_states = {row[1] for row in cur.fetchall()}
+        required_states = {
+            "last_10_sot_for": "TEXT NOT NULL DEFAULT '[]'",
+            "last_10_sot_against": "TEXT NOT NULL DEFAULT '[]'",
+            "last_10_corners_for": "TEXT NOT NULL DEFAULT '[]'",
+            "last_10_corners_against": "TEXT NOT NULL DEFAULT '[]'",
+            "last_10_fouls_for": "TEXT NOT NULL DEFAULT '[]'",
+            "last_10_fouls_against": "TEXT NOT NULL DEFAULT '[]'",
+            "avg_sot_for": "REAL NOT NULL DEFAULT 0.0",
+            "avg_sot_against": "REAL NOT NULL DEFAULT 0.0",
+            "avg_corners_for": "REAL NOT NULL DEFAULT 0.0",
+            "avg_corners_against": "REAL NOT NULL DEFAULT 0.0",
+            "avg_fouls_for": "REAL NOT NULL DEFAULT 0.0",
+            "avg_fouls_against": "REAL NOT NULL DEFAULT 0.0",
+        }
+        for column_name, column_def in required_states.items():
+            if column_name not in existing_states:
+                self._conn.execute(
+                    f"ALTER TABLE live_team_states ADD COLUMN {column_name} {column_def}"
+                )
+
+        # 3. fixtures_26_27
+        cur = self._conn.execute("PRAGMA table_info(fixtures_26_27)")
+        existing_fixtures = {row[1] for row in cur.fetchall()}
+        required_fixtures = {
+            "home_shots_on_target": "INTEGER",
+            "away_shots_on_target": "INTEGER",
+            "home_corners": "INTEGER",
+            "away_corners": "INTEGER",
+            "home_fouls": "INTEGER",
+            "away_fouls": "INTEGER",
+        }
+        for column_name, column_def in required_fixtures.items():
+            if column_name not in existing_fixtures:
+                self._conn.execute(
+                    f"ALTER TABLE fixtures_26_27 ADD COLUMN {column_name} {column_def}"
+                )
+
         self._conn.commit()
 
     # ── Public read ───────────────────────────────────────────────────────────
@@ -108,8 +150,18 @@ class TeamStateManager:
         for col in (
             "last_10_xg_for", "last_10_xg_against",
             "last_10_goals_for", "last_10_goals_against",
+            "last_10_sot_for", "last_10_sot_against",
+            "last_10_corners_for", "last_10_corners_against",
+            "last_10_fouls_for", "last_10_fouls_against",
         ):
-            state[col] = json.loads(state[col])
+            val = state.get(col)
+            if isinstance(val, str):
+                try:
+                    state[col] = json.loads(val)
+                except Exception:
+                    state[col] = []
+            elif not isinstance(val, list):
+                state[col] = []
         return state
 
     def get_all_team_states(self) -> list[dict[str, Any]]:
@@ -124,37 +176,44 @@ class TeamStateManager:
             for col in (
                 "last_10_xg_for", "last_10_xg_against",
                 "last_10_goals_for", "last_10_goals_against",
+                "last_10_sot_for", "last_10_sot_against",
+                "last_10_corners_for", "last_10_corners_against",
+                "last_10_fouls_for", "last_10_fouls_against",
             ):
-                state[col] = json.loads(state[col])
+                val = state.get(col)
+                if isinstance(val, str):
+                    try:
+                        state[col] = json.loads(val)
+                    except Exception:
+                        state[col] = []
+                elif not isinstance(val, list):
+                    state[col] = []
             result.append(state)
         return result
 
     # ── Core match update ─────────────────────────────────────────────────────
     def update_after_match(
         self,
-        match_id:    int,
-        home_team:   str,
-        away_team:   str,
-        home_goals:  int,
-        away_goals:  int,
-        home_xg:     float,
-        away_xg:     float,
+        match_id:      int,
+        home_team:     str,
+        away_team:     str,
+        home_goals:    int,
+        away_goals:    int,
+        home_xg:       float,
+        away_xg:       float,
+        home_sot:      int | None = None,
+        away_sot:      int | None = None,
+        home_corners:  int | None = None,
+        away_corners:  int | None = None,
+        home_fouls:    int | None = None,
+        away_fouls:    int | None = None,
     ) -> None:
         """
         Process a completed result:
           1. Fetch current states for both teams.
           2. Compute Elo update for home and away.
-          3. Slide rolling windows and recalculate averages.
+          3. Slide rolling windows (xG, goals, shots on target, corners, fouls).
           4. Persist both team states and mark fixture as completed.
-
-        Args:
-            match_id:   Primary key in fixtures_26_27.
-            home_team:  Canonical team name (e.g. "Arsenal").
-            away_team:  Canonical team name (e.g. "Chelsea").
-            home_goals: Full-time home goals scored.
-            away_goals: Full-time away goals scored.
-            home_xg:    Home expected goals (from Opta / StatsBomb or NDC λ).
-            away_xg:    Away expected goals.
         """
         home_state = self.get_team_state(home_team)
         away_state = self.get_team_state(away_team)
@@ -175,6 +234,12 @@ class TeamStateManager:
             goals_against=away_goals,
             xg_for=home_xg,
             xg_against=away_xg,
+            sot_for=home_sot,
+            sot_against=away_sot,
+            corners_for=home_corners,
+            corners_against=away_corners,
+            fouls_for=home_fouls,
+            fouls_against=away_fouls,
             current_state=home_state,
         )
         self._update_sliding_window(
@@ -184,24 +249,63 @@ class TeamStateManager:
             goals_against=home_goals,
             xg_for=away_xg,
             xg_against=home_xg,
+            sot_for=away_sot,
+            sot_against=home_sot,
+            corners_for=away_corners,
+            corners_against=home_corners,
+            fouls_for=away_fouls,
+            fouls_against=home_fouls,
             current_state=away_state,
         )
 
         # 3. Mark fixture completed
-        self.mark_fixture_complete(match_id, home_goals, away_goals)
+        self.mark_fixture_complete(
+            match_id=match_id,
+            home_goals=home_goals,
+            away_goals=away_goals,
+            home_sot=home_sot,
+            away_sot=away_sot,
+            home_corners=home_corners,
+            away_corners=away_corners,
+            home_fouls=home_fouls,
+            away_fouls=away_fouls,
+        )
 
     # ── Fixture management ────────────────────────────────────────────────────
     def mark_fixture_complete(
-        self, match_id: int, home_goals: int, away_goals: int
+        self,
+        match_id:     int,
+        home_goals:   int,
+        away_goals:   int,
+        home_sot:     int | None = None,
+        away_sot:     int | None = None,
+        home_corners: int | None = None,
+        away_corners: int | None = None,
+        home_fouls:   int | None = None,
+        away_fouls:   int | None = None,
     ) -> None:
-        """Set status='completed' and record goals in fixtures_26_27."""
+        """Set status='completed' and record match stats in fixtures_26_27."""
         self._conn.execute(
             """
             UPDATE fixtures_26_27
-            SET status = 'completed', home_goals = ?, away_goals = ?
+            SET status = 'completed',
+                home_goals = ?,
+                away_goals = ?,
+                home_shots_on_target = COALESCE(?, home_shots_on_target),
+                away_shots_on_target = COALESCE(?, away_shots_on_target),
+                home_corners         = COALESCE(?, home_corners),
+                away_corners         = COALESCE(?, away_corners),
+                home_fouls           = COALESCE(?, home_fouls),
+                away_fouls           = COALESCE(?, away_fouls)
             WHERE match_id = ?
             """,
-            (home_goals, away_goals, match_id),
+            (
+                home_goals, away_goals,
+                home_sot, away_sot,
+                home_corners, away_corners,
+                home_fouls, away_fouls,
+                match_id,
+            ),
         )
         self._conn.commit()
 
@@ -311,13 +415,19 @@ class TeamStateManager:
 
     def _update_sliding_window(
         self,
-        team:          str,
-        new_elo:       float,
-        goals_for:     int,
-        goals_against: int,
-        xg_for:        float,
-        xg_against:    float,
-        current_state: dict[str, Any],
+        team:            str,
+        new_elo:         float,
+        goals_for:       int,
+        goals_against:   int,
+        xg_for:          float,
+        xg_against:      float,
+        sot_for:         int | float | None,
+        sot_against:     int | float | None,
+        corners_for:     int | float | None,
+        corners_against: int | float | None,
+        fouls_for:       int | float | None,
+        fouls_against:   int | float | None,
+        current_state:   dict[str, Any],
     ) -> None:
         """
         Append the new match's stats to each rolling array (max WINDOW_SIZE),
@@ -329,15 +439,53 @@ class TeamStateManager:
                 updated = updated[-WINDOW_SIZE:]
             return updated
 
-        new_xg_for      = _slide(current_state["last_10_xg_for"],      xg_for)
-        new_xg_against  = _slide(current_state["last_10_xg_against"],   xg_against)
-        new_goals_for   = _slide(current_state["last_10_goals_for"],    goals_for)
-        new_goals_against = _slide(current_state["last_10_goals_against"], goals_against)
+        def _get_list(key: str, fallback_val: float) -> list:
+            raw = current_state.get(key)
+            if isinstance(raw, list):
+                return list(raw)
+            if isinstance(raw, str):
+                try:
+                    parsed = json.loads(raw)
+                    if isinstance(parsed, list):
+                        return parsed
+                except Exception:
+                    pass
+            return [fallback_val] * 5
 
-        avg_xg_for      = sum(new_xg_for)      / len(new_xg_for)
-        avg_xg_against  = sum(new_xg_against)  / len(new_xg_against)
-        avg_goals_for   = sum(new_goals_for)   / len(new_goals_for)
-        avg_goals_against = sum(new_goals_against) / len(new_goals_against)
+        new_xg_for        = _slide(current_state.get("last_10_xg_for") or [1.4] * 5, xg_for)
+        new_xg_against    = _slide(current_state.get("last_10_xg_against") or [1.3] * 5, xg_against)
+        new_goals_for     = _slide(current_state.get("last_10_goals_for") or [1.4] * 5, goals_for)
+        new_goals_against = _slide(current_state.get("last_10_goals_against") or [1.3] * 5, goals_against)
+
+        # Shots on target (fall back to current avg or seasonal 4.35)
+        cur_sot_for = _get_list("last_10_sot_for", 4.35)
+        cur_sot_con = _get_list("last_10_sot_against", 4.45)
+        new_sot_for = _slide(cur_sot_for, float(sot_for if sot_for is not None else (sum(cur_sot_for) / len(cur_sot_for) if cur_sot_for else 4.35)))
+        new_sot_con = _slide(cur_sot_con, float(sot_against if sot_against is not None else (sum(cur_sot_con) / len(cur_sot_con) if cur_sot_con else 4.45)))
+
+        # Corners (fall back to current avg or seasonal 5.05)
+        cur_cor_for = _get_list("last_10_corners_for", 5.05)
+        cur_cor_con = _get_list("last_10_corners_against", 5.11)
+        new_cor_for = _slide(cur_cor_for, float(corners_for if corners_for is not None else (sum(cur_cor_for) / len(cur_cor_for) if cur_cor_for else 5.05)))
+        new_cor_con = _slide(cur_cor_con, float(corners_against if corners_against is not None else (sum(cur_cor_con) / len(cur_cor_con) if cur_cor_con else 5.11)))
+
+        # Fouls (fall back to current avg or seasonal 10.95)
+        cur_foul_for = _get_list("last_10_fouls_for", 10.95)
+        cur_foul_con = _get_list("last_10_fouls_against", 10.88)
+        new_foul_for = _slide(cur_foul_for, float(fouls_for if fouls_for is not None else (sum(cur_foul_for) / len(cur_foul_for) if cur_foul_for else 10.95)))
+        new_foul_con = _slide(cur_foul_con, float(fouls_against if fouls_against is not None else (sum(cur_foul_con) / len(cur_foul_con) if cur_foul_con else 10.88)))
+
+        avg_xg_for          = sum(new_xg_for)        / len(new_xg_for)
+        avg_xg_against      = sum(new_xg_against)    / len(new_xg_against)
+        avg_goals_for       = sum(new_goals_for)     / len(new_goals_for)
+        avg_goals_against   = sum(new_goals_against) / len(new_goals_against)
+
+        avg_sot_for         = sum(new_sot_for)       / len(new_sot_for)
+        avg_sot_against     = sum(new_sot_con)       / len(new_sot_con)
+        avg_corners_for     = sum(new_cor_for)       / len(new_cor_for)
+        avg_corners_against = sum(new_cor_con)       / len(new_cor_con)
+        avg_fouls_for       = sum(new_foul_for)      / len(new_foul_for)
+        avg_fouls_against   = sum(new_foul_con)      / len(new_foul_con)
 
         self._conn.execute(
             """
@@ -347,10 +495,22 @@ class TeamStateManager:
                 last_10_xg_against    = ?,
                 last_10_goals_for     = ?,
                 last_10_goals_against = ?,
+                last_10_sot_for       = ?,
+                last_10_sot_against   = ?,
+                last_10_corners_for   = ?,
+                last_10_corners_against = ?,
+                last_10_fouls_for     = ?,
+                last_10_fouls_against = ?,
                 avg_xg_for            = ?,
                 avg_xg_against        = ?,
                 avg_goals_for         = ?,
                 avg_goals_against     = ?,
+                avg_sot_for           = ?,
+                avg_sot_against       = ?,
+                avg_corners_for       = ?,
+                avg_corners_against   = ?,
+                avg_fouls_for         = ?,
+                avg_fouls_against     = ?,
                 last_updated          = ?
             WHERE team_name = ?
             """,
@@ -360,10 +520,22 @@ class TeamStateManager:
                 json.dumps(new_xg_against),
                 json.dumps(new_goals_for),
                 json.dumps(new_goals_against),
+                json.dumps(new_sot_for),
+                json.dumps(new_sot_con),
+                json.dumps(new_cor_for),
+                json.dumps(new_cor_con),
+                json.dumps(new_foul_for),
+                json.dumps(new_foul_con),
                 round(avg_xg_for, 4),
                 round(avg_xg_against, 4),
                 round(avg_goals_for, 4),
                 round(avg_goals_against, 4),
+                round(avg_sot_for, 4),
+                round(avg_sot_against, 4),
+                round(avg_corners_for, 4),
+                round(avg_corners_against, 4),
+                round(avg_fouls_for, 4),
+                round(avg_fouls_against, 4),
                 datetime.now(timezone.utc).isoformat(),
                 team,
             ),

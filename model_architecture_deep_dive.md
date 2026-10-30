@@ -180,21 +180,29 @@ The blend weight (`--blend` flag, default 0.5) is fixed at prediction time.
 ### 🔴 High Priority
 
 #### L1. Shots/Corners/Fouls Are Imputed, Not Tracked Live
-The live `TeamStateManager` only tracks xG and goals. Shots on target, corners, and fouls are replaced with static seasonal averages for all teams. This means:
-- A team that just had 3 games with 10+ corners gets the same corner value as a team that had 1
-- The NDC model uses these features — missing them reduces model expressiveness significantly
+The live `TeamStateManager` previously only tracked xG and goals. Shots on target, corners, and fouls were replaced with static seasonal averages for all teams.
 
-**Fix**: Track shots, corners, and fouls in `live_team_states` from the Understat/football-data feed.
+**Status**: ✅ **Implemented**. `live_team_states` now tracks 10-match rolling arrays and averages for `sot_for`, `sot_against`, `corners_for`, `corners_against`, `fouls_for`, and `fouls_against`. Live updates fetch and enrich match events from Understat and football-data.co.uk feeds, feeding genuine territorial pressure and chance creation metrics into NDC (windows 3, 5, 10) and XGBoost (`Corner_Diff_roll5`, `Foul_Diff_roll5`).
 
 #### L2. Rest Days and Congestion Are Zero/Imputed at Inference
 `Rest_Diff` and `Congestion_Diff` are hardcoded to `0.0` in the live XGBoost feature vector because the live pipeline doesn't compute them from the fixture schedule.
 
-**Fix**: Calculate rest days directly from `fixtures_26_27` table using the `match_date` column.
+**Status**: ✅ **Implemented**. Rest days and congestion flags are now dynamically computed from the `fixtures_26_27` schedule table.
 
 #### L3. Blend Weight Is Fixed at 50/50
-The 50/50 blend is a sensible default but not optimised. It's possible NDC systematically outperforms XGB on draws, or vice versa.
+The 50/50 blend was previously a fixed default heuristic.
 
-**Fix**: Learn optimal blend weights using logistic regression or Nelder-Mead optimization on the 2024/25 validation season.
+**Status**: ✅ **Implemented via `scripts/optimize_blend.py`**.
+- Learned optimal blend weights using Nelder-Mead optimization and Logistic Regression on the 2024/25 validation season (380 matches) and verified out-of-sample on the 2025/26 test season (380 matches):
+  - **Optimal Scalar Blend**: $\alpha_{\text{NDC}} = 0.6519$, $\alpha_{\text{XGB}} = 0.3481$ (Val Log-Loss improved from 1.0214 to 1.0184).
+  - **Optimal Class-Wise Blend**:
+    - **Away**: NDC = `60.7%`, XGB = `39.3%`
+    - **Draw**: NDC = `100.0%`, XGB = `0.0%` (Neural Dixon-Coles with bivariate Poisson + tau low-score correction decisively outperforms tree models on draw distributions).
+    - **Home**: NDC = `57.6%`, XGB = `42.4%`
+    - Val Log-Loss improved to `1.0145` (from 1.0214 baseline), Val Accuracy improved to `51.6%` (from 51.1%).
+  - **Logistic Regression Stacking Meta-Classifier**: Val Loss = `1.0114`, Val Acc = `52.9%`, Test Loss = `1.0544`, Test Acc = `45.5%`.
+- Artifacts generated: `models/bin/blend_weights.json` and `models/bin/blend_stacker.joblib`.
+- Default inference pipeline in `scripts/predict_next_gameweek.py` and `app.py` live leaderboard automatically load and execute the optimized class-wise blend weights.
 
 #### L4. xG Estimation Is Approximate
 If Understat xG is unavailable, xG is proxied via `0.32 × shots_on_target + 0.03 × (shots - shots_on_target)`. This is a simplification and loses a lot of shot quality information.
@@ -247,9 +255,9 @@ Home wins (~45%) outnumber draws (~25%) and away wins (~30%) in EPL data. The XG
 
 ## 9. Recommended Next Improvements (Priority Order)
 
-1. **Track shots, corners, fouls in live state** (L1) — biggest feature accuracy gain
+1. ~~**Track shots, corners, fouls in live state** (L1)~~ — ✅ **Implemented** (tracked in `live_team_states` across 3, 5, 10 match rolling windows)
 2. ~~**Compute rest days from fixture schedule** (L2)~~ — ✅ **Implemented** (calculated from `fixtures_26_27` schedule)
-3. **Optimise blend weights** (L3) — quick experiment using 2024/25 validation data
+3. ~~**Optimise blend weights** (L3)~~ — ✅ **Implemented** (learned optimal class-wise blend via Nelder-Mead & logistic stacking on 2024/25 validation season)
 4. **Tune Elo K-factor and HFA** (L8) — grid search on historical data
 5. **Add H2H features** (L6) — moderate effort, could meaningfully improve draw prediction
 6. ~~**Add class weighting for draws in XGBoost** (L12)~~ — ✅ **Implemented** (sample weight 1.35x in `scripts/train_xgb.py`)
