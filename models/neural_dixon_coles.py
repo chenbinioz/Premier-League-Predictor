@@ -53,7 +53,11 @@ class NeuralDixonColes(nn.Module):
         h = self.backbone(x)
         lam = self.head_lambda(h).squeeze(-1)      # (batch,)
         mu  = self.head_mu(h).squeeze(-1)           # (batch,)
-        rho = torch.tanh(self.head_rho_fc(h)).squeeze(-1) * 0.25  # (batch,)
+        raw_rho = torch.tanh(self.head_rho_fc(h)).squeeze(-1)
+        # All four low-score tau factors must remain positive for these rates.
+        lower_size = torch.minimum(torch.full_like(lam, .25), 1 / torch.maximum(lam, mu).clamp(min=1e-7)) * .99
+        upper_size = torch.minimum(torch.full_like(lam, .25), 1 / (lam * mu).clamp(min=1e-7)) * .99
+        rho = raw_rho * torch.where(raw_rho < 0, lower_size, upper_size)
         return lam, mu, rho
 
 
@@ -157,6 +161,12 @@ def predict_scoreline_grid(
     -------
     grid : np.ndarray, shape (max_goals+1, max_goals+1), sums to ~1.0
     """
+    if not np.isfinite([lambda_h, mu_a, rho]).all() or lambda_h <= 0 or mu_a <= 0:
+        raise ValueError("Expected goals must be positive and distribution parameters finite")
+    if max_goals < 1:
+        raise ValueError("Scoreline grid must include at least 0 and 1 goals")
+    # Safe projection also supports legacy parameters outside the valid domain.
+    rho = float(np.clip(rho, -.999999 / max(lambda_h, mu_a), min(.999999, .999999 / (lambda_h * mu_a))))
     n = max_goals + 1
     home_pmf = scipy_poisson.pmf(np.arange(n), lambda_h)
     away_pmf = scipy_poisson.pmf(np.arange(n), mu_a)
@@ -234,8 +244,8 @@ def parse_grid_outputs(
     ]
 
     return {
-        "home_win":       round(home_win * 100, 2),
-        "draw":           round(draw * 100, 2),
-        "away_win":       round(away_win * 100, 2),
+        "home_win":       home_win * 100,
+        "draw":           draw * 100,
+        "away_win":       away_win * 100,
         "top_scorelines": top_scorelines,
     }

@@ -1,0 +1,85 @@
+{
+  "audited_at": "2026-11-13T21:30:20.020507+00:00",
+  "feature_contract": "prematch-v2-shot-proxy",
+  "sqlite_integrity": "ok",
+  "fixtures": 380,
+  "completed": 100,
+  "pending": 280,
+  "overdue": 0,
+  "missing_observed_stats": {
+    "home_shots_on_target": 0,
+    "away_shots_on_target": 0,
+    "home_shots": 0,
+    "away_shots": 0,
+    "home_corners": 0,
+    "away_corners": 0,
+    "home_fouls": 0,
+    "away_fouls": 0
+  },
+  "state_replay_checked_teams": 20,
+  "applied_results": 100,
+  "locked_forecasts": 110,
+  "verified_forecasts_checked": 20,
+  "legacy_quarantined": 90,
+  "legacy_payloads_unchanged": true,
+  "model_version": "603f94bdcd0988c9",
+  "common_cohort_metrics": {
+    "blend": {
+      "hits": 0,
+      "total": 0,
+      "acc": null,
+      "loss": null
+    },
+    "ndc": {
+      "hits": 0,
+      "total": 0,
+      "acc": null,
+      "loss": null
+    },
+    "xgb": {
+      "hits": 0,
+      "total": 0,
+      "acc": null,
+      "loss": null
+    },
+    "bookie": {
+      "hits": 0,
+      "total": 0,
+      "acc": null,
+      "loss": null
+    }
+  },
+  "model_only_metrics": {
+    "blend": {
+      "hits": 5,
+      "total": 10,
+      "acc": 50.0,
+      "loss": 0.9470938532530863
+    },
+    "ndc": {
+      "hits": 5,
+      "total": 10,
+      "acc": 50.0,
+      "loss": 1.0136593233251283
+    },
+    "xgb": {
+      "hits": 6,
+      "total": 10,
+      "acc": 60.0,
+      "loss": 0.901394547450891
+    }
+  },
+  "findings": [
+    {
+      "severity": "low",
+      "code": "market_snapshot_coverage",
+      "message": "20 eligible forecasts have no contemporaneous bookmaker quote; excluded from the common-cohort market race"
+    },
+    {
+      "severity": "info",
+      "code": "legacy_quarantine",
+      "message": "90 preserved legacy forecasts are excluded from prospective accuracy"
+    }
+  ],
+  "passed": true
+}

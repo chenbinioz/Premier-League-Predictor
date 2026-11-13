@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# Local recovery copies; never published by the daily pipeline.
+data/backups/
+__pycache__/
+*.py[cod]
+data/live/*-wal
+data/live/*-shm

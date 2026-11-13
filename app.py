@@ -4,7 +4,7 @@ Premier League Predictive Engine — Streamlit App
 Combines:
   • XGBoost Calibrated Classifier  → 1X2 outcome probabilities
   • Neural Dixon-Coles (PyTorch)   → λ, μ, ρ → scoreline grid & 1X2 implied
-  • Static Dixon-Coles MLE Model  → Baseline comparison
+  • Static Poisson MLE Model  → Baseline comparison
 """
 
 # ── MUST be set before any `import torch` to prevent the OpenMP / macOS
@@ -17,6 +17,7 @@ os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 # ─────────────────────────────────────────────────────────────────────────
 
 import json
+from contextlib import closing
 import re
 import sys
 import subprocess
@@ -47,8 +48,10 @@ from scripts.predict_next_gameweek import (
     build_xgb_feature_vector,
     run_ndc_inference,
     run_xgb_inference,
+    snapshot as model_snapshot, _load_ndc, _load_xgb, model_manifest,
 )
 from src.data.live_fetchers import fetch_from_football_data_csv, normalize_team_name
+from src.evaluation import eligible, common_cohort, model_metrics, score_candidates, market_triplet, tracker_coverage
 
 # Page Configuration
 st.set_page_config(
@@ -238,149 +241,61 @@ st.markdown(
 # 1. Load Assets & Models
 # ---------------------------------------------------------------------------
 @st.cache_resource
-def load_xgb_assets():
-    model    = joblib.load("models/calibrated_xgb_outcome.pkl")
-    features = pd.read_csv("data/processed/epl_model_features.csv")
+def load_xgb_assets(bundle_version):
+    return _load_xgb(), pd.read_csv(REPO_ROOT / "data/processed/epl_model_features.csv")
 
-    # Derive differential and engineered features
-    features["Elo_Diff"] = features["Home_Elo"] - features["Away_Elo"]
-    for w in [3, 5, 10]:
-        features[f"xG_Attack_Diff_roll{w}"]  = features[f"Home_xG_Created_roll{w}"]  - features[f"Away_xG_Conceded_roll{w}"]
-        features[f"xG_Defense_Diff_roll{w}"] = features[f"Away_xG_Created_roll{w}"]  - features[f"Home_xG_Conceded_roll{w}"]
-        features[f"Corner_Diff_roll{w}"]     = features[f"Home_Corners_roll{w}"]      - features[f"Away_Corners_roll{w}"]
-        features[f"Foul_Diff_roll{w}"]       = features[f"Home_Fouls_roll{w}"]        - features[f"Away_Fouls_roll{w}"]
-
-    features["Venue_xG_Attack_Diff"] = (
-        features["Home_xG_Created_Venue_roll5"] - features["Away_xG_Conceded_Venue_roll5"]
-    )
-    features["Expected_Match_xG"] = features["Home_xG_Created_roll5"] + features["Away_xG_Created_roll5"]
-    features["Rest_Diff"]         = features["Home_Rest_Days"]         - features["Away_Rest_Days"]
-    features["Congestion_Diff"]   = features["Home_Congestion_Flag"]   - features["Away_Congestion_Flag"]
-
-    raw_margin              = (1 / features["B365H"]) + (1 / features["B365D"]) + (1 / features["B365A"])
-    features["Bookie_Prob_H"] = (1 / features["B365H"]) / raw_margin
-    features["Bookie_Prob_D"] = (1 / features["B365D"]) / raw_margin
-    features["Bookie_Prob_A"] = (1 / features["B365A"]) / raw_margin
-
-    return model, features
 
 @st.cache_resource
-def load_ndc_assets():
-    model_path    = "models/bin/neural_dixon_coles.pt"
-    scaler_path   = "models/bin/ndc_scaler.joblib"
-    features_path = "models/bin/ndc_feature_names.json"
+def load_ndc_assets(bundle_version):
+    return _load_ndc()
 
-    missing = [p for p in [model_path, scaler_path, features_path] if not os.path.exists(p)]
-    if missing:
-        return None, None, None
 
-    device = torch.device("cpu")
-    checkpoint = torch.load(model_path, map_location=device, weights_only=True)
-    n_features = checkpoint["n_features"]
-    
-    ndc_model = NeuralDixonColes(n_features=n_features)
-    ndc_model.load_state_dict(checkpoint["state_dict"])
-    ndc_model.eval()
-
-    scaler = joblib.load(scaler_path)
-    with open(features_path) as f:
-        feature_names = json.load(f)
-
-    return ndc_model, scaler, feature_names
-
-@st.cache_data(ttl=10)
+@st.cache_data(ttl=10, max_entries=8)
 def load_live_tracker_data(db_path):
     if not os.path.exists(db_path):
         return pd.DataFrame(), pd.DataFrame()
-    try:
-        conn = sqlite3.connect(db_path)
-        df_fixtures = pd.read_sql_query("SELECT * FROM fixtures_26_27", conn)
-        df_predictions = pd.read_sql_query("SELECT * FROM predictions_26_27", conn)
-        conn.close()
-        return df_fixtures, df_predictions
-    except Exception as e:
-        return pd.DataFrame(), pd.DataFrame()
+    with closing(sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)) as conn:
+        return (pd.read_sql_query("SELECT * FROM fixtures_26_27", conn),
+                pd.read_sql_query("SELECT * FROM predictions_26_27", conn))
 
 
-@st.cache_data(ttl=30)
+@st.cache_data(ttl=30, max_entries=8)
 def load_live_team_states(db_path):
     if not os.path.exists(db_path):
         return {}
-    try:
-        conn = sqlite3.connect(db_path)
-        df_states = pd.read_sql_query("SELECT * FROM live_team_states", conn)
-        conn.close()
-        if df_states.empty:
-            return {}
-        return df_states.set_index("team_name").to_dict(orient="index")
-    except Exception:
-        return {}
+    with closing(sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)) as conn:
+        states = pd.read_sql_query("SELECT * FROM live_team_states", conn)
+    return states.set_index("team_name").to_dict(orient="index") if not states.empty else {}
 
 
-def build_live_fixture_model_snapshot(home_team: str, away_team: str, live_states: dict[str, dict]) -> dict[str, dict | list[str] | None]:
-    home_state = live_states.get(home_team)
-    away_state = live_states.get(away_team)
-    if not home_state or not away_state:
+def build_live_fixture_model_snapshot(home_team, away_team, live_states, match_date=None):
+    if home_team not in live_states or away_team not in live_states:
         return {"xgb": None, "ndc": None}
-
-    bookie_h, bookie_d, bookie_a = 0.40, 0.27, 0.33
-    ndc_vec = build_ndc_feature_vector(home_state, away_state, ndc_feature_names, bookie_h, bookie_d, bookie_a)
-    ndc_result = run_ndc_inference(ndc_model, ndc_scaler, ndc_vec)
-    ndc_probs = {
-        "Home": ndc_result["parsed"]["home_win"] / 100.0,
-        "Draw": ndc_result["parsed"]["draw"] / 100.0,
-        "Away": ndc_result["parsed"]["away_win"] / 100.0,
-    }
-    ndc_top3 = [item["scoreline"] for item in ndc_result["parsed"]["top_scorelines"][:3]]
-
-    bookie_h, bookie_d, bookie_a = _ndc_implied_odds(ndc_probs["Home"], ndc_probs["Draw"], ndc_probs["Away"])
-    xgb_vec = build_xgb_feature_vector(home_state, away_state, bookie_h, bookie_d, bookie_a)
-    xgb_home, xgb_draw, xgb_away = run_xgb_inference(xgb_model, xgb_vec)
-    xgb_probs = {"Home": xgb_home, "Draw": xgb_draw, "Away": xgb_away}
-
-    return {
-        "xgb": {"probs": xgb_probs},
-        "ndc": {
-            "lambda": ndc_result["lambda"],
-            "mu": ndc_result["mu"],
-            "rho": ndc_result["rho"],
-            "probs": ndc_probs,
-            "top3": ndc_top3,
-        },
-    }
+    n, np_, xp, blended, feature_hash = model_snapshot(
+        live_states[home_team], live_states[away_team], match_date,
+        assets=(ndc_model, ndc_scaler, ndc_feature_names, xgb_model))
+    return {"xgb": {"probs": dict(zip(("Home","Draw","Away"),xp))},
+            "ndc": {"lambda":n["lambda"],"mu":n["mu"],"rho":n["rho"],
+                    "probs":dict(zip(("Home","Draw","Away"),np_)),
+                    "top3":[r["scoreline"] for r in n["parsed"]["top_scorelines"]]}}
 
 
-def get_live_tracker_status(db_path: str) -> dict:
-    db_exists = os.path.exists(db_path)
-    understat_available = False
+def get_live_tracker_status(db_path):
+    if not os.path.exists(db_path):
+        return {"source_name":"No results database","summary":"Run initialization with a verified schedule.","api_configured":False}
     try:
-        import understatapi  # noqa: F401
-        understat_available = True
-    except Exception:
-        understat_available = False
-
-    if understat_available:
-        return {
-            "source_name": "Understat (live season feed)",
-            "summary": "The tracker is reading live 2026/27 fixtures and results from Understat, with a football-data.co.uk CSV fallback when needed.",
-            "api_configured": True,
-            "db_exists": db_exists,
-        }
-
-    if db_exists:
-        return {
-            "source_name": "football-data.co.uk CSV fallback",
-            "summary": "Understat is unavailable right now, so the tracker is using the football-data.co.uk season CSV as the fallback source.",
-            "api_configured": False,
-            "db_exists": True,
-        }
-
-    return {
-        "source_name": "No live data source configured",
-        "summary": "No live season feed is available. The tracker is waiting for an active Understat or fallback data source.",
-        "api_configured": False,
-        "db_exists": False,
-    }
+        with closing(sqlite3.connect(db_path)) as conn:
+            latest=conn.execute("SELECT observed_at,status,summary FROM ingestion_runs ORDER BY run_id DESC LIMIT 1").fetchone()
+        if latest:
+            report=json.loads(latest[2])
+            fresh=(pd.Timestamp.now(tz="UTC")-pd.Timestamp(latest[0]))<pd.Timedelta(hours=36)
+            healthy=latest[1]=="ok" and fresh
+            if latest[1] != "ok":
+                return {"source_name":"Result reconciliation needs attention", "summary":f"Last ingestion: {latest[0]}. Status: {latest[1]}. See pipeline logs for missing data or source errors.", "api_configured":False}
+            return {"source_name":"Reconciled season results", "summary":f"Last ingestion: {latest[0]}. Status: {latest[1] if fresh else 'stale'}. Unresolved overdue fixtures: {len(report.get('overdue',[]))}.","api_configured":healthy}
+    except sqlite3.Error:
+        pass
+    return {"source_name":"Unverified database freshness","summary":"Run the result reconciliation pipeline.","api_configured":False}
 
 
 def _actual_outcome_label(home_goals, away_goals) -> str:
@@ -427,8 +342,12 @@ def _gameweek_status_label(gw_df: pd.DataFrame, today: pd.Timestamp | None = Non
     if gw_df.empty:
         return "upcoming"
 
-    today = today or pd.Timestamp.now().normalize()
+    today = today or pd.Timestamp.now(tz="Europe/London").tz_localize(None).normalize()
     statuses = set(gw_df["status"].astype(str).str.lower().tolist())
+    if "schedule_status" in gw_df:
+        pending = gw_df[gw_df["status"] == "pending"]
+        if not pending.empty and pending["schedule_status"].eq("postponed").all():
+            return "awaiting postponed fixtures"
 
     if statuses == {"completed"}:
         return "completed"
@@ -492,64 +411,20 @@ def _odds_to_prob_triplet(home_odds: object, draw_odds: object, away_odds: objec
     return (1.0 / h) / implied, (1.0 / d) / implied, (1.0 / a) / implied
 
 
-@st.cache_data(ttl=300)
-def _load_bookie_odds_map() -> dict[tuple, tuple[float, float, float]]:
-    mapping: dict[tuple, tuple[float, float, float]] = {}
-    for row in fetch_from_football_data_csv():
-        home = normalize_team_name(row.get("home_team"))
-        away = normalize_team_name(row.get("away_team"))
-        raw_date = row.get("date") or ""
-        date_str = ""
-        if raw_date:
-            try:
-                date_str = pd.to_datetime(raw_date, dayfirst=True).strftime("%Y-%m-%d")
-            except Exception:
-                date_str = str(raw_date)
-
-        if not home or not away:
-            continue
-        triplet = _odds_to_prob_triplet(row.get("B365H"), row.get("B365D"), row.get("B365A"))
-        if triplet is not None:
-            if date_str:
-                mapping[(home, away, date_str)] = triplet
-            mapping[(home, away)] = triplet
-    return mapping
+def _bookie_prob_triplet_from_row(row):
+    # Benchmark quotes are persisted with result provenance; never fabricate odds.
+    triplet = market_triplet(row)
+    return tuple(triplet) if triplet is not None else None
 
 
-def _bookie_prob_triplet_from_row(row: pd.Series) -> tuple[float, float, float] | None:
-    odds_h = row.get("B365H")
-    odds_d = row.get("B365D")
-    odds_a = row.get("B365A")
-    if all(pd.notna(v) for v in [odds_h, odds_d, odds_a]):
-        return _odds_to_prob_triplet(odds_h, odds_d, odds_a)
-
-    bookie_map = _load_bookie_odds_map()
-    home = normalize_team_name(row.get("home_team"))
-    away = normalize_team_name(row.get("away_team"))
-    raw_date = row.get("match_date") or ""
-    date_str = ""
-    if raw_date:
-        try:
-            date_str = pd.to_datetime(raw_date).strftime("%Y-%m-%d")
-        except Exception:
-            date_str = str(raw_date)
-
-    if (home, away, date_str) in bookie_map:
-        return bookie_map[(home, away, date_str)]
-    return bookie_map.get((home, away))
-
-
-def _ndc_implied_odds(ndc_h: float, ndc_d: float, ndc_a: float) -> tuple[float, float, float]:
-    margin = 1.05
-    raw_h = ndc_h * margin
-    raw_d = ndc_d * margin
-    raw_a = ndc_a * margin
-    total = raw_h + raw_d + raw_a
-    return raw_h / total, raw_d / total, raw_a / total
+def _model_metric_detail(info):
+    if not info["total"]:
+        return "No eligible completed matches"
+    return f"{info['hits']}/{info['total']} correct | Loss: {info['loss']:.3f}"
 
 
 def _format_hits(hits: int, total: int) -> str:
-    return f"{hits}/{total}" if total else "0/0"
+    return f"{hits}/{total}" if total else "—"
 
 
 def build_gameweek_overview(df_fixtures: pd.DataFrame, df_predictions: pd.DataFrame) -> pd.DataFrame:
@@ -565,7 +440,7 @@ def build_gameweek_overview(df_fixtures: pd.DataFrame, df_predictions: pd.DataFr
         ])
 
     df_merged = pd.merge(df_fixtures, df_predictions, on="match_id", how="left")
-    today = pd.Timestamp.now().normalize()
+    today = pd.Timestamp.now(tz="Europe/London").tz_localize(None).normalize()
     rows = []
 
     for gw in range(1, 39):
@@ -594,7 +469,8 @@ def build_gameweek_overview(df_fixtures: pd.DataFrame, df_predictions: pd.DataFr
             continue
 
         total_fixtures = len(gw_df)
-        played_df = gw_df[gw_df["status"].astype(str).str.lower() == "completed"].copy()
+        played_count = int(gw_df["status"].eq("completed").sum())
+        played_df = common_cohort(gw_df)
         gw_status = _gameweek_status_label(gw_df, today=today)
 
         final_prob_hits = 0
@@ -613,8 +489,8 @@ def build_gameweek_overview(df_fixtures: pd.DataFrame, df_predictions: pd.DataFr
             actual_score = _scoreline_string(row["home_goals"], row["away_goals"])
 
             final_probs = _probability_triplet(row, "predicted")
-            ndc_probs = _probability_triplet(row, "ndc", fallback_prefix="predicted")
-            xgb_probs = _probability_triplet(row, "xgb", fallback_prefix="predicted")
+            ndc_probs = _probability_triplet(row, "ndc")
+            xgb_probs = _probability_triplet(row, "xgb")
             bookie_probs = _bookie_prob_triplet_from_row(row)
 
             if final_probs:
@@ -639,24 +515,14 @@ def build_gameweek_overview(df_fixtures: pd.DataFrame, df_predictions: pd.DataFr
             ndc_candidates = _parse_scoreline_candidates(row.get("predicted_score"), top_n=3)
             ndc_score_hits += int(actual_score in ndc_candidates)
 
-            static_summary = _static_dc_summary(str(row["home_team"]), str(row["away_team"]), top_n=3)
-            if static_summary:
-                static_parsed = static_summary["parsed"]
-                static_outcome = _predicted_outcome_label(
-                    static_parsed["home_win"] / 100.0,
-                    static_parsed["draw"] / 100.0,
-                    static_parsed["away_win"] / 100.0,
-                )
-                static_prob_hits += int(static_outcome == actual_outcome)
-                static_score_hits += int(actual_score in static_summary["scorelines"])
 
         rows.append({
             "Gameweek": gw,
             "Status": gw_status,
             "Fixtures": total_fixtures,
-            "Played": len(played_df),
+            "Played": played_count,
             "Final Prob Hits": final_prob_hits,
-            "Final Prob Total": total_fixtures,
+            "Final Prob Total": len(played_df),
             "NDC Prob Hits": ndc_prob_hits,
             "NDC Prob Total": ndc_total,
             "XGB Prob Hits": xgb_prob_hits,
@@ -664,11 +530,11 @@ def build_gameweek_overview(df_fixtures: pd.DataFrame, df_predictions: pd.DataFr
             "Bookie Prob Hits": bookie_prob_hits,
             "Bookie Prob Total": bookie_total,
             "NDC Score Hits": ndc_score_hits,
-            "NDC Score Total": total_fixtures,
+            "NDC Score Total": len(played_df),
             "Static Prob Hits": static_prob_hits,
-            "Static Prob Total": total_fixtures,
+            "Static Prob Total": 0,
             "Static Score Hits": static_score_hits,
-            "Static Score Total": total_fixtures,
+            "Static Score Total": 0,
         })
 
     return pd.DataFrame(rows)
@@ -679,7 +545,16 @@ def render_fixture_card(row: pd.Series) -> None:
     away_team = row["away_team"]
     date_str = row["match_date"]
     status = row["status"]
-    live_snapshot = build_live_fixture_model_snapshot(home_team, away_team, live_team_states)
+    live_snapshot = {"xgb": None, "ndc": None}
+    has_lock = pd.notna(row.get("locked_at"))
+    if not has_lock and status == "pending" and str(date_str) > pd.Timestamp.now(tz="Europe/London").date().isoformat():
+        live_snapshot = build_live_fixture_model_snapshot(home_team, away_team, live_team_states, str(date_str))
+    if has_lock:
+        st.caption(f"Locked {row['locked_at']} · model {row.get('model_version', 'legacy')} · blend {row.get('blend_version', 'unknown')}")
+        if not eligible(row):
+            st.caption(f"Excluded from performance scoring: {row.get('quality_flags', 'unverified forecast')}")
+    elif live_snapshot["ndc"]:
+        st.caption("Current simulation for this fixture; no pre-match forecast has been locked.")
 
     st.markdown(
         f"""
@@ -716,12 +591,16 @@ def render_fixture_card(row: pd.Series) -> None:
             "Away": float(row["ndc_away_prob"])
         }
         if pd.notna(row.get("predicted_score")):
-            ndc_top3 = [str(row["predicted_score"])]
+            ndc_top3 = _parse_scoreline_candidates(row["predicted_score"], top_n=3)
+            if "scoreline_parameters_disagree" in str(row.get("quality_flags", "")):
+                historical_grid = predict_scoreline_grid(float(row["ndc_lambda"]), float(row["ndc_mu"]), float(row["ndc_rho"]), max_goals=6)
+                ndc_top3 = [item["scoreline"] for item in parse_grid_outputs(historical_grid, top_k=3)["top_scorelines"]]
+                st.caption("Historical scorelines reconstructed from the saved distribution; inconsistent original text is preserved in the ledger.")
     elif live_snapshot["ndc"]:
         ndc_probs = live_snapshot["ndc"]["probs"]
         ndc_top3 = live_snapshot["ndc"]["top3"]
 
-    static_summary = _static_dc_summary(home_team, away_team, top_n=3)
+    static_summary = _static_dc_summary(home_team, away_team, top_n=3) if status == "pending" else None
 
     bookie_triplet = _bookie_prob_triplet_from_row(row)
 
@@ -764,11 +643,11 @@ def render_fixture_card(row: pd.Series) -> None:
             st.caption("Bookie odds unavailable")
 
     if static_summary:
-        st.caption(f"Static DC top 3: {' • '.join(static_summary['scorelines'][:3])}")
+        st.caption(f"Static Poisson top 3: {' • '.join(static_summary['scorelines'][:3])}")
     else:
-        st.caption("Static DC top 3: unavailable")
+        st.caption("Static Poisson top 3: unavailable")
 
-    if status == "completed":
+    if status == "completed" and eligible(row):
         h_g = int(row["home_goals"])
         a_g = int(row["away_goals"])
         actual_outcome = "Home" if h_g > a_g else "Away" if h_g < a_g else "Draw"
@@ -827,24 +706,17 @@ def render_fixture_card(row: pd.Series) -> None:
             )
 
         st.markdown(f"**Actual result:** {h_g} - {a_g}")
+    elif status == "completed":
+        st.caption(f"Actual result: {int(row['home_goals'])} - {int(row['away_goals'])}. Forecast excluded from scoring.")
     else:
-        st.caption("⏳ Match pending")
+        st.caption("Match pending")
 
     st.markdown("<hr style='margin: 0.8rem 0 0; border: 0; border-top: 1px solid rgba(203,213,225,0.9);'>", unsafe_allow_html=True)
 
 # XGBoost feature columns
-XGB_FEATURE_COLS = [
-    "Elo_Diff", "Home_Elo", "Away_Elo",
-    "xG_Attack_Diff_roll3", "xG_Defense_Diff_roll3",
-    "xG_Attack_Diff_roll5", "xG_Defense_Diff_roll5",
-    "xG_Attack_Diff_roll10", "xG_Defense_Diff_roll10",
-    "Corner_Diff_roll5", "Foul_Diff_roll5",
-    "Venue_xG_Attack_Diff", "Expected_Match_xG",
-    "Rest_Diff", "Congestion_Diff",
-    "Bookie_Prob_H", "Bookie_Prob_D", "Bookie_Prob_A",
-]
+from src.features.prematch import XGB_BASE_FEATURES as XGB_FEATURE_COLS
 
-# Static Dixon-Coles Grid Helper
+# Static Poisson Grid Helper
 def _static_dc_grid(home_team, away_team, dc_params, max_goals=6):
     alpha_h = dc_params["attack"].get(home_team, 1.0)
     beta_h  = dc_params["defense"].get(home_team, 1.0)
@@ -939,13 +811,22 @@ def compute_live_elos(df, k_factor=20, home_advantage=60):
     return elo_dict, last_season
 
 # Load data assets
-xgb_model, df_features = load_xgb_assets()
-ndc_model, ndc_scaler, ndc_feature_names = load_ndc_assets()
+try:
+    bundle_version = model_manifest()["model_version"]
+    xgb_model, df_features = load_xgb_assets(bundle_version)
+    ndc_model, ndc_scaler, ndc_feature_names = load_ndc_assets(bundle_version)
+except Exception as exc:
+    st.error(f"Verified model bundle unavailable: {exc}")
+    st.caption(f"Running Python: {sys.executable}. Start the site with the project environment:")
+    st.code("./run_app.sh", language="bash")
+    st.stop()
 ndc_available = ndc_model is not None
 
 dc_params = None
 if os.path.exists("models/dc_mle_params.pkl"):
-    dc_params = joblib.load("models/dc_mle_params.pkl")
+    candidate = joblib.load("models/dc_mle_params.pkl")
+    if candidate.get("model_kind") == "static-poisson-v2":
+        dc_params = candidate
 
 # UI — Hero Header
 st.markdown(
@@ -996,27 +877,31 @@ selected_gw = st.sidebar.selectbox(
 with st.sidebar.expander("⚡ Pipeline & Data Sync", expanded=False):
     st.caption("Fetch live match results, update team states, and sync GitHub repo.")
     
-    if st.button("📥 Pull Latest from GitHub", help="Fetch and fast-forward latest data commits from remote main", use_container_width=True):
+    if st.button("📥 Pull Latest from GitHub", help="Fetch and fast-forward latest data commits from remote main", width="stretch"):
         with st.spinner("Executing git pull origin main..."):
             try:
                 res = subprocess.run(["git", "pull", "origin", "main"], capture_output=True, text=True, timeout=30)
                 if res.returncode == 0:
                     st.success("Successfully pulled latest commits!")
                     st.cache_data.clear()
+                    st.cache_resource.clear()
                     st.rerun()
                 else:
                     st.error(f"Git pull failed: {res.stderr or res.stdout}")
             except Exception as e:
                 st.error(f"Failed to execute git pull: {e}")
                 
-    if st.button("🔄 Run Live Update Pipeline", help="Fetch latest Understat results and recalculate pre-match predictions", use_container_width=True):
+    if st.button("🔄 Run Live Update Pipeline", help="Reconcile the official schedule/results and lock missing future forecasts", width="stretch"):
         with st.spinner("Running live state update & prediction engine..."):
             try:
-                res1 = subprocess.run([sys.executable, "scripts/update_live_state.py"], capture_output=True, text=True, timeout=120)
-                res2 = subprocess.run([sys.executable, "scripts/predict_next_gameweek.py", "--auto"], capture_output=True, text=True, timeout=120)
+                res1 = subprocess.run([sys.executable, "scripts/update_live_state.py", "--db", LIVE_DB_PATH], capture_output=True, text=True, timeout=120)
+                if res1.returncode != 0:
+                    raise RuntimeError(res1.stderr or res1.stdout)
+                res2 = subprocess.run([sys.executable, "scripts/predict_next_gameweek.py", "--auto", "--db", LIVE_DB_PATH], capture_output=True, text=True, timeout=120)
                 if res1.returncode == 0 and res2.returncode == 0:
                     st.success("Live states and predictions recalculated!")
                     st.cache_data.clear()
+                    st.cache_resource.clear()
                     st.rerun()
                 else:
                     st.error(f"Pipeline failed:\n{res1.stderr or res1.stdout}\n{res2.stderr or res2.stdout}")
@@ -1042,7 +927,7 @@ with tab_forecast:
         away_team = st.selectbox("✈️ Away Team", teams, index=1, key="away_team")
     with btn_col:
         st.markdown("<br>", unsafe_allow_html=True)
-        generate = st.button("Generate Forecast ⚡", key="generate_btn", use_container_width=True)
+        generate = st.button("Generate Forecast ⚡", key="generate_btn", width="stretch")
 
     if generate:
         st.session_state["has_forecast"] = True
@@ -1070,7 +955,7 @@ with tab_forecast:
                 st.error(f"No historical data found for **{home_team}** vs **{away_team}**.")
             else:
                 if use_live_state:
-                    st.caption("⚡ **Live Mode**: Forecasting using real-time 2026/27 team states (Elo rating & 10-match rolling form)")
+                    st.caption("⚡ **Current simulation** using reconciled team states for tomorrow; match-specific locked forecasts are in the tracker")
                     snapshot = build_live_fixture_model_snapshot(home_team, away_team, live_team_states)
                     xgb_snap = snapshot.get("xgb")
                     ndc_snap = snapshot.get("ndc")
@@ -1086,12 +971,13 @@ with tab_forecast:
                         ndc_lam  = ndc_snap["lambda"]
                         ndc_mu   = ndc_snap["mu"]
                         ndc_rho  = ndc_snap["rho"]
-                        ndc_grid   = predict_scoreline_grid(ndc_lam, ndc_mu, ndc_rho, max_goals=6)
+                        ndc_grid   = predict_scoreline_grid(ndc_lam, ndc_mu, ndc_rho, max_goals=12)
                         ndc_parsed = parse_grid_outputs(ndc_grid, top_k=3)
                     else:
                         ndc_lam, ndc_mu, ndc_rho = None, None, None
                         ndc_grid, ndc_parsed = None, None
                 else:
+                    st.caption("Historical reconstruction from the last recorded meeting; not a current or locked forecast.")
                     # XGBoost fallback
                     X_live_xgb = match_vector[XGB_FEATURE_COLS]
                     xgb_probs  = xgb_model.predict_proba(X_live_xgb)[0]
@@ -1116,12 +1002,12 @@ with tab_forecast:
                         ndc_lam  = float(lam_t.item())
                         ndc_mu   = float(mu_t.item())
                         ndc_rho  = float(rho_t.item())
-                        ndc_grid   = predict_scoreline_grid(ndc_lam, ndc_mu, ndc_rho, max_goals=6)
+                        ndc_grid   = predict_scoreline_grid(ndc_lam, ndc_mu, ndc_rho, max_goals=12)
                         ndc_parsed = parse_grid_outputs(ndc_grid, top_k=3)
 
                 # Match Overview Metrics
                 st.markdown(
-                    f'<div class="section-title">📊 Match Overview — {home_team} vs {away_team}</div>',
+                    f'<div class="section-title">📊 XGBoost probabilities and NDC expected goals — {home_team} vs {away_team}</div>',
                     unsafe_allow_html=True,
                 )
 
@@ -1211,7 +1097,7 @@ with tab_forecast:
                         st.info("Train NDC model to see these predictions.")
 
                 with score_dc_col:
-                    st.markdown('Static Dixon-Coles <span class="badge-dc">MLE</span>', unsafe_allow_html=True)
+                    st.markdown('Static Poisson <span class="badge-dc">MLE</span>', unsafe_allow_html=True)
                     if dc_params:
                         dc_xg_h, dc_xg_a, df_dc = _static_dc_top_scorelines(home_team, away_team, dc_params, top_n=3)
                         df_dc["Prob"] = df_dc["Probability"].map(lambda p: f"{p:.1%}")
@@ -1269,13 +1155,13 @@ with tab_forecast:
                 with hm_ndc_col:
                     if ndc_grid is not None:
                         fig_ndc = create_heatmap_fig(ndc_grid, f"Neural Dixon-Coles (NDC) — {home_team} vs {away_team}")
-                        st.plotly_chart(fig_ndc, use_container_width=True)
+                        st.plotly_chart(fig_ndc, width="stretch")
 
                 with hm_dc_col:
                     if dc_params:
                         _, _, static_grid = _static_dc_grid(home_team, away_team, dc_params, max_goals=6)
-                        fig_dc = create_heatmap_fig(static_grid, f"Static Dixon-Coles (MLE) — {home_team} vs {away_team}")
-                        st.plotly_chart(fig_dc, use_container_width=True)
+                        fig_dc = create_heatmap_fig(static_grid, f"Static Poisson (MLE) — {home_team} vs {away_team}")
+                        st.plotly_chart(fig_dc, width="stretch")
 
                 # Elo History Trajectory
                 st.markdown(
@@ -1320,15 +1206,21 @@ with tab_forecast:
                         yaxis={"showgrid": True, "gridcolor": "rgba(203, 213, 225, 0.4)"},
                         margin={"l": 40, "r": 20, "t": 50, "b": 40},
                     )
-                    st.plotly_chart(fig_elo, use_container_width=True)
+                    st.plotly_chart(fig_elo, width="stretch")
 
 # ── TAB 2: Live Elo Ratings ────────────────────────────────────────────────
 with tab_elo:
     st.markdown('<div class="section-title">🏆 Current Premier League Elo Standings</div>', unsafe_allow_html=True)
     
-    elo_ratings, last_active_season = compute_live_elos(df_features)
-    latest_season_str = sorted(df_features["Season"].unique().tolist())[-1]
-    active_teams_set = set(df_features[df_features["Season"] == latest_season_str]["HomeTeam"])
+    if live_team_states:
+        elo_ratings = {team: float(state["current_elo"]) for team, state in live_team_states.items()}
+        last_active_season = {team: "2026/27" for team in live_team_states}
+        active_teams_set = set(live_team_states)
+        st.caption("Ratings include all reconciled completed results in the live database.")
+    else:
+        elo_ratings, last_active_season = compute_live_elos(df_features)
+        active_teams_set = set()
+        st.warning("Live state unavailable. Showing historical ratings only.")
     
     # Build dataframe for standings table
     elo_data = []
@@ -1346,7 +1238,7 @@ with tab_elo:
     df_elo_table.index.name = "Rank"
     
     # Toggle to filter active teams only
-    filter_active = st.checkbox("Show active 2025/26 season teams only", value=True, key="filter_active_teams")
+    filter_active = st.checkbox("Show active 2026/27 season teams only", value=True, key="filter_active_teams")
     if filter_active:
         display_df = df_elo_table[df_elo_table["Status"] == "Active"].copy()
         display_df = display_df.reset_index(drop=True)
@@ -1356,7 +1248,7 @@ with tab_elo:
         display_df = df_elo_table
         
     st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-    st.dataframe(display_df, use_container_width=True)
+    st.dataframe(display_df, width="stretch")
     st.markdown("</div>", unsafe_allow_html=True)
     
     # Bar chart for active teams
@@ -1378,7 +1270,7 @@ with tab_elo:
         title_font={"size": 14, "color": "#1e293b"},
         margin={"l": 100, "r": 20, "t": 50, "b": 40},
     )
-    st.plotly_chart(fig_bar, use_container_width=True)
+    st.plotly_chart(fig_bar, width="stretch")
 
 # ── TAB 3: Live 26/27 Tracker ──────────────────────────────────────────────
 with tab_live:
@@ -1426,102 +1318,7 @@ with tab_live:
             return actual == predicted
             
         # Head-to-head model metric calculator across completed 2026/27 matches
-        def compute_model_metrics(df_completed):
-            if df_completed.empty:
-                return {
-                    "blend": {"hits": 0, "acc": 0.0, "loss": 0.0, "total": 0},
-                    "xgb":   {"hits": 0, "acc": 0.0, "loss": 0.0, "total": 0},
-                    "ndc":   {"hits": 0, "acc": 0.0, "loss": 0.0, "total": 0},
-                    "bookie": {"hits": 0, "acc": 0.0, "loss": 0.0, "total": 0},
-                }
-
-            def _sf(val, fallback):
-                if val is None or pd.isna(val):
-                    return float(fallback)
-                try:
-                    return float(val)
-                except (TypeError, ValueError):
-                    return float(fallback)
-
-            hits_blend, hits_xgb, hits_ndc, hits_bookie = 0, 0, 0, 0
-            y_true_blend, y_true_xgb, y_true_ndc, y_true_bookie = [], [], [], []
-            probs_blend, probs_xgb, probs_ndc, probs_bookie = [], [], [], []
-
-            for _, row in df_completed.iterrows():
-                h_g = row["home_goals"]
-                a_g = row["away_goals"]
-                actual = "Home" if h_g > a_g else "Away" if h_g < a_g else "Draw"
-                actual_idx = 2 if h_g > a_g else 0 if h_g < a_g else 1
-
-                # Blended Ensemble (always present for locked rows)
-                b_h = _sf(row.get("predicted_home_prob"), 0.33)
-                b_d = _sf(row.get("predicted_draw_prob"), 0.33)
-                b_a = _sf(row.get("predicted_away_prob"), 0.34)
-                p_blend = {"Home": b_h, "Draw": b_d, "Away": b_a}
-                if max(p_blend, key=p_blend.get) == actual:
-                    hits_blend += 1
-                y_true_blend.append(actual_idx)
-                probs_blend.append([b_a, b_d, b_h])
-
-                # XGBoost Classifier
-                x_h = row.get("xgb_home_prob")
-                x_d = row.get("xgb_draw_prob")
-                x_a = row.get("xgb_away_prob")
-                if all(pd.notna(v) for v in [x_h, x_d, x_a]):
-                    x_h = _sf(x_h, 0.33)
-                    x_d = _sf(x_d, 0.33)
-                    x_a = _sf(x_a, 0.34)
-                    p_xgb = {"Home": x_h, "Draw": x_d, "Away": x_a}
-                    if max(p_xgb, key=p_xgb.get) == actual:
-                        hits_xgb += 1
-                    y_true_xgb.append(actual_idx)
-                    probs_xgb.append([x_a, x_d, x_h])
-
-                # Neural Dixon-Coles
-                n_h = row.get("ndc_home_prob")
-                n_d = row.get("ndc_draw_prob")
-                n_a = row.get("ndc_away_prob")
-                if all(pd.notna(v) for v in [n_h, n_d, n_a]):
-                    n_h = _sf(n_h, 0.33)
-                    n_d = _sf(n_d, 0.33)
-                    n_a = _sf(n_a, 0.34)
-                    p_ndc = {"Home": n_h, "Draw": n_d, "Away": n_a}
-                    if max(p_ndc, key=p_ndc.get) == actual:
-                        hits_ndc += 1
-                    y_true_ndc.append(actual_idx)
-                    probs_ndc.append([n_a, n_d, n_h])
-
-                # Bookmaker benchmark
-                bookie_triplet = _bookie_prob_triplet_from_row(row)
-                if bookie_triplet is not None:
-                    b_h, b_d, b_a = bookie_triplet
-                    p_bookie = {"Home": b_h, "Draw": b_d, "Away": b_a}
-                    if max(p_bookie, key=p_bookie.get) == actual:
-                        hits_bookie += 1
-                    y_true_bookie.append(actual_idx)
-                    probs_bookie.append([b_a, b_d, b_h])
-
-            def _log_loss_calc(y_t, p_list):
-                if not p_list:
-                    return 0.0
-                arr = np.nan_to_num(np.array(p_list, dtype=np.float64), nan=1.0 / 3.0)
-                arr = np.clip(arr, 1e-9, None)
-                arr = arr / arr.sum(axis=1, keepdims=True)
-                return float(log_loss(np.array(y_t, dtype=int), arr, labels=[0, 1, 2]))
-
-            total_blend = len(y_true_blend)
-            total_xgb = len(y_true_xgb)
-            total_ndc = len(y_true_ndc)
-            total_bookie = len(y_true_bookie)
-
-            return {
-                "blend": {"hits": hits_blend, "acc": (hits_blend / total_blend) * 100 if total_blend else 0.0, "loss": _log_loss_calc(y_true_blend, probs_blend), "total": total_blend},
-                "xgb":   {"hits": hits_xgb,   "acc": (hits_xgb / total_xgb) * 100 if total_xgb else 0.0,   "loss": _log_loss_calc(y_true_xgb, probs_xgb), "total": total_xgb},
-                "ndc":   {"hits": hits_ndc,   "acc": (hits_ndc / total_ndc) * 100 if total_ndc else 0.0,   "loss": _log_loss_calc(y_true_ndc, probs_ndc), "total": total_ndc},
-                "bookie": {"hits": hits_bookie, "acc": (hits_bookie / total_bookie) * 100 if total_bookie else 0.0, "loss": _log_loss_calc(y_true_bookie, probs_bookie), "total": total_bookie},
-            }
-
-        model_stats = compute_model_metrics(df_completed_preds)
+        model_stats = model_metrics(df_completed_preds)
         gw_overview = build_gameweek_overview(df_fixtures, df_predictions)
 
         if "tracker_gw_selected" not in st.session_state:
@@ -1530,7 +1327,30 @@ with tab_live:
 
         # Display Model Race Banner
         st.markdown('### ⚔️ 2026/27 Live Model Race & Leaderboard', unsafe_allow_html=True)
-        st.caption("Pitting the Blended Ensemble, XGBoost, Neural Dixon-Coles, and the Bookie benchmark head-to-head on completed 2026/27 season fixtures.")
+        st.caption("Only verified pre-match forecasts with probabilities for every model and a bookmaker quote observed by forecast time are compared. Legacy forecasts are preserved but excluded. All models use the same match cohort.")
+
+        coverage = tracker_coverage(df_merged)
+        if not coverage["matched_completed"]:
+            if not coverage["verified_completed"] and coverage["verified_pending"]:
+                st.info(
+                    f"Awaiting results for {coverage['verified_pending']} verified forecasts from the repaired models. "
+                    f"The {coverage['historical_completed']} completed historical forecasts are preserved in the gameweek cards "
+                    "but excluded from verified accuracy because their original model/input provenance is unreliable. "
+                    "Match results are present; verified model accuracy starts with the new forecasts."
+                )
+            elif coverage["verified_completed"]:
+                st.info(
+                    f"{coverage['verified_completed']} verified forecasts have completed, but none has a matching "
+                    "bookmaker quote captured by forecast time. Their accuracy is shown in the model-only table below."
+                )
+            else:
+                st.info("No verified forecasts are available yet. Historical forecasts remain visible in the gameweek cards.")
+            st.caption("A later bookmaker price cannot be attached retroactively to an earlier forecast. Model-only accuracy does not require bookmaker quotes.")
+
+        empty_value = ("Awaiting results" if coverage["verified_pending"] and not coverage["verified_completed"]
+                       else "No matched quotes" if coverage["verified_completed"] else "No verified forecasts")
+        empty_detail = (f"{coverage['verified_pending']} verified forecasts pending" if empty_value == "Awaiting results"
+                        else "See model-only performance below")
 
         kpi1, kpi2, kpi3, kpi4 = st.columns(4)
         blend_info = model_stats["blend"]
@@ -1539,30 +1359,35 @@ with tab_live:
         bookie_info = model_stats["bookie"]
 
         blend_weights_file = REPO_ROOT / "models" / "bin" / "blend_weights.json"
-        blend_title = "🔮 Blended Ensemble (Optimized)" if blend_weights_file.exists() else "🔮 Blended Ensemble (50/50)"
+        blend_title = "Stored ensemble forecasts"
         kpi1.metric(
             blend_title,
-            f"{blend_info['acc']:.1f}% Acc",
-            delta=f"{blend_info['hits']}/{total_completed} Correct | Loss: {blend_info['loss']:.3f}"
+            (f"{blend_info['acc']:.1f}% Acc" if blend_info["total"] else empty_value),
+            delta=_model_metric_detail(blend_info) if blend_info["total"] else empty_detail
         )
         kpi2.metric(
             "⚡ XGBoost Classifier",
-            f"{xgb_info['acc']:.1f}% Acc",
-            delta=f"{xgb_info['hits']}/{total_completed} Correct | Loss: {xgb_info['loss']:.3f}"
+            (f"{xgb_info['acc']:.1f}% Acc" if xgb_info["total"] else empty_value),
+            delta=_model_metric_detail(xgb_info) if xgb_info["total"] else empty_detail
         )
         kpi3.metric(
             "🧠 Neural Dixon-Coles",
-            f"{ndc_info['acc']:.1f}% Acc",
-            delta=f"{ndc_info['hits']}/{total_completed} Correct | Loss: {ndc_info['loss']:.3f}"
+            (f"{ndc_info['acc']:.1f}% Acc" if ndc_info["total"] else empty_value),
+            delta=_model_metric_detail(ndc_info) if ndc_info["total"] else empty_detail
         )
         kpi4.metric(
             "📉 Bookie Odds Benchmark",
-            f"{bookie_info['acc']:.1f}% Acc",
-            delta=f"{bookie_info['hits']}/{bookie_info['total']} Correct | Loss: {bookie_info['loss']:.3f}"
+            (f"{bookie_info['acc']:.1f}% Acc" if bookie_info["total"] else "Awaiting matched results"),
+            delta=_model_metric_detail(bookie_info) if bookie_info["total"] else "Requires a quote captured by forecast time"
         )
 
+        with st.expander("Verified model performance without a bookmaker comparison", expanded=bool(coverage["verified_completed"] and not coverage["matched_completed"])):
+            model_only = model_metrics(df_completed_preds, matched_market=False)
+            st.caption("All verified completed forecasts, including those without bookmaker quotes at lock time. This table does not claim a market comparison.")
+            st.dataframe(pd.DataFrame([{"Model": name, "Correct": info["hits"], "Matches": info["total"], "Accuracy %": info["acc"], "Log loss": info["loss"]} for name, info in model_only.items()]), hide_index=True)
+
         st.markdown("### 🧭 Gameweek Overview", unsafe_allow_html=True)
-        st.caption("Status is based on fixture dates/results: completed, in progress, or upcoming. Accuracy counts use the completed fixtures for each gameweek.")
+        st.caption("Status is based on fixture dates/results: completed, in progress, or upcoming. Accuracy counts use the common eligible completed-match cohort. Static simulations are excluded.")
 
         overview_df = gw_overview[[
             "Gameweek", "Status", "Played", "Fixtures",
@@ -1580,7 +1405,7 @@ with tab_live:
         overview_df["Static Prob"] = overview_df.apply(lambda r: _format_hits(int(r["Static Prob Hits"]), int(r["Static Prob Total"])), axis=1)
         overview_df["Static Score"] = overview_df.apply(lambda r: _format_hits(int(r["Static Score Hits"]), int(r["Static Score Total"])), axis=1)
         overview_df = overview_df[["Gameweek", "Status", "Played", "Fixtures", "Final Prob", "NDC Prob", "XGB Prob", "Bookie Prob", "Static Prob"]].copy()
-        st.dataframe(overview_df, use_container_width=True, hide_index=True)
+        st.dataframe(overview_df, width="stretch", hide_index=True)
 
         st.markdown("#### Click a gameweek", unsafe_allow_html=True)
         gw_rows = [list(range(1, 14)), list(range(14, 27)), list(range(27, 39))]
@@ -1598,7 +1423,7 @@ with tab_live:
                 bookie_prob = _format_hits(int(gw_row["Bookie Prob Hits"]), int(gw_row["Bookie Prob Total"]))
                 static_prob = _format_hits(int(gw_row["Static Prob Hits"]), int(gw_row["Static Prob Total"]))
                 label = f"GW{gw}\n{gw_row['Status']}\nFinal {final_prob} | NDC {ndc_prob} | XGB {xgb_prob} | Bookie {bookie_prob}"
-                if col.button(label, key=f"gw_button_{gw}", use_container_width=True):
+                if col.button(label, key=f"gw_button_{gw}", width="stretch"):
                     st.session_state["tracker_gw_selected"] = gw
                     st.rerun()
 
