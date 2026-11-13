@@ -1,0 +1,10 @@
+{
+  "feature_contract": "prematch-v2-shot-proxy",
+  "method": "scalar-validation-log-loss",
+  "ndc_weight": 0.5614738161165839,
+  "xgb_weight": 0.43852618388341613,
+  "train_end": "2023-05-28",
+  "calibration_season": "2023/24",
+  "validation_season": "2024/25",
+  "test_season": "2025/26"
+}

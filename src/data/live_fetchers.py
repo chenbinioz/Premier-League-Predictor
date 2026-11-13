@@ -1,26 +1,13 @@
-"""
-live_fetchers.py
-================
-Understat-backed live data adapter for the 2026/27 Premier League tracker.
+"""Canonical 2026/27 data adapters.
 
-This module intentionally preserves the project’s historical call patterns while
-switching the live season source away from API-Sports / RapidAPI to Understat,
-which exposes the 2026/27 season without a blocking paid plan.
-
-Public API contract:
-  - normalize_team_name(raw_name: str) -> str
-  - fetch_upcoming_fixtures(gameweek: int) -> list[dict]
-  - fetch_weekend_results(gameweek: int) -> list[dict]
-  - fetch_live_xg(*args, **kwargs) -> tuple[float | None, float | None] | dict
-
-Backward compatibility:
-  - Existing code calls fetch_live_xg(home_team, away_team, match_date)
-    and expects a 2-tuple: (home_xg, away_xg)
-  - Newer code may call fetch_live_xg(match_id) and expect a dict:
-    {'home_xg': float, 'away_xg': float}
+Official Premier League FPL fixtures own schedule/round identity. Football-data
+supplies observed scores and match statistics plus real upcoming prices.
+Understat is optional xG enrichment; no date or groups-of-ten round guessing is
+used. Every network read has a bounded timeout on the primary pipeline path.
 """
 
 from __future__ import annotations
+from contextlib import closing
 
 import json
 import logging
@@ -43,6 +30,8 @@ CSV_FALLBACK_URL = "https://www.football-data.co.uk/mmz4281/2627/E0.csv"
 
 
 CANONICAL_TEAM_MAP: dict[str, str] = {
+    "Man Utd": "Man United",
+    "Spurs": "Tottenham",
     "Arsenal": "Arsenal",
     "Aston Villa": "Aston Villa",
     "Bournemouth": "Bournemouth",
@@ -105,347 +94,235 @@ CANONICAL_TEAM_MAP: dict[str, str] = {
 }
 
 
-def _safe_int(value: Any) -> int | None:
-    if value is None or value == "":
-        return None
+def _safe_float(value):
+    import math
     try:
-        return int(float(value))
+        value = float(value)
+        return value if math.isfinite(value) else None
     except (TypeError, ValueError):
         return None
 
 
-def _safe_float(value: Any) -> float | None:
-    if value is None or value == "":
-        return None
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return None
+def _safe_int(value):
+    value = _safe_float(value)
+    return int(value) if value is not None and value >= 0 and value.is_integer() else None
 
 
-def _normalise_date(value: Any) -> str:
+def _normalise_date(value):
     if value is None:
         return ""
-    if isinstance(value, str):
-        raw = value.strip()
-        if not raw:
-            return ""
-        for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%d"):
-            try:
-                return datetime.strptime(raw, fmt).strftime("%Y-%m-%d")
-            except ValueError:
-                continue
+    raw = str(value).strip()
+    for fmt in ("%Y-%m-%d", "%d/%m/%Y", "%d/%m/%y", "%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S"):
         try:
-            return datetime.fromisoformat(raw.replace("Z", "+00:00")).strftime("%Y-%m-%d")
+            return datetime.strptime(raw, fmt).date().isoformat()
         except ValueError:
-            return raw[:10]
+            pass
     try:
-        return pd.to_datetime(value).strftime("%Y-%m-%d")
-    except Exception:
-        return str(value)[:10]
+        return datetime.fromisoformat(raw.replace("Z", "+00:00")).date().isoformat()
+    except ValueError:
+        return ""
 
 
-def normalize_team_name(raw_name: str) -> str:
-    """Map a raw Understat or scraped source team name to the project canonical name."""
+def normalize_team_name(raw_name):
     if raw_name is None:
         return ""
     clean = str(raw_name).strip()
-    if not clean:
-        return ""
-    canonical = CANONICAL_TEAM_MAP.get(clean)
-    if canonical is not None:
-        return canonical
-    return clean
+    return CANONICAL_TEAM_MAP.get(clean, clean)
 
 
-def _assign_gameweeks(rows: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Assign a sequential gameweek number using the actual season order.
-
-    Understat does not expose a gameweek field in the raw match payload. To keep the
-    tracker compatible with the rest of the project, we assign gameweeks in the same
-    order as the season schedule: each block of 10 matches is treated as one fixture
-    round, matching the Premier League structure.
-    """
-    ordered = sorted(rows, key=lambda item: (item.get("date") or "", item.get("match_id") or 0))
-    out: list[dict[str, Any]] = []
-    for index, row in enumerate(ordered, start=1):
-        row_copy = dict(row)
-        row_copy["gameweek"] = ((index - 1) // 10) + 1
-        row_copy["match_date"] = row_copy.get("date") or row_copy.get("match_date") or ""
-        row_copy["date"] = row_copy["match_date"]
-        out.append(row_copy)
-    return out
-
-
-def _read_understat_matches() -> list[dict[str, Any]]:
-    """Load all EPL matches for the configured season from Understat using understatapi."""
+def _read_understat_matches():
     try:
         from understatapi import UnderstatClient
-    except ImportError as exc:  # pragma: no cover - guard for environments without the package
-        logger.warning("understatapi is not installed; falling back to football-data CSV only: %s", exc)
-        return []
-
-    try:
         with UnderstatClient() as client:
-            raw_rows = client.league(UNDERSTAT_LEAGUE).get_match_data(season=UNDERSTAT_SEASON)
-    except Exception as exc:  # pragma: no cover - runtime external dependency issue
-        logger.warning("Understat fetch failed for season %s/%s: %s", UNDERSTAT_SEASON, UNDERSTAT_LEAGUE, exc)
+            raw = client.league(UNDERSTAT_LEAGUE).get_match_data(season=UNDERSTAT_SEASON)
+        if not isinstance(raw, list):
+            raise ValueError("Understat response has no match list")
+    except Exception as exc:
+        logger.warning("Understat unavailable: %s", exc)
         return []
-
-    cleaned: list[dict[str, Any]] = []
-    for row in raw_rows or []:
-        h_info = row.get("h") or {}
-        a_info = row.get("a") or {}
-        goals = row.get("goals") or {}
-        xg = row.get("xG") or {}
-
-        home_team = normalize_team_name((h_info or {}).get("title"))
-        away_team = normalize_team_name((a_info or {}).get("title"))
-        if not home_team or not away_team:
+    out = []
+    for r in raw:
+        goals, xg = r.get("goals") or {}, r.get("xG") or {}
+        hg, ag = _safe_int(goals.get("h")), _safe_int(goals.get("a"))
+        complete = r.get("isResult") is True and hg is not None and ag is not None
+        dt = _normalise_date(r.get("datetime"))
+        if not dt:
             continue
-
-        home_goals = _safe_int(goals.get("h"))
-        away_goals = _safe_int(goals.get("a"))
-        home_xg = _safe_float(xg.get("h"))
-        away_xg = _safe_float(xg.get("a"))
-
-        cleaned.append({
-            "match_id": int(str(row.get("id") or 0).strip() or 0),
-            "date": _normalise_date(row.get("datetime")),
-            "home_team": home_team,
-            "away_team": away_team,
-            "home_goals": home_goals,
-            "away_goals": away_goals,
-            "home_xg": home_xg,
-            "away_xg": away_xg,
-            "status": "completed" if bool(row.get("isResult")) else "pending",
-            "is_result": bool(row.get("isResult")),
-        })
-
-    return sorted(cleaned, key=lambda item: (item.get("date") or "", item.get("match_id") or 0))
-
-
-def fetch_from_football_data_csv() -> list[dict[str, Any]]:
-    """Offline backup for completed results when Understat is unavailable.
-
-    Reads the football-data.co.uk CSV for the 2026/27 season and returns a list of
-    canonicalized rows containing at least Date/HomeTeam/AwayTeam/FTHG/FTAG.
-    """
-    try:
-        df = pd.read_csv(CSV_FALLBACK_URL)
-    except Exception as exc:  # pragma: no cover - network fallback may be unavailable
-        logger.warning("football-data csv backup failed: %s", exc)
-        return []
-
-    if df.empty:
-        return []
-
-    required = {"Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG"}
-    missing = required - set(df.columns)
-    if missing:
-        logger.warning("football-data csv missing expected columns: %s", sorted(missing))
-        return []
-
-    rows: list[dict[str, Any]] = []
-    for _, row in df.iterrows():
-        try:
-            date_value = _normalise_date(row.get("Date"))
-            home_team = normalize_team_name(row.get("HomeTeam"))
-            away_team = normalize_team_name(row.get("AwayTeam"))
-            if not date_value or not home_team or not away_team:
-                continue
-            item = {
-                "date": date_value,
-                "home_team": home_team,
-                "away_team": away_team,
-                "home_goals": _safe_int(row.get("FTHG")) or 0,
-                "away_goals": _safe_int(row.get("FTAG")) or 0,
-                "home_sot": _safe_int(row.get("HST")),
-                "away_sot": _safe_int(row.get("AST")),
-                "home_corners": _safe_int(row.get("HC")),
-                "away_corners": _safe_int(row.get("AC")),
-                "home_fouls": _safe_int(row.get("HF")),
-                "away_fouls": _safe_int(row.get("AF")),
-                "status": "completed",
-                "match_id": 0,
-                "home_xg": _safe_float(row.get("HxG")),
-                "away_xg": _safe_float(row.get("AxG")),
-            }
-            for key in ("B365H", "B365D", "B365A"):
-                if key in df.columns:
-                    item[key] = row.get(key)
-            rows.append(item)
-        except Exception:
-            continue
-    return rows
-
-
-def fetch_upcoming_fixtures(gameweek: int) -> list[dict[str, Any]]:
-    """Return the pending fixtures for the requested gameweek from Understat.
-
-    The function preserves the project contract for older code by returning both a
-    canonical "match_date" field and a compatibility "date" alias.
-    """
-    if gameweek < 1:
-        return []
-
-    rows = _read_understat_matches()
-    if not rows:
-        return []
-
-    rows = _assign_gameweeks(rows)
-    out: list[dict[str, Any]] = []
-    for row in rows:
-        if not row.get("is_result") and row.get("gameweek") == gameweek:
-            out.append({
-                "match_id": int(row["match_id"]),
-                "api_match_id": int(row["match_id"]),
-                "gameweek": int(row["gameweek"]),
-                "match_date": row["match_date"],
-                "date": row["match_date"],
-                "home_team": row["home_team"],
-                "away_team": row["away_team"],
-                "status": "pending",
-            })
+        out.append({"api_match_id": str(r.get("id", "")), "match_date": dt, "date": dt,
+                    "home_team": normalize_team_name((r.get("h") or {}).get("title")),
+                    "away_team": normalize_team_name((r.get("a") or {}).get("title")),
+                    "home_goals": hg, "away_goals": ag, "home_xg": _safe_float(xg.get("h")),
+                    "away_xg": _safe_float(xg.get("a")), "status": "completed" if complete else "pending",
+                    "is_result": complete, "result_source": "understat", "xg_source": "understat"})
     return out
 
 
-def fetch_weekend_results(gameweek: int) -> list[dict[str, Any]]:
-    """Return completed results for the requested gameweek from Understat / football-data CSV.
+def _kickoff(match_date, match_time):
+    from datetime import timezone
+    from zoneinfo import ZoneInfo
+    try:
+        dt = datetime.strptime(f"{match_date} {match_time}", "%Y-%m-%d %H:%M")
+        return dt.replace(tzinfo=ZoneInfo("Europe/London")).astimezone(timezone.utc).isoformat()
+    except (ValueError, TypeError):
+        return None
 
-    Returns a list of dicts with values suitable for live-state updates. Includes both
-    "match_date" and "date" for compatibility with the existing pipeline, plus
-    shots on target, corners, and fouls.
-    """
-    if gameweek < 1:
+
+def fetch_from_football_data_csv(csv_path=None):
+    """Observed results only; missing goals never become completed 0-0s."""
+    from datetime import timezone
+    try:
+        if csv_path is not None:
+            frame = pd.read_csv(csv_path)
+        else:
+            from io import StringIO
+            response = requests.get(CSV_FALLBACK_URL, timeout=(5, 25))
+            response.raise_for_status()
+            frame = pd.read_csv(StringIO(response.text))
+        if not {"Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG"}.issubset(frame):
+            raise ValueError("Results CSV is missing required columns")
+    except Exception as exc:
+        logger.warning("football-data unavailable: %s", exc)
         return []
+    observed = datetime.now(timezone.utc).isoformat()
+    out = []
+    for r in frame.to_dict("records"):
+        dt = _normalise_date(r.get("Date"))
+        hg, ag = _safe_int(r.get("FTHG")), _safe_int(r.get("FTAG"))
+        if not dt or hg is None or ag is None:
+            continue
+        item = {"match_date": dt, "date": dt, "home_team": normalize_team_name(r.get("HomeTeam")),
+                "away_team": normalize_team_name(r.get("AwayTeam")), "home_goals": hg, "away_goals": ag,
+                "status": "completed", "result_source": "football-data", "observed_at": observed,
+                "kickoff_at": _kickoff(dt, r.get("Time")), "xg_source": "football-data"}
+        for key, column in {"home_sot": "HST", "away_sot": "AST", "home_shots": "HS", "away_shots": "AS",
+                            "home_corners": "HC", "away_corners": "AC", "home_fouls": "HF", "away_fouls": "AF"}.items():
+            item[key] = _safe_int(r.get(column))
+        for key, col in {"home_xg": "HxG", "away_xg": "AxG", "B365H": "B365H", "B365D": "B365D", "B365A": "B365A"}.items():
+            item[key] = _safe_float(r.get(col))
+        if item["home_team"] and item["away_team"] and item["home_team"] != item["away_team"]:
+            out.append(item)
+    return out
 
-    # Pre-fetch football-data CSV to enrich Understat with shots, corners, and fouls
-    csv_rows = fetch_from_football_data_csv()
-    csv_map = {(r["home_team"], r["away_team"]): r for r in csv_rows}
 
+def fetch_results(csv_path=None, include_understat=True):
+    """Merge sources by season fixture identity, never by inferred gameweek.
+
+    CSV is authoritative for scores, dates and match stats; Understat enriches xG.
+    Conflicting scores fail explicitly instead of mixing incompatible observations.
+    """
+    from datetime import timezone
+    understat = _read_understat_matches() if include_understat else []
+    csv = fetch_from_football_data_csv(csv_path)
+    merged = {(r["home_team"], r["away_team"]): dict(r) for r in understat if r["status"] == "completed"}
+    for row in csv:
+        key = row["home_team"], row["away_team"]
+        old = merged.get(key)
+        if old and (old["home_goals"], old["away_goals"]) != (row["home_goals"], row["away_goals"]):
+            raise ValueError(f"Result sources disagree for {key}")
+        merged[key] = {**(old or {}), **row}
+        if old and old.get("home_xg") is not None and old.get("away_xg") is not None:
+            merged[key].update(home_xg=old["home_xg"], away_xg=old["away_xg"], xg_source="understat")
+    observed = datetime.now(timezone.utc).isoformat()
+    for row in merged.values():
+        row.setdefault("observed_at", observed)
+        row["xg_source"] = row.get("xg_source") if row.get("home_xg") is not None and row.get("away_xg") is not None else None
+    if not csv and not merged:
+        raise RuntimeError("No usable results source; ingestion did not succeed")
+    return sorted(merged.values(), key=lambda r: (r["match_date"], r["home_team"]))
+
+
+def _known_fixtures(db_path=None):
+    import sqlite3
+    from pathlib import Path
+    path = Path(db_path or os.environ.get("LIVE_DB_PATH", "data/live/epl_2627.db"))
+    if not path.exists():
+        return []
+    with closing(sqlite3.connect(f"file:{path}?mode=ro", uri=True)) as conn, conn:
+        conn.row_factory = sqlite3.Row
+        return [dict(r) for r in conn.execute("SELECT * FROM fixtures_26_27")]
+
+
+def fetch_weekend_results(gameweek, fixtures=None, csv_path=None):
+    known = fixtures if fixtures is not None else _known_fixtures()
+    lookup = {(f["home_team"], f["away_team"]): f for f in known if f["gameweek"] == gameweek}
+    return [{**r, "gameweek": gameweek, "match_id": lookup[(r["home_team"], r["away_team"])]["match_id"]}
+            for r in fetch_results(csv_path) if (r["home_team"], r["away_team"]) in lookup]
+
+
+def fetch_upcoming_fixtures(gameweek):
+    # The persisted schedule owns round identity. No groups-of-ten/date guessing.
+    return [f for f in _known_fixtures() if f["gameweek"] == gameweek and f["status"] == "pending"]
+
+
+def fetch_live_xg(*args, **kwargs):
     rows = _read_understat_matches()
-    if rows:
-        rows = _assign_gameweeks(rows)
-        results: list[dict[str, Any]] = []
-        for row in rows:
-            if row.get("is_result") and row.get("gameweek") == gameweek:
-                home_team = row["home_team"]
-                away_team = row["away_team"]
-                csv_item = csv_map.get((home_team, away_team), {})
-
-                results.append({
-                    "match_id": int(row["match_id"]),
-                    "api_match_id": int(row["match_id"]),
-                    "gameweek": int(row["gameweek"]),
-                    "match_date": row["match_date"],
-                    "date": row["match_date"],
-                    "home_team": home_team,
-                    "away_team": away_team,
-                    "home_goals": int(row["home_goals"] or 0),
-                    "away_goals": int(row["away_goals"] or 0),
-                    "home_xg": float(row["home_xg"]) if row.get("home_xg") is not None else float(csv_item.get("home_xg") or row.get("home_goals") or 0.0),
-                    "away_xg": float(row["away_xg"]) if row.get("away_xg") is not None else float(csv_item.get("away_xg") or row.get("away_goals") or 0.0),
-                    "home_sot": csv_item.get("home_sot"),
-                    "away_sot": csv_item.get("away_sot"),
-                    "home_corners": csv_item.get("home_corners"),
-                    "away_corners": csv_item.get("away_corners"),
-                    "home_fouls": csv_item.get("home_fouls"),
-                    "away_fouls": csv_item.get("away_fouls"),
-                    "status": "completed",
-                })
-        if results:
-            return results
-
-    if not csv_rows:
-        return []
-
-    csv_dates = sorted({row["date"] for row in csv_rows if row.get("date")})
-    date_to_gw = {date_value: index + 1 for index, date_value in enumerate(csv_dates)}
-
-    results = []
-    for row in csv_rows:
-        if row.get("status") == "completed" and date_to_gw.get(row.get("date"), 0) == gameweek:
-            results.append({
-                "match_id": int(row.get("match_id") or 0),
-                "api_match_id": int(row.get("match_id") or 0),
-                "gameweek": int(gameweek),
-                "match_date": row["date"],
-                "date": row["date"],
-                "home_team": row["home_team"],
-                "away_team": row["away_team"],
-                "home_goals": int(row.get("home_goals") or 0),
-                "away_goals": int(row.get("away_goals") or 0),
-                "home_xg": float(row.get("home_xg") or 0.0),
-                "away_xg": float(row.get("away_xg") or 0.0),
-                "home_sot": row.get("home_sot"),
-                "away_sot": row.get("away_sot"),
-                "home_corners": row.get("home_corners"),
-                "away_corners": row.get("away_corners"),
-                "home_fouls": row.get("home_fouls"),
-                "away_fouls": row.get("away_fouls"),
-                "status": "completed",
-            })
-    return results
+    for row in rows:
+        if len(args) == 1 and str(row.get("api_match_id")) == str(args[0]):
+            return {"home_xg": row.get("home_xg"), "away_xg": row.get("away_xg")}
+        if len(args) >= 2 and (row["home_team"], row["away_team"]) == tuple(map(normalize_team_name, args[:2])):
+            if len(args) == 2 or row["match_date"] == _normalise_date(args[2]):
+                return row.get("home_xg"), row.get("away_xg")
+    return {"home_xg": None, "away_xg": None} if len(args) == 1 else (None, None)
 
 
-def fetch_live_xg(*args: Any, **kwargs: Any) -> tuple[float | None, float | None] | dict[str, float | None]:
-    """Fetch xG for a match.
+def fetch_official_schedule(csv_path=None):
+    """Official FPL event IDs supply rounds, including rescheduled fixtures.
 
-    Backward-compatible signatures:
-      - fetch_live_xg(home_team, away_team, match_date)
-        -> (home_xg, away_xg)
-      - fetch_live_xg(match_id)
-        -> {'home_xg': float, 'away_xg': float}
+    A snapshot CSV is supported for reproducible offline repair; its provenance
+    must be supplied by this adapter, not by grouping dates or counting matches.
     """
-    if len(args) == 1 and isinstance(args[0], int):
-        match_id = int(args[0])
-        rows = _read_understat_matches()
-        for row in rows:
-            if int(row.get("match_id") or 0) == match_id:
-                return {
-                    "home_xg": float(row["home_xg"]) if row.get("home_xg") is not None else None,
-                    "away_xg": float(row["away_xg"]) if row.get("away_xg") is not None else None,
-                }
-        return {"home_xg": None, "away_xg": None}
-
-    if len(args) == 3:
-        home_team, away_team, match_date = args
-        rows = _read_understat_matches()
-        normalized_date = _normalise_date(match_date)
-        home_norm = normalize_team_name(home_team)
-        away_norm = normalize_team_name(away_team)
-        for row in rows:
-            if row.get("date") != normalized_date:
-                continue
-            if row.get("home_team") == home_norm and row.get("away_team") == away_norm:
-                return (
-                    float(row["home_xg"]) if row.get("home_xg") is not None else None,
-                    float(row["away_xg"]) if row.get("away_xg") is not None else None,
-                )
-        return (None, None)
-
-    if len(args) == 2 and isinstance(args[0], str) and isinstance(args[1], str):
-        home_team, away_team = args
-        rows = _read_understat_matches()
-        for row in rows:
-            if row.get("home_team") == normalize_team_name(home_team) and row.get("away_team") == normalize_team_name(away_team):
-                return (
-                    float(row["home_xg"]) if row.get("home_xg") is not None else None,
-                    float(row["away_xg"]) if row.get("away_xg") is not None else None,
-                )
-        return (None, None)
-
-    raise TypeError(
-        "fetch_live_xg requires either (match_id) or (home_team, away_team, match_date) "
-        "or (home_team, away_team)."
-    )
+    from datetime import timezone
+    from zoneinfo import ZoneInfo
+    if csv_path:
+        rows = pd.read_csv(csv_path).to_dict('records')
+        return [{k: (None if pd.isna(v) else v) for k, v in row.items()} for row in rows]
+    response = requests.get('https://fantasy.premierleague.com/api/bootstrap-static/', timeout=(5, 20))
+    response.raise_for_status()
+    teams = {t['id']: normalize_team_name(t['name']) for t in response.json()['teams']}
+    response = requests.get('https://fantasy.premierleague.com/api/fixtures/', timeout=(5, 20))
+    response.raise_for_status()
+    observed = datetime.now(timezone.utc).isoformat()
+    out = []
+    for row in response.json():
+        kickoff = datetime.fromisoformat(row['kickoff_time'].replace('Z','+00:00')) if row.get('kickoff_time') else None
+        out.append({'home_team':teams[row['team_h']], 'away_team':teams[row['team_a']],
+                    'gameweek':row.get('event'), 'match_date':kickoff.astimezone(ZoneInfo('Europe/London')).date().isoformat() if kickoff else None,
+                    'kickoff_at':kickoff.isoformat() if kickoff else None, 'official_match_id':str(row['id']),
+                    'schedule_source':'premier-league-fpl', 'schedule_observed_at':observed,
+                    'schedule_status':'scheduled' if kickoff else 'postponed',
+                    'official_home_goals':row.get('team_h_score') if row.get('finished') else None,
+                    'official_away_goals':row.get('team_a_score') if row.get('finished') else None})
+    if len(out) != 380 or len({(r['home_team'],r['away_team']) for r in out}) != 380:
+        raise ValueError('Official schedule must contain exactly 380 unique EPL fixtures')
+    if any(r['match_date'] and not '2026-07-01' <= r['match_date'] < '2027-07-01' for r in out):
+        raise ValueError('Official schedule API is serving a different season')
+    return out
 
 
-__all__ = [
-    "normalize_team_name",
-    "fetch_upcoming_fixtures",
-    "fetch_weekend_results",
-    "fetch_live_xg",
-    "fetch_from_football_data_csv",
-]
+def fetch_upcoming_odds(csv_path=None):
+    """Real pre-match quotes; unavailable prices never become NDC proxies."""
+    from datetime import timezone
+    from src.features.prematch import normalized_market
+    try:
+        if csv_path:
+            frame = pd.read_csv(csv_path)
+        else:
+            from io import StringIO
+            response = requests.get('https://www.football-data.co.uk/fixtures.csv', timeout=(5,15))
+            response.raise_for_status()
+            frame = pd.read_csv(StringIO(response.text))
+        if not {'Div','Date','HomeTeam','AwayTeam','B365H','B365D','B365A'}.issubset(frame):
+            return []
+    except Exception as exc:
+        logger.warning('Upcoming bookmaker quotes unavailable: %s',exc)
+        return []
+    observed = datetime.now(timezone.utc).isoformat()
+    out = []
+    for raw in frame[frame.Div=='E0'].to_dict('records'):
+        odds = [_safe_float(raw.get(k)) for k in ('B365H','B365D','B365A')]
+        if normalized_market(odds) is None:
+            continue
+        out.append({'home_team':normalize_team_name(raw['HomeTeam']), 'away_team':normalize_team_name(raw['AwayTeam']),
+                    'match_date':_normalise_date(raw['Date']), 'odds_observed_at':observed,
+                    **dict(zip(('B365H','B365D','B365A'),odds))})
+    return out

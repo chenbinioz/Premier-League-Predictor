@@ -1,982 +1,178 @@
-#!/usr/bin/env python
-"""
-predict_next_gameweek.py
-========================
-Pre-match inference pipeline for the 2026/27 EPL season.
-
-Workflow per fixture
---------------------
-1. Fetch upcoming fixtures for the target gameweek (Understat).
-2. Skip any fixture that already has a locked prediction in the DB.
-3. Load live team states (Elo + rolling xG/goals) from live_team_states.
-4. Build the 75-feature NDC vector and 18-feature XGBoost vector.
-5. Run Neural Dixon-Coles → λ, μ, ρ → scoreline grid → 1X2 probs.
-6. Run XGBoost calibrated classifier → blended 1X2 probs.
-7. Lock prediction into predictions_26_27.
-
-Usage
------
-  python scripts/predict_next_gameweek.py --gameweek 1
-  python scripts/predict_next_gameweek.py --gameweek 1 --dry-run
-  python scripts/predict_next_gameweek.py --gameweek 1 --no-fetch --db data/live/epl_2627.db
-
-Flags
------
-  --gameweek  INT    Target gameweek (required).
-  --db        PATH   Path to SQLite DB (default: data/live/epl_2627.db).
-  --dry-run          Print predictions without writing to DB.
-  --no-fetch         Skip the API call; use fixtures already in the DB.
-  --blend     FLOAT  Weight on NDC vs XGBoost (0=XGBoost only, 1=NDC only, default 0.5).
-"""
-
+"""Generate immutable, versioned pre-kickoff forecasts from the persisted schedule."""
 from __future__ import annotations
-
-import argparse
-import json
-import logging
+from contextlib import closing
 import os
-import sys
-from datetime import date, datetime
+for variable in ('OMP_NUM_THREADS','MKL_NUM_THREADS','OPENBLAS_NUM_THREADS'):os.environ.setdefault(variable,'1')
+import argparse
+from datetime import datetime,timedelta,timezone
+from functools import lru_cache
+import hashlib
+import importlib.metadata
+import json
 from pathlib import Path
-from typing import Any, Optional
-
-import numpy as np
-
-# ── Path setup ────────────────────────────────────────────────────────────────
-REPO_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO_ROOT))
-
-# Must be set before torch import to prevent macOS OpenMP segfault
-os.environ.setdefault("OMP_NUM_THREADS", "1")
-os.environ.setdefault("MKL_NUM_THREADS", "1")
-os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
-
+import sqlite3
+import sys
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
 import joblib
+import numpy as np
+import pandas as pd
 import torch
-from dotenv import load_dotenv
-
-load_dotenv()
-
-from models.neural_dixon_coles import (
-    NeuralDixonColes,
-    parse_grid_outputs,
-    predict_scoreline_grid,
-)
-from src.data.state_manager import TeamStateManager
-from src.data.live_fetchers import fetch_upcoming_fixtures
-
-# ── Logging ───────────────────────────────────────────────────────────────────
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt="%H:%M:%S",
-)
-logger = logging.getLogger(__name__)
-
-# ── Paths ─────────────────────────────────────────────────────────────────────
-DEFAULT_DB_PATH      = REPO_ROOT / "data" / "live" / "epl_2627.db"
-NDC_MODEL_PATH       = REPO_ROOT / "models" / "bin" / "neural_dixon_coles.pt"
-NDC_SCALER_PATH      = REPO_ROOT / "models" / "bin" / "ndc_scaler.joblib"
-NDC_FEATURES_PATH    = REPO_ROOT / "models" / "bin" / "ndc_feature_names.json"
-XGB_MODEL_PATH       = REPO_ROOT / "models" / "calibrated_xgb_outcome.pkl"
-BLEND_WEIGHTS_PATH   = REPO_ROOT / "models" / "bin" / "blend_weights.json"
-BLEND_STACKER_PATH   = REPO_ROOT / "models" / "bin" / "blend_stacker.joblib"
+from models.neural_dixon_coles import NeuralDixonColes,predict_scoreline_grid,parse_grid_outputs
+from src.data.state_manager import TeamStateManager,digest
+from src.features.prematch import FeatureEngine,CONTRACT,NDC_FEATURES,XGB_BASE_FEATURES,normalized_market
+DEFAULT_DB_PATH=ROOT/'data/live/epl_2627.db'
+XGB_FEATURE_COLS=XGB_BASE_FEATURES
 
 
-def _load_blend_config() -> dict[str, Any] | None:
-    """Load learned optimal blend weights if available."""
-    if BLEND_WEIGHTS_PATH.exists():
-        try:
-            return json.loads(BLEND_WEIGHTS_PATH.read_text())
-        except Exception as exc:
-            logger.debug("Failed to read blend weights from %s: %s", BLEND_WEIGHTS_PATH, exc)
+def _verified_manifest(manifest_text):
+    manifest=json.loads(manifest_text)
+    identity=hashlib.sha256(json.dumps({k:v for k,v in manifest.items() if k!='model_version'},sort_keys=True).encode()).hexdigest()[:16]
+    if identity!=manifest['model_version']:raise ValueError('Model manifest identity mismatch')
+    if manifest['feature_contract']!=CONTRACT:raise ValueError('Model feature contract mismatch; retrain models')
+    for package,version in manifest['environment'].items():
+        if importlib.metadata.version(package)!=version:raise ValueError(f'{package} version mismatch: install requirements.txt or retrain')
+    for relative,expected in {**manifest['artifacts'],**manifest['code_sha256']}.items():
+        if hashlib.sha256((ROOT/relative).read_bytes()).hexdigest()!=expected:raise ValueError(f'Model bundle file changed: {relative}; retrain the coherent bundle')
+    return manifest
+
+
+def model_manifest():
+    path=ROOT/'models/bin/manifest.json'
+    if not path.exists():raise ValueError('Verified model bundle missing; run scripts/train_models.py')
+    return _verified_manifest(path.read_text())
+
+
+def _load_ndc():
+    model_manifest()
+    checkpoint=torch.load(ROOT/'models/bin/neural_dixon_coles.pt',map_location='cpu',weights_only=True)
+    names=json.loads((ROOT/'models/bin/ndc_feature_names.json').read_text())
+    if names!=NDC_FEATURES or checkpoint.get('feature_contract')!=CONTRACT:raise ValueError('Unsafe neural feature contract')
+    model=NeuralDixonColes(len(names));model.load_state_dict(checkpoint['state_dict']);model.eval()
+    return model,joblib.load(ROOT/'models/bin/ndc_scaler.joblib'),names
+
+
+def _load_xgb():
+    model_manifest()
+    return joblib.load(ROOT/'models/calibrated_xgb_outcome.pkl')
+
+
+def _features(home_state,away_state,match_date=None):
+    if match_date is None:
+        match_date=(datetime.now(timezone.utc).date()+timedelta(days=1)).isoformat()
+    def decode(state):
+        value=state.get('engine_state')
+        if not value:raise ValueError('Team state requires v2 chronological rebuild')
+        return json.loads(value) if isinstance(value,str) else value
+    engine=FeatureEngine({'season':'2026/27','active':['home','away'],'teams':{'home':decode(home_state),'away':decode(away_state)}})
+    return engine.features('home','away',match_date)
+
+
+def build_ndc_feature_vector(home_state,away_state,feature_names,*unused,match_date=None,**kwargs):
+    if feature_names!=NDC_FEATURES:raise ValueError('Leaked or unknown feature names are not accepted')
+    features=_features(home_state,away_state,match_date)
+    return np.array([[features[k] for k in feature_names]],dtype='float32')
+
+
+def build_xgb_feature_vector(home_state,away_state,*unused,match_date=None,**kwargs):
+    features=_features(home_state,away_state,match_date)
+    return np.array([[features[k] for k in XGB_FEATURE_COLS]],dtype='float32')
+
+
+def run_ndc_inference(model,scaler,feature_vec):
+    values=pd.DataFrame(feature_vec,columns=NDC_FEATURES)
+    values=scaler.transform(values).astype('float32')
+    with torch.no_grad():lam,mu,rho=model(torch.from_numpy(values))
+    l,m,r=float(lam.item()),float(mu.item()),float(rho.item())
+    grid=predict_scoreline_grid(l,m,r,max_goals=12)
+    return {'lambda':l,'mu':m,'rho':r,'grid':grid,'parsed':parse_grid_outputs(grid,top_k=3)}
+
+
+def run_xgb_inference(model,feature_vec):
+    if list(model.feature_names_in_)!=XGB_FEATURE_COLS:raise ValueError('Primary XGBoost must be market-free')
+    p=model.predict_proba(pd.DataFrame(feature_vec,columns=XGB_FEATURE_COLS))[0]
+    return float(p[2]),float(p[1]),float(p[0])
+
+
+def _blend_probs(nh,nd,na,xh,xd,xa,alpha=None):
+    if alpha is None:alpha=json.loads((ROOT/'models/bin/blend_weights.json').read_text())['ndc_weight']
+    if not 0<=alpha<=1:raise ValueError('Blend weight must be in [0,1]')
+    p=float(alpha)*np.array([nh,nd,na])+(1-float(alpha))*np.array([xh,xd,xa])
+    p/=p.sum()
+    return tuple(float(v) for v in p)
+
+
+def snapshot(home_state,away_state,match_date=None,assets=None):
+    ndc_model,scaler,names,xgb=assets or (*_load_ndc(),_load_xgb())
+    nv=build_ndc_feature_vector(home_state,away_state,names,match_date=match_date)
+    xv=build_xgb_feature_vector(home_state,away_state,match_date=match_date)
+    n=run_ndc_inference(ndc_model,scaler,nv)
+    np_=tuple(n['parsed'][k]/100 for k in ('home_win','draw','away_win'))
+    xp=run_xgb_inference(xgb,xv)
+    return n,np_,xp,_blend_probs(*np_,*xp),digest(_features(home_state,away_state,match_date))
+
+
+def get_auto_gameweek(db_path):
+    now=datetime.now(timezone.utc)
+    with closing(sqlite3.connect(f'file:{db_path}?mode=ro',uri=True)) as conn, conn:
+        conn.row_factory=sqlite3.Row
+        pending=[dict(r) for r in conn.execute("SELECT * FROM fixtures_26_27 WHERE status='pending' AND schedule_status!='postponed' ORDER BY match_date")]
+    for row in pending:
+        cutoff=datetime.fromisoformat(row['kickoff_at']) if row.get('kickoff_at') else datetime.fromisoformat(row['match_date']).replace(tzinfo=timezone.utc)
+        if cutoff>now:return row['gameweek']
     return None
-# Pre-computed from last 2 seasons of epl_model_features.csv.
-# Used for features not tracked in live_team_states (shots, corners, fouls).
-_SEASON_MEANS: dict[str, float] = {
-    "Home_ShotsOnTarget_roll3":  4.3239,
-    "Away_ShotsOnTarget_roll3":  4.4453,
-    "Home_Corners_roll3":        5.0189,
-    "Away_Corners_roll3":        5.1171,
-    "Home_Fouls_roll3":         10.9542,
-    "Away_Fouls_roll3":         10.8878,
-    "Home_ShotsOnTarget_roll5":  4.3453,
-    "Away_ShotsOnTarget_roll5":  4.4397,
-    "Home_Corners_roll5":        5.0452,
-    "Away_Corners_roll5":        5.1064,
-    "Home_Fouls_roll5":         10.9576,
-    "Away_Fouls_roll5":         10.8818,
-    "Home_ShotsOnTarget_roll10": 4.3995,
-    "Away_ShotsOnTarget_roll10": 4.4229,
-    "Home_Corners_roll10":       5.0686,
-    "Away_Corners_roll10":       5.1075,
-    "Home_Fouls_roll10":        10.9333,
-    "Away_Fouls_roll10":        10.9259,
-    "Home_xG_Created_Venue_roll5":  1.7912,
-    "Home_xG_Conceded_Venue_roll5": 1.5308,
-    "Away_xG_Created_Venue_roll5":  1.5364,
-    "Away_xG_Conceded_Venue_roll5": 1.7850,
-}
 
-# ── XGBoost feature list (must match training order exactly) ──────────────────
-XGB_FEATURE_COLS = [
-    "Elo_Diff", "Home_Elo", "Away_Elo",
-    "xG_Attack_Diff_roll3", "xG_Defense_Diff_roll3",
-    "xG_Attack_Diff_roll5", "xG_Defense_Diff_roll5",
-    "xG_Attack_Diff_roll10", "xG_Defense_Diff_roll10",
-    "Corner_Diff_roll5", "Foul_Diff_roll5",
-    "Venue_xG_Attack_Diff", "Expected_Match_xG",
-    "Rest_Diff", "Congestion_Diff",
-    "Bookie_Prob_H", "Bookie_Prob_D", "Bookie_Prob_A",
-]
 
-
-# ── Rest-day computation ─────────────────────────────────────────────────────
-
-def _compute_rest_days(
-    conn: Any,
-    team: str,
-    match_date_str: str,
-    default: float = 7.0,
-) -> tuple[float, int]:
-    """
-    Query fixtures_26_27 for the most recent COMPLETED fixture played by *team*
-    strictly before *match_date_str* (YYYY-MM-DD), and return:
-        (rest_days: float, congestion_flag: int)
-
-    rest_days      = days since last completed match (capped at 21 to avoid
-                     season-start outliers inflating the feature).
-    congestion_flag = 1 if rest_days < 4 else 0.
-
-    Falls back to *default* if no prior completed fixture exists (e.g. GW1).
-    """
-    try:
-        target_date = datetime.strptime(match_date_str, "%Y-%m-%d").date()
-    except (ValueError, TypeError):
-        return default, 0
-
-    try:
-        cur = conn.execute(
-            """
-            SELECT match_date
-            FROM   fixtures_26_27
-            WHERE  (home_team = ? OR away_team = ?)
-              AND  status = 'completed'
-              AND  match_date < ?
-            ORDER BY match_date DESC
-            LIMIT 1
-            """,
-            (team, team, match_date_str),
-        )
-        row = cur.fetchone()
-    except Exception as exc:
-        logger.debug("rest_days query failed for %s: %s", team, exc)
-        return default, 0
-
-    if row is None:
-        return default, 0
-
-    try:
-        last_date_str = row[0] if isinstance(row, (list, tuple)) else row["match_date"]
-        last_date = datetime.strptime(last_date_str, "%Y-%m-%d").date()
-        rest_days = float((target_date - last_date).days)
-        # Cap at 21 to avoid pre-season gaps dominating
-        rest_days = min(rest_days, 21.0)
-        congestion = 1 if rest_days < 4 else 0
-        return rest_days, congestion
-    except Exception as exc:
-        logger.debug("rest_days parse failed for %s: %s", team, exc)
-        return default, 0
-
-
-# ── Model loading ─────────────────────────────────────────────────────────────
-
-def _load_ndc() -> tuple[NeuralDixonColes, Any, list[str]] | tuple[None, None, None]:
-    """Load the Neural Dixon-Coles model, scaler, and feature name list."""
-    for p in [NDC_MODEL_PATH, NDC_SCALER_PATH, NDC_FEATURES_PATH]:
-        if not p.exists():
-            logger.warning("NDC artifact missing: %s — NDC inference disabled.", p)
-            return None, None, None
-
-    checkpoint   = torch.load(NDC_MODEL_PATH, map_location="cpu", weights_only=True)
-    n_features   = checkpoint["n_features"]
-    ndc_model    = NeuralDixonColes(n_features=n_features)
-    ndc_model.load_state_dict(checkpoint["state_dict"])
-    ndc_model.eval()
-
-    scaler        = joblib.load(NDC_SCALER_PATH)
-    feature_names = json.loads(NDC_FEATURES_PATH.read_text())
-
-    logger.info("Loaded NDC model (%d features).", n_features)
-    return ndc_model, scaler, feature_names
-
-
-def _load_xgb() -> Any | None:
-    """Load the calibrated XGBoost classifier."""
-    if not XGB_MODEL_PATH.exists():
-        logger.warning("XGBoost model missing at %s — XGB inference disabled.", XGB_MODEL_PATH)
-        return None
-    model = joblib.load(XGB_MODEL_PATH)
-    logger.info("Loaded XGBoost calibrated classifier.")
-    return model
-
-
-# ── Feature vector builders ───────────────────────────────────────────────────
-
-def build_ndc_feature_vector(
-    home_state: dict[str, Any],
-    away_state: dict[str, Any],
-    feature_names: list[str],
-    bookie_h: float = 0.40,
-    bookie_d: float = 0.27,
-    bookie_a: float = 0.33,
-    home_rest_days: float = 7.0,
-    away_rest_days: float = 7.0,
-    home_congestion: int = 0,
-    away_congestion: int = 0,
-) -> np.ndarray:
-    """
-    Construct the 75-element feature vector expected by the NDC model.
-
-    Features tracked in live_team_states are read directly.
-    Features not tracked (shots on target, corners, fouls, venue splits)
-    are imputed from seasonal means or sensible defaults.
-    Rest days and congestion flags are now computed from the fixtures table.
-
-    Args:
-        home_state:      Dict from TeamStateManager.get_team_state().
-        away_state:      Dict from TeamStateManager.get_team_state().
-        feature_names:   Ordered list from ndc_feature_names.json.
-        bookie_h/d/a:    Prior 1X2 odds fractions (sum to 1.0).
-        home_rest_days:  Days since home team's last completed match.
-        away_rest_days:  Days since away team's last completed match.
-        home_congestion: 1 if home team has < 4 days rest, else 0.
-        away_congestion: 1 if away team has < 4 days rest, else 0.
-
-    Returns:
-        np.ndarray of shape (1, len(feature_names)), dtype float32.
-    """
-    h = home_state
-    a = away_state
-
-    # Helper: calculate exact window slice average (last 3, 5, 10 matches) from state array
-    def _slice_avg(state_dict: dict, key: str, n: int, fallback: float) -> float:
-        val = state_dict.get(key)
-        if isinstance(val, str):
-            try:
-                arr = json.loads(val)
-            except Exception:
-                arr = []
-        elif isinstance(val, list):
-            arr = val
-        else:
-            arr = []
-
-        if arr:
-            sub = arr[-n:]
-            return float(sum(sub) / len(sub))
-        return float(state_dict.get(f"avg_{key.replace('last_10_', '')}", fallback) or fallback)
-
-    h_elo     = float(h.get("current_elo", 1500.0) or 1500.0)
-    a_elo     = float(a.get("current_elo", 1500.0) or 1500.0)
-
-    # 3-match rolling averages
-    h_g_for_3   = _slice_avg(h, "last_10_goals_for", 3, 1.4)
-    h_g_con_3   = _slice_avg(h, "last_10_goals_against", 3, 1.2)
-    h_xg_for_3  = _slice_avg(h, "last_10_xg_for", 3, 1.5)
-    h_xg_con_3  = _slice_avg(h, "last_10_xg_against", 3, 1.2)
-    a_g_for_3   = _slice_avg(a, "last_10_goals_for", 3, 1.2)
-    a_g_con_3   = _slice_avg(a, "last_10_goals_against", 3, 1.3)
-    a_xg_for_3  = _slice_avg(a, "last_10_xg_for", 3, 1.3)
-    a_xg_con_3  = _slice_avg(a, "last_10_xg_against", 3, 1.3)
-
-    # 5-match rolling averages
-    h_g_for_5   = _slice_avg(h, "last_10_goals_for", 5, 1.4)
-    h_g_con_5   = _slice_avg(h, "last_10_goals_against", 5, 1.2)
-    h_xg_for_5  = _slice_avg(h, "last_10_xg_for", 5, 1.5)
-    h_xg_con_5  = _slice_avg(h, "last_10_xg_against", 5, 1.2)
-    a_g_for_5   = _slice_avg(a, "last_10_goals_for", 5, 1.2)
-    a_g_con_5   = _slice_avg(a, "last_10_goals_against", 5, 1.3)
-    a_xg_for_5  = _slice_avg(a, "last_10_xg_for", 5, 1.3)
-    a_xg_con_5  = _slice_avg(a, "last_10_xg_against", 5, 1.3)
-
-    # 10-match rolling averages
-    h_g_for_10  = _slice_avg(h, "last_10_goals_for", 10, 1.4)
-    h_g_con_10  = _slice_avg(h, "last_10_goals_against", 10, 1.2)
-    h_xg_for_10 = _slice_avg(h, "last_10_xg_for", 10, 1.5)
-    h_xg_con_10 = _slice_avg(h, "last_10_xg_against", 10, 1.2)
-    a_g_for_10  = _slice_avg(a, "last_10_goals_for", 10, 1.2)
-    a_g_con_10  = _slice_avg(a, "last_10_goals_against", 10, 1.3)
-    a_xg_for_10 = _slice_avg(a, "last_10_xg_for", 10, 1.3)
-    a_xg_con_10 = _slice_avg(a, "last_10_xg_against", 10, 1.3)
-
-    # Shots on target (for and against/opp)
-    h_sot_for_3  = _slice_avg(h, "last_10_sot_for", 3, _SEASON_MEANS["Home_ShotsOnTarget_roll3"])
-    h_sot_con_3  = _slice_avg(h, "last_10_sot_against", 3, _SEASON_MEANS["Away_ShotsOnTarget_roll3"])
-    h_sot_for_5  = _slice_avg(h, "last_10_sot_for", 5, _SEASON_MEANS["Home_ShotsOnTarget_roll5"])
-    h_sot_con_5  = _slice_avg(h, "last_10_sot_against", 5, _SEASON_MEANS["Away_ShotsOnTarget_roll5"])
-    h_sot_for_10 = _slice_avg(h, "last_10_sot_for", 10, _SEASON_MEANS["Home_ShotsOnTarget_roll10"])
-    h_sot_con_10 = _slice_avg(h, "last_10_sot_against", 10, _SEASON_MEANS["Away_ShotsOnTarget_roll10"])
-
-    a_sot_for_3  = _slice_avg(a, "last_10_sot_for", 3, _SEASON_MEANS["Away_ShotsOnTarget_roll3"])
-    a_sot_con_3  = _slice_avg(a, "last_10_sot_against", 3, _SEASON_MEANS["Home_ShotsOnTarget_roll3"])
-    a_sot_for_5  = _slice_avg(a, "last_10_sot_for", 5, _SEASON_MEANS["Away_ShotsOnTarget_roll5"])
-    a_sot_con_5  = _slice_avg(a, "last_10_sot_against", 5, _SEASON_MEANS["Home_ShotsOnTarget_roll5"])
-    a_sot_for_10 = _slice_avg(a, "last_10_sot_for", 10, _SEASON_MEANS["Away_ShotsOnTarget_roll10"])
-    a_sot_con_10 = _slice_avg(a, "last_10_sot_against", 10, _SEASON_MEANS["Home_ShotsOnTarget_roll10"])
-
-    # Corners
-    h_cor_for_3  = _slice_avg(h, "last_10_corners_for", 3, _SEASON_MEANS["Home_Corners_roll3"])
-    h_cor_for_5  = _slice_avg(h, "last_10_corners_for", 5, _SEASON_MEANS["Home_Corners_roll5"])
-    h_cor_for_10 = _slice_avg(h, "last_10_corners_for", 10, _SEASON_MEANS["Home_Corners_roll10"])
-    a_cor_for_3  = _slice_avg(a, "last_10_corners_for", 3, _SEASON_MEANS["Away_Corners_roll3"])
-    a_cor_for_5  = _slice_avg(a, "last_10_corners_for", 5, _SEASON_MEANS["Away_Corners_roll5"])
-    a_cor_for_10 = _slice_avg(a, "last_10_corners_for", 10, _SEASON_MEANS["Away_Corners_roll10"])
-
-    # Fouls
-    h_foul_for_3  = _slice_avg(h, "last_10_fouls_for", 3, _SEASON_MEANS["Home_Fouls_roll3"])
-    h_foul_for_5  = _slice_avg(h, "last_10_fouls_for", 5, _SEASON_MEANS["Home_Fouls_roll5"])
-    h_foul_for_10 = _slice_avg(h, "last_10_fouls_for", 10, _SEASON_MEANS["Home_Fouls_roll10"])
-    a_foul_for_3  = _slice_avg(a, "last_10_fouls_for", 3, _SEASON_MEANS["Away_Fouls_roll3"])
-    a_foul_for_5  = _slice_avg(a, "last_10_fouls_for", 5, _SEASON_MEANS["Away_Fouls_roll5"])
-    a_foul_for_10 = _slice_avg(a, "last_10_fouls_for", 10, _SEASON_MEANS["Away_Fouls_roll10"])
-
-    # Build lookup for all 75 features
-    feature_map: dict[str, float] = {
-        # Elo
-        "Home_Elo":   h_elo,
-        "Away_Elo":   a_elo,
-
-        # Last-match single stats (use 5-match rolling averages as proxy)
-        "Home_GoalsScored":       h_g_for_5,
-        "Home_GoalsConceded":     h_g_con_5,
-        "Home_xG_Created":        h_xg_for_5,
-        "Home_xG_Conceded":       h_xg_con_5,
-        "Home_ShotsOnTarget":     h_sot_for_5,
-        "Home_Opp_ShotsOnTarget": h_sot_con_5,
-        "Home_YellowCards":       1.6,
-        "Home_RedCards":          0.05,
-        "Home_Corners":           h_cor_for_5,
-        "Home_Fouls":             h_foul_for_5,
-        "Home_Rest_Days":         home_rest_days,
-        "Home_Congestion_Flag":   float(home_congestion),
-
-        "Away_GoalsScored":       a_g_for_5,
-        "Away_GoalsConceded":     a_g_con_5,
-        "Away_xG_Created":        a_xg_for_5,
-        "Away_xG_Conceded":       a_xg_con_5,
-        "Away_ShotsOnTarget":     a_sot_for_5,
-        "Away_Opp_ShotsOnTarget": a_sot_con_5,
-        "Away_YellowCards":       1.7,
-        "Away_RedCards":          0.05,
-        "Away_Corners":           a_cor_for_5,
-        "Away_Fouls":             a_foul_for_5,
-        "Away_Rest_Days":         away_rest_days,
-        "Away_Congestion_Flag":   float(away_congestion),
-
-        # Rolling stats — xG and goals from live state slices
-        "Home_GoalsScored_roll3":   h_g_for_3,
-        "Home_GoalsConceded_roll3": h_g_con_3,
-        "Home_xG_Created_roll3":    h_xg_for_3,
-        "Home_xG_Conceded_roll3":   h_xg_con_3,
-        "Away_GoalsScored_roll3":   a_g_for_3,
-        "Away_GoalsConceded_roll3": a_g_con_3,
-        "Away_xG_Created_roll3":    a_xg_for_3,
-        "Away_xG_Conceded_roll3":   a_xg_con_3,
-
-        "Home_GoalsScored_roll5":   h_g_for_5,
-        "Home_GoalsConceded_roll5": h_g_con_5,
-        "Home_xG_Created_roll5":    h_xg_for_5,
-        "Home_xG_Conceded_roll5":   h_xg_con_5,
-        "Away_GoalsScored_roll5":   a_g_for_5,
-        "Away_GoalsConceded_roll5": a_g_con_5,
-        "Away_xG_Created_roll5":    a_xg_for_5,
-        "Away_xG_Conceded_roll5":   a_xg_con_5,
-
-        "Home_GoalsScored_roll10":   h_g_for_10,
-        "Home_GoalsConceded_roll10": h_g_con_10,
-        "Home_xG_Created_roll10":    h_xg_for_10,
-        "Home_xG_Conceded_roll10":   h_xg_con_10,
-        "Away_GoalsScored_roll10":   a_g_for_10,
-        "Away_GoalsConceded_roll10": a_g_con_10,
-        "Away_xG_Created_roll10":    a_xg_for_10,
-        "Away_xG_Conceded_roll10":   a_xg_con_10,
-
-        # Rolling shots / corners / fouls — tracked from live state (fallback: seasonal means)
-        "Home_ShotsOnTarget_roll3":  h_sot_for_3,
-        "Away_ShotsOnTarget_roll3":  a_sot_for_3,
-        "Home_Corners_roll3":        h_cor_for_3,
-        "Away_Corners_roll3":        a_cor_for_3,
-        "Home_Fouls_roll3":          h_foul_for_3,
-        "Away_Fouls_roll3":          a_foul_for_3,
-        "Home_ShotsOnTarget_roll5":  h_sot_for_5,
-        "Away_ShotsOnTarget_roll5":  a_sot_for_5,
-        "Home_Corners_roll5":        h_cor_for_5,
-        "Away_Corners_roll5":        a_cor_for_5,
-        "Home_Fouls_roll5":          h_foul_for_5,
-        "Away_Fouls_roll5":          a_foul_for_5,
-        "Home_ShotsOnTarget_roll10": h_sot_for_10,
-        "Away_ShotsOnTarget_roll10": a_sot_for_10,
-        "Home_Corners_roll10":       h_cor_for_10,
-        "Away_Corners_roll10":       a_cor_for_10,
-        "Home_Fouls_roll10":         h_foul_for_10,
-        "Away_Fouls_roll10":         a_foul_for_10,
-
-        # Venue-split xG — fallback to overall rolling
-        "Home_xG_Created_Venue_roll5":  h_xg_for_5,
-        "Home_xG_Conceded_Venue_roll5": h_xg_con_5,
-        "Away_xG_Created_Venue_roll5":  a_xg_for_5,
-        "Away_xG_Conceded_Venue_roll5": a_xg_con_5,
-
-        # Bookie odds proxy (from NDC prior or caller-supplied)
-        "B365H": 1.0 / bookie_h if bookie_h > 0 else 3.0,
-        "B365D": 1.0 / bookie_d if bookie_d > 0 else 3.7,
-        "B365A": 1.0 / bookie_a if bookie_a > 0 else 3.0,
-    }
-
-    # Assemble in the exact order recorded during training
-    vec = np.array([feature_map.get(f, 0.0) for f in feature_names], dtype=np.float32)
-    return vec.reshape(1, -1)
-
-
-def build_xgb_feature_vector(
-    home_state: dict[str, Any],
-    away_state: dict[str, Any],
-    bookie_h: float,
-    bookie_d: float,
-    bookie_a: float,
-    home_rest_days: float = 7.0,
-    away_rest_days: float = 7.0,
-    home_congestion: int = 0,
-    away_congestion: int = 0,
-) -> np.ndarray:
-    """
-    Build the 18-element XGBoost feature vector from live team states.
-
-    Args:
-        home_rest_days:  Days since home team's last completed match.
-        away_rest_days:  Days since away team's last completed match.
-        home_congestion: 1 if home team has < 4 days rest, else 0.
-        away_congestion: 1 if away team has < 4 days rest, else 0.
-
-    Returns np.ndarray of shape (1, 18).
-    """
-    h = home_state
-    a = away_state
-
-    def _slice_avg(state_dict: dict, key: str, n: int, fallback: float) -> float:
-        val = state_dict.get(key)
-        if isinstance(val, str):
-            try:
-                arr = json.loads(val)
-            except Exception:
-                arr = []
-        elif isinstance(val, list):
-            arr = val
-        else:
-            arr = []
-
-        if arr:
-            sub = arr[-n:]
-            return float(sum(sub) / len(sub))
-        return float(state_dict.get(f"avg_{key.replace('last_10_', '')}", fallback) or fallback)
-
-    h_elo     = float(h.get("current_elo", 1500.0) or 1500.0)
-    a_elo     = float(a.get("current_elo", 1500.0) or 1500.0)
-
-    h_xg_for_3  = _slice_avg(h, "last_10_xg_for", 3, 1.5)
-    h_xg_con_3  = _slice_avg(h, "last_10_xg_against", 3, 1.2)
-    a_xg_for_3  = _slice_avg(a, "last_10_xg_for", 3, 1.3)
-    a_xg_con_3  = _slice_avg(a, "last_10_xg_against", 3, 1.3)
-
-    h_xg_for_5  = _slice_avg(h, "last_10_xg_for", 5, 1.5)
-    h_xg_con_5  = _slice_avg(h, "last_10_xg_against", 5, 1.2)
-    a_xg_for_5  = _slice_avg(a, "last_10_xg_for", 5, 1.3)
-    a_xg_con_5  = _slice_avg(a, "last_10_xg_against", 5, 1.3)
-
-    h_xg_for_10 = _slice_avg(h, "last_10_xg_for", 10, 1.5)
-    h_xg_con_10 = _slice_avg(h, "last_10_xg_against", 10, 1.2)
-    a_xg_for_10 = _slice_avg(a, "last_10_xg_for", 10, 1.3)
-    a_xg_con_10 = _slice_avg(a, "last_10_xg_against", 10, 1.3)
-
-    # Tracked corners & fouls (fallback to seasonal means)
-    h_cor  = _slice_avg(h, "last_10_corners_for", 5, _SEASON_MEANS["Home_Corners_roll5"])
-    a_cor  = _slice_avg(a, "last_10_corners_for", 5, _SEASON_MEANS["Away_Corners_roll5"])
-    h_foul = _slice_avg(h, "last_10_fouls_for", 5, _SEASON_MEANS["Home_Fouls_roll5"])
-    a_foul = _slice_avg(a, "last_10_fouls_for", 5, _SEASON_MEANS["Away_Fouls_roll5"])
-
-    h_venue_xg_for = h_xg_for_5
-    a_venue_xg_con = a_xg_con_5
-
-    # Derived differentials
-    elo_diff              = h_elo - a_elo
-    xg_attack_diff_roll3  = h_xg_for_3 - a_xg_con_3
-    xg_defense_diff_roll3 = a_xg_for_3 - h_xg_con_3
-    xg_attack_diff_roll5  = h_xg_for_5 - a_xg_con_5
-    xg_defense_diff_roll5 = a_xg_for_5 - h_xg_con_5
-    xg_attack_diff_roll10 = h_xg_for_10 - a_xg_con_10
-    xg_defense_diff_roll10= a_xg_for_10 - h_xg_con_10
-    corner_diff_roll5     = h_cor - a_cor
-    foul_diff_roll5       = h_foul - a_foul
-    venue_xg_attack_diff  = h_venue_xg_for - a_venue_xg_con
-    expected_match_xg     = h_xg_for_5 + a_xg_for_5
-
-    rest_diff       = home_rest_days - away_rest_days
-    congestion_diff = float(home_congestion) - float(away_congestion)
-
-    vec = np.array([
-        elo_diff,
-        h_elo, a_elo,
-        xg_attack_diff_roll3,  xg_defense_diff_roll3,
-        xg_attack_diff_roll5,  xg_defense_diff_roll5,
-        xg_attack_diff_roll10, xg_defense_diff_roll10,
-        corner_diff_roll5,
-        foul_diff_roll5,
-        venue_xg_attack_diff,
-        expected_match_xg,
-        rest_diff,         # Rest_Diff — computed from fixture schedule
-        congestion_diff,   # Congestion_Diff — computed from fixture schedule
-        bookie_h, bookie_d, bookie_a,
-    ], dtype=np.float32)
-    return vec.reshape(1, -1)
-
-
-# ── Inference ─────────────────────────────────────────────────────────────────
-
-def run_ndc_inference(
-    ndc_model: NeuralDixonColes,
-    scaler: Any,
-    feature_vec: np.ndarray,
-) -> dict[str, Any]:
-    """Run NDC inference and return λ, μ, ρ + parsed grid outputs."""
-    scaled = scaler.transform(feature_vec).astype(np.float32)
-    x_t    = torch.from_numpy(scaled)
-
-    with torch.no_grad():
-        ndc_model.eval()
-        lam_t, mu_t, rho_t = ndc_model(x_t)
-
-    lam = float(lam_t.item())
-    mu  = float(mu_t.item())
-    rho = float(rho_t.item())
-
-    grid   = predict_scoreline_grid(lam, mu, rho, max_goals=6)
-    parsed = parse_grid_outputs(grid, top_k=5)
-
-    return {"lambda": lam, "mu": mu, "rho": rho, "grid": grid, "parsed": parsed}
-
-
-def run_xgb_inference(
-    xgb_model: Any,
-    feature_vec: np.ndarray,
-) -> tuple[float, float, float]:
-    """Run XGBoost calibrated classifier. Returns (home_win%, draw%, away_win%)."""
-    import pandas as pd
-    X = pd.DataFrame(feature_vec, columns=XGB_FEATURE_COLS)
-    probs = xgb_model.predict_proba(X)[0]
-    # Calibrated classifiers return [away, draw, home] order (label 0,1,2)
-    return float(probs[2]), float(probs[1]), float(probs[0])
-
-
-def _blend_probs(
-    ndc_h: float, ndc_d: float, ndc_a: float,
-    xgb_h: float, xgb_d: float, xgb_a: float,
-    alpha: float | dict[str, float] | None = None,
-) -> tuple[float, float, float]:
-    """
-    Weighted average of NDC and XGBoost 1X2 probabilities.
-
-    Supports:
-      - float alpha: P_blend = alpha * NDC + (1 - alpha) * XGB
-      - dict alpha:  Class-wise weights e.g. {'away_ndc_weight': 0.6074, ...}
-      - None:        Automatically loads learned classwise weights from blend_weights.json
-    """
-    if isinstance(alpha, (float, int)):
-        a_val = float(alpha)
-        h = a_val * ndc_h + (1.0 - a_val) * xgb_h
-        d = a_val * ndc_d + (1.0 - a_val) * xgb_d
-        a = a_val * ndc_a + (1.0 - a_val) * xgb_a
-    else:
-        cw = alpha if isinstance(alpha, dict) else None
-        if cw is None:
-            cfg = _load_blend_config()
-            if cfg and "classwise_blend" in cfg:
-                cw = cfg["classwise_blend"]
-
-        if cw:
-            alpha_h = float(cw.get("home_ndc_weight", 0.5764))
-            alpha_d = float(cw.get("draw_ndc_weight", 1.0))
-            alpha_a = float(cw.get("away_ndc_weight", 0.6074))
-        else:
-            alpha_h, alpha_d, alpha_a = 0.5, 0.5, 0.5
-
-        h = alpha_h * ndc_h + (1.0 - alpha_h) * xgb_h
-        d = alpha_d * ndc_d + (1.0 - alpha_d) * xgb_d
-        a = alpha_a * ndc_a + (1.0 - alpha_a) * xgb_a
-
-    total = h + d + a
-    if total > 0:
-        return h / total, d / total, a / total
-    return 1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0
-
-
-# ── Prediction derivation ─────────────────────────────────────────────────────
-
-def _ndc_implied_odds(
-    ndc_h: float, ndc_d: float, ndc_a: float
-) -> tuple[float, float, float]:
-    """
-    Convert NDC 1X2 probabilities (0-1) to implied bookie probability fractions.
-    Adds a small margin so they sum to slightly more than 1 (realistic).
-    """
-    margin = 1.05
-    raw_h = ndc_h * margin
-    raw_d = ndc_d * margin
-    raw_a = ndc_a * margin
-    total = raw_h + raw_d + raw_a
-    return raw_h / total, raw_d / total, raw_a / total
-
-
-def _top1_score(parsed: dict) -> str:
-    top = parsed.get("top_scorelines", [{}])
-    return top[0].get("scoreline", "?-?") if top else "?-?"
-
-
-def _topk_scores(parsed: dict, top_n: int = 3) -> list[str]:
-    """Return the top-K scoreline strings from the NDC grid."""
-    top = parsed.get("top_scorelines", [])
-    return [item.get("scoreline", "?-?") for item in top[:top_n] if item.get("scoreline")]
-
-
-# ── CLI orchestrator ──────────────────────────────────────────────────────────
-
-def predict_gameweek(
-    gameweek: int,
-    db_path:  Path,
-    dry_run:  bool,
-    no_fetch: bool,
-    blend:    Optional[float] = None,
-    force:    bool = False,
-) -> None:
-    """Main prediction loop for a given gameweek."""
-
-    # ── Resolve blend weights ──────────────────────────────────────────────────
-    if blend is not None:
-        blend_param = blend
-        blend_desc = f"Manual Scalar (NDC×{blend:.0%} + XGB×{1-blend:.0%})"
-    else:
-        cfg = _load_blend_config()
-        if cfg and "classwise_blend" in cfg:
-            cw = cfg["classwise_blend"]
-            blend_param = cw
-            blend_desc = (
-                f"Optimized Class-Wise (NDC: Away={cw['away_ndc_weight']:.1%}, "
-                f"Draw={cw['draw_ndc_weight']:.1%}, Home={cw['home_ndc_weight']:.1%})"
-            )
-        else:
-            blend_param = 0.5
-            blend_desc = "Default 50/50"
-
-    # ── Load models ────────────────────────────────────────────────────────────
-    ndc_model, ndc_scaler, ndc_feature_names = _load_ndc()
-    xgb_model = _load_xgb()
-
-    if not ndc_model and not xgb_model:
-        logger.error("No models loaded — aborting.")
-        sys.exit(1)
-
-    ndc_ok = ndc_model is not None
-    xgb_ok = xgb_model is not None
-
-    # ── Fetch or load fixtures ─────────────────────────────────────────────────
-    with TeamStateManager(db_path) as sm:
-        if no_fetch:
-            pending = [
-                f for f in sm.get_pending_fixtures()
-                if f["gameweek"] == gameweek
-            ]
-            logger.info("--no-fetch: using %d pending fixtures from DB.", len(pending))
-            fixtures = [
-                {
-                    "api_match_id": None,
-                    "db_match_id":  f["match_id"],   # carry the DB PK through
-                    "gameweek":     f["gameweek"],
-                    "match_date":   f["match_date"],
-                    "home_team":    f["home_team"],
-                    "away_team":    f["away_team"],
-                }
-                for f in pending
-            ]
-        else:
-            fixtures = fetch_upcoming_fixtures(gameweek)
-            logger.info("Fetched %d fixtures from Understat for GW%d.", len(fixtures), gameweek)
-
-            # Upsert fixtures into DB
-            existing_fix = {
-                (f["home_team"], f["away_team"]): f["match_id"]
-                for f in sm.get_pending_fixtures()
-            }
-            for fix in fixtures:
-                key = (fix["home_team"], fix["away_team"])
-                if key not in existing_fix:
-                    mid = sm.add_fixture(
-                        gameweek=fix["gameweek"],
-                        match_date=fix["match_date"],
-                        home_team=fix["home_team"],
-                        away_team=fix["away_team"],
-                    )
-                    fix["db_match_id"] = mid
-                else:
-                    fix["db_match_id"] = existing_fix[key]
-
-        # ── Check for already-locked predictions ───────────────────────────────
-        import sqlite3
-        conn_check = sqlite3.connect(db_path)
-        locked_ids = set()
-        if not force:
-            locked_ids = {
-                r[0] for r in conn_check.execute(
-                    "SELECT match_id FROM predictions_26_27"
-                ).fetchall()
-            }
-        conn_check.close()
-
-        # ── Per-fixture inference loop ──────────────────────────────────────────
-        results_table = []
-
-        for fix in fixtures:
-            home, away = fix["home_team"], fix["away_team"]
-            db_mid = fix.get("db_match_id") or fix.get("match_id")
-
-            if db_mid and db_mid in locked_ids and not force:
-                logger.info("⏭  GW%d: %s vs %s — prediction already locked, skipping.",
-                            gameweek, home, away)
-                continue
-
-            # Load team states
-            try:
-                home_state = sm.get_team_state(home)
-                away_state = sm.get_team_state(away)
-            except KeyError as e:
-                logger.warning("Team state not found: %s — skipping fixture.", e)
-                continue
-
-            # ── Rest-day computation from fixture schedule ──────────────────────
-            match_date_str = fix.get("match_date", "")
-            home_rest, home_cong = _compute_rest_days(
-                sm._conn, home, match_date_str
-            )
-            away_rest, away_cong = _compute_rest_days(
-                sm._conn, away, match_date_str
-            )
-            logger.info(
-                "  Rest: %s %.0fd (cong=%d) | %s %.0fd (cong=%d)",
-                home, home_rest, home_cong,
-                away, away_rest, away_cong,
-            )
-
-            # ── NDC inference ──────────────────────────────────────────────────
-            ndc_result = None
-            bookie_h, bookie_d, bookie_a = 0.40, 0.27, 0.33  # neutral prior
-
-            if ndc_ok:
-                ndc_vec    = build_ndc_feature_vector(
-                    home_state, away_state, ndc_feature_names,
-                    bookie_h=bookie_h, bookie_d=bookie_d, bookie_a=bookie_a,
-                    home_rest_days=home_rest, away_rest_days=away_rest,
-                    home_congestion=home_cong, away_congestion=away_cong,
-                )
-                ndc_result = run_ndc_inference(ndc_model, ndc_scaler, ndc_vec)
-                ndc_p      = ndc_result["parsed"]
-                ndc_h      = ndc_p["home_win"] / 100.0
-                ndc_d      = ndc_p["draw"]     / 100.0
-                ndc_a      = ndc_p["away_win"] / 100.0
-
-                # Update bookie proxy from NDC output (implied margin)
-                bookie_h, bookie_d, bookie_a = _ndc_implied_odds(ndc_h, ndc_d, ndc_a)
-
-            # ── XGBoost inference ──────────────────────────────────────────────
-            xgb_h, xgb_d, xgb_a = 0.40, 0.27, 0.33  # fallback
-            if xgb_ok:
-                xgb_vec        = build_xgb_feature_vector(
-                    home_state, away_state, bookie_h, bookie_d, bookie_a,
-                    home_rest_days=home_rest, away_rest_days=away_rest,
-                    home_congestion=home_cong, away_congestion=away_cong,
-                )
-                xgb_h, xgb_d, xgb_a = run_xgb_inference(xgb_model, xgb_vec)
-
-            # ── Blend ──────────────────────────────────────────────────────────
-            if ndc_ok and xgb_ok:
-                final_h, final_d, final_a = _blend_probs(
-                    ndc_h, ndc_d, ndc_a,
-                    xgb_h, xgb_d, xgb_a,
-                    alpha=blend_param,
-                )
-            elif ndc_ok:
-                final_h, final_d, final_a = ndc_h, ndc_d, ndc_a
-            else:
-                final_h, final_d, final_a = xgb_h, xgb_d, xgb_a
-
-            top_score = (
-                _top1_score(ndc_result["parsed"])
-                if ndc_result else f"{int(round(final_h*2))}-{int(round(final_a*2))}"
-            )
-
-            if ndc_result:
-                score_candidates = _topk_scores(ndc_result["parsed"], top_n=3)
-                if score_candidates:
-                    top_score = " • ".join(score_candidates)
-                else:
-                    top_score = _top1_score(ndc_result["parsed"])
-            else:
-                top_score = (
-                    f"{int(round(final_h*2))}-{int(round(final_a*2))} • "
-                    f"{int(round(final_h*1.5))}-{int(round(final_a*1.2))} • "
-                    f"{int(round(final_h*1.2))}-{int(round(final_a*1.5))}"
-                )
-
-            # ── Record ─────────────────────────────────────────────────────────
-            results_table.append({
-                "GW":        gameweek,
-                "Home":      home,
-                "Away":      away,
-                "H%":        f"{final_h:.1%}",
-                "D%":        f"{final_d:.1%}",
-                "A%":        f"{final_a:.1%}",
-                "NDC%":      f"{ndc_h:.1%} / {ndc_d:.1%} / {ndc_a:.1%}" if ndc_result else "—",
-                "XGB%":      f"{xgb_h:.1%} / {xgb_d:.1%} / {xgb_a:.1%}",
-                "Score":     top_score,
-                "λ":         f"{ndc_result['lambda']:.2f}" if ndc_result else "—",
-                "μ":         f"{ndc_result['mu']:.2f}"     if ndc_result else "—",
-                "db_mid":    db_mid,
-                # Raw floats for DB write
-                "_h": final_h, "_d": final_d, "_a": final_a,
-                "_ndc_h": ndc_h if ndc_result else None,
-                "_ndc_d": ndc_d if ndc_result else None,
-                "_ndc_a": ndc_a if ndc_result else None,
-                "_xgb_h": xgb_h,
-                "_xgb_d": xgb_d,
-                "_xgb_a": xgb_a,
-                "_ndc_lam":  ndc_result["lambda"]  if ndc_result else None,
-                "_ndc_mu":   ndc_result["mu"]       if ndc_result else None,
-                "_ndc_rho":  ndc_result["rho"]      if ndc_result else None,
-            })
-
-        # ── Print summary table ────────────────────────────────────────────────
-        print(f"\n{'━' * 86}")
-        print(f"  GW{gameweek} PREDICTIONS {'(DRY RUN — not written to DB)' if dry_run else ''}")
-        print(f"{'━' * 86}")
-        header = f"  {'Home':<22} {'Away':<22} {'Final':>18} {'NDC':>18} {'XGB':>18}  {'Score':>8}  {'λ':>5} {'μ':>5}"
-        print(header)
-        print(f"  {'-' * 82}")
-        for r in results_table:
-            print(
-                f"  {r['Home']:<22} {r['Away']:<22} {r['H%']:>18} {r['NDC%']:>18} {r['XGB%']:>18}"
-                f"  {r['Score']:>8}  {r['λ']:>5} {r['μ']:>5}"
-            )
-        print(f"{'━' * 86}")
-        print(f"  Blend: {blend_desc} | "
-              f"NDC={'✓' if ndc_ok else '✗'} | XGB={'✓' if xgb_ok else '✗'}")
-        print(f"{'━' * 86}\n")
-
-        # ── Write to DB ────────────────────────────────────────────────────────
-        if not dry_run:
-            written = 0
-            for r in results_table:
-                if r["db_mid"] is None:
-                    logger.warning("No DB match_id for %s vs %s — skipping DB write.", r["Home"], r["Away"])
-                    continue
-                sm.lock_prediction(
-                    match_id=r["db_mid"],
-                    home_prob=r["_h"],
-                    draw_prob=r["_d"],
-                    away_prob=r["_a"],
-                    predicted_score=r["Score"],
-                    ndc_home_prob=r["_ndc_h"],
-                    ndc_draw_prob=r["_ndc_d"],
-                    ndc_away_prob=r["_ndc_a"],
-                    xgb_home_prob=r["_xgb_h"],
-                    xgb_draw_prob=r["_xgb_d"],
-                    xgb_away_prob=r["_xgb_a"],
-                    ndc_lambda=r["_ndc_lam"],
-                    ndc_mu=r["_ndc_mu"],
-                    ndc_rho=r["_ndc_rho"],
-                )
-                written += 1
-            logger.info("✅  Locked %d predictions into %s.", written, db_path)
-        else:
-            logger.info("Dry-run complete — no DB writes performed.")
-
-
-# ── Entrypoint ────────────────────────────────────────────────────────────────
-
-def get_auto_gameweek(db_path: Path) -> int:
-    import sqlite3
-    if not db_path.exists():
-        logger.error("Database %s does not exist. Cannot determine automatic gameweek.", db_path)
-        sys.exit(1)
-    conn = sqlite3.connect(db_path)
-    cur = conn.cursor()
-    cur.execute("SELECT MIN(gameweek) FROM fixtures_26_27 WHERE status = 'pending'")
-    row = cur.fetchone()
-    conn.close()
-    if row and row[0] is not None:
-        return int(row[0])
-    return 1
-
-
-def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Lock pre-match predictions for a Premier League gameweek.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    parser.add_argument(
-        "--gameweek", "-g", type=int, required=False,
-        help="Target gameweek number (1–38). Required if --auto is not set.",
-    )
-    parser.add_argument(
-        "--auto", action="store_true",
-        help="Automatically predict the next gameweek with pending fixtures.",
-    )
-    parser.add_argument(
-        "--db", type=Path, default=DEFAULT_DB_PATH,
-        help="Path to the SQLite live database.",
-    )
-    parser.add_argument(
-        "--dry-run", action="store_true",
-        help="Print predictions without writing them to the database.",
-    )
-    parser.add_argument(
-        "--no-fetch", action="store_true",
-        help="Skip API-Football call; use pending fixtures already in the DB.",
-    )
-    parser.add_argument(
-        "--blend", type=float, default=None,
-        help="Weight on NDC vs XGBoost (0=XGB only, 1=NDC only). If omitted, uses optimal learned blend weights from models/bin/blend_weights.json.",
-    )
-    parser.add_argument(
-        "--force", action="store_true",
-        help="Regenerate predictions even for matches already locked in the live database.",
-    )
-    return parser.parse_args()
-
-
-if __name__ == "__main__":
-    args = _parse_args()
-    
-    target_gw = args.gameweek
-    if args.auto:
-        target_gw = get_auto_gameweek(args.db)
-        logger.info("Auto mode: Selected Gameweek %d for prediction.", target_gw)
-    elif target_gw is None:
-        logger.error("Either --gameweek (-g) or --auto must be provided.")
-        sys.exit(1)
-        
-    predict_gameweek(
-        gameweek=target_gw,
-        db_path=args.db,
-        dry_run=args.dry_run,
-        no_fetch=args.no_fetch,
-        blend=args.blend,
-        force=args.force,
-    )
+def predict_gameweek(gameweek,db_path,dry_run=False,no_fetch=False,blend=None,force=False):
+    if force:raise ValueError('Overwriting locked forecasts is disabled; use a simulation instead')
+    if blend is not None:raise ValueError('Production locks must use the validated blend configuration')
+    manifest=model_manifest();assets=(*_load_ndc(),_load_xgb())
+    with closing(sqlite3.connect(f'file:{db_path}?mode=ro',uri=True)) as conn, conn:
+        conn.row_factory=sqlite3.Row
+        contract=conn.execute("SELECT value FROM pipeline_metadata WHERE key='feature_contract'").fetchone()
+        if not contract or contract[0]!=CONTRACT:raise ValueError('Live state has not been rebuilt with the trained contract')
+        latest=conn.execute('SELECT observed_at,status FROM ingestion_runs ORDER BY run_id DESC LIMIT 1').fetchone()
+        if not latest or latest['status']!='ok' or datetime.now(timezone.utc)-datetime.fromisoformat(latest['observed_at'])>timedelta(hours=36):
+            raise ValueError('A recent successful result/schedule reconciliation is required before locking forecasts')
+        # Do not publish forecasts from an incomplete results state.
+        overdue=conn.execute("SELECT COUNT(*) FROM fixtures_26_27 WHERE status='pending' AND schedule_status!='postponed' AND match_date < ?",((datetime.now(timezone.utc)-timedelta(days=2)).date().isoformat(),)).fetchone()[0]
+        if overdue:raise ValueError('Overdue fixtures remain; reconcile results before prediction')
+        locked={r[0] for r in conn.execute('SELECT match_id FROM predictions_26_27')}
+        fixtures=[dict(r) for r in conn.execute("SELECT * FROM fixtures_26_27 WHERE gameweek=? AND status='pending' AND schedule_status!='postponed' ORDER BY match_date,match_id",(gameweek,))]
+        states={r['team_name']:dict(r) for r in conn.execute('SELECT * FROM live_team_states')}
+    predictions=[]
+    for fix in fixtures:
+        if fix['match_id'] in locked:continue
+        now=datetime.now(timezone.utc)
+        cutoff=datetime.fromisoformat(fix['kickoff_at']) if fix.get('kickoff_at') else datetime.fromisoformat(fix['match_date']).replace(tzinfo=timezone.utc)
+        if now>=cutoff:continue
+        hs,aws=states[fix['home_team']],states[fix['away_team']]
+        n,np_,xp,p,feature_hash=snapshot(hs,aws,fix['match_date'],assets)
+        record=dict(match_id=fix['match_id'],home_prob=p[0],draw_prob=p[1],away_prob=p[2],
+                    predicted_score=' • '.join(s['scoreline'] for s in n['parsed']['top_scorelines']),
+                    ndc_home_prob=np_[0],ndc_draw_prob=np_[1],ndc_away_prob=np_[2],xgb_home_prob=xp[0],xgb_draw_prob=xp[1],xgb_away_prob=xp[2],
+                    ndc_lambda=n['lambda'],ndc_mu=n['mu'],ndc_rho=n['rho'],model_version=manifest['model_version'],feature_contract=CONTRACT,
+                    blend_version=manifest['artifacts']['models/bin/blend_weights.json'][:16],feature_hash=feature_hash,
+                    state_as_of=max(hs['last_updated'],aws['last_updated']),feature_values=json.dumps(_features(hs,aws,fix['match_date']),sort_keys=True),
+                    blend_alpha=json.loads((ROOT/'models/bin/blend_weights.json').read_text())['ndc_weight'],model_manifest=json.dumps(manifest,sort_keys=True))
+        market=normalized_market([fix.get(k) for k in ('B365H','B365D','B365A')])
+        if market and fix.get('odds_observed_at') and datetime.fromisoformat(fix['odds_observed_at']) <= now:
+            record.update(market_home_prob=market[0],market_draw_prob=market[1],market_away_prob=market[2],market_observed_at=fix['odds_observed_at'])
+        predictions.append(record)
+    if not dry_run and predictions:
+        with TeamStateManager(db_path) as sm:
+            for prediction in predictions:sm.lock_prediction(**prediction)
+    print(json.dumps({'gameweek':gameweek,'dry_run':dry_run,'forecasts':len(predictions),'model_version':manifest['model_version']},indent=2))
+    return predictions
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--db',type=Path,default=DEFAULT_DB_PATH);parser.add_argument('--gameweek','-g',type=int)
+    parser.add_argument('--auto',action='store_true');parser.add_argument('--dry-run',action='store_true');parser.add_argument('--no-fetch',action='store_true');parser.add_argument('--force',action='store_true')
+    args=parser.parse_args()
+    gw=get_auto_gameweek(args.db) if args.auto else args.gameweek
+    if gw is None:
+        if not args.auto:parser.error('Specify --auto or --gameweek')
+        print('No future pending gameweek')
+    else:predict_gameweek(gw,args.db,args.dry_run,args.no_fetch,force=args.force)

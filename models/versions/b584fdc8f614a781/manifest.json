@@ -1,0 +1,43 @@
+{
+  "feature_contract": "prematch-v2-shot-proxy",
+  "environment": {
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scipy": "1.18.0",
+    "scikit-learn": "1.9.0",
+    "xgboost": "3.4.0",
+    "joblib": "1.5.3",
+    "torch": "2.13.0"
+  },
+  "data_sha256": "769882645d6ee390fe1a31d95f663f5e32f75f052ada88e1fa139df178be87e7",
+  "raw_data_sha256": "bcda0b4bdc11dfc65596009d6713eb7f5b5338ce3450ca80ded4b1549ee48253",
+  "code_sha256": {
+    "src/features/prematch.py": "6c4aed7bded9165caac1975eff60580851441bb82158b5ae8e122dd7fe3e9ba0",
+    "models/neural_dixon_coles.py": "4fe40d6282e76c11f464d1f314228cbc1a307293890ba030509cdcc46406aca9",
+    "scripts/train_models.py": "90d473fd0cf7452c124fa255787625e37c17b7e132e9b9280fc2e6d41cfb20b9",
+    "scripts/train_static_poisson.py": "bb7b2c3ac88987273f49d1fd14a8b7c3f1c1da444f3482e8196135e6eda88725",
+    "src/features/build_features.py": "4bb516f5fc472ca70236595feabd66ff643e3214b63d3a2966ed63b60d9eff06",
+    "scripts/predict_next_gameweek.py": "488c8ee5f176e297a18c922c62c5c4dbe44e2c37a5ea670175f59e2de80e2467"
+  },
+  "artifacts": {
+    "models/dc_mle_params.pkl": "d94dc752cc35b7555afdc522fc9fa81eb89a7a69d162817220e5564e06bd7ef3",
+    "models/calibrated_xgb_outcome.pkl": "e1e1625a8bdd05ccb906533fc27a9c93a545dfe2dc672812157a9a8432b2bc0e",
+    "models/bin/market_xgb.joblib": "d8aa30fe3e174daab01f886c4fca2775c9d5fb8d599766b8f1da2a4357849d8e",
+    "models/bin/neural_dixon_coles.pt": "85fcaa0de1ec87e14d9239177b1741eac817adaf63fb21c499409bb3430e0b39",
+    "models/bin/ndc_scaler.joblib": "15405f1f780b95732d105024f181c4255f4548ab9873fbee940f2c877e0048d2",
+    "models/bin/ndc_feature_names.json": "ab2e2c49bbcebd6fdfe45d2d73108235bd71099bdcbe3b5ef4a3cd43cd66c382",
+    "models/bin/blend_weights.json": "a85a72ac94121a66abee966e0d1121fcecb77156badff2a28ba1c3bf6d34d3f1"
+  },
+  "training": {
+    "feature_contract": "prematch-v2-shot-proxy",
+    "method": "scalar-validation-log-loss",
+    "ndc_weight": 0.5614738161165839,
+    "xgb_weight": 0.43852618388341613,
+    "train_end": "2023-05-28",
+    "calibration_season": "2023/24",
+    "validation_season": "2024/25",
+    "test_season": "2025/26"
+  },
+  "test_evaluated_once_per_run": true,
+  "model_version": "b584fdc8f614a781"
+}
