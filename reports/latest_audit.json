@@ -1,5 +1,5 @@
 {
-  "audited_at": "2026-11-13T21:30:20.020507+00:00",
+  "audited_at": "2026-11-13T21:47:16.187605+00:00",
   "feature_contract": "prematch-v2-shot-proxy",
   "sqlite_integrity": "ok",
   "fixtures": 380,
@@ -70,6 +70,11 @@
     }
   },
   "findings": [
+    {
+      "severity": "info",
+      "code": "replay_float_roundoff",
+      "message": "Historical replay differs only within 1e-10 absolute floating-point tolerance"
+    },
     {
       "severity": "low",
       "code": "market_snapshot_coverage",
