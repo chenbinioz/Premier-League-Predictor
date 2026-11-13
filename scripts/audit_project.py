@@ -11,6 +11,7 @@ from contextlib import closing
 from datetime import datetime,timedelta,timezone
 import hashlib
 import json
+import math
 from pathlib import Path
 import sqlite3
 import sys
@@ -24,6 +25,22 @@ from src.model_registry import load_archived_assets
 from src.data.state_manager import RESULT_COLUMNS,digest
 from src.evaluation import model_metrics,eligible,score_candidates
 from src.features.prematch import CONTRACT,FeatureEngine,NDC_FEATURES,XGB_BASE_FEATURES,replay_history
+
+
+def replay_states_equal(expected, stored):
+    """Compare replay state with absolute tolerance only for floating arithmetic.
+
+    libm exponentiation can differ by a few ULPs between macOS and Linux. Keep
+    structure, dates, observations and integer counts exact, allowing only 1e-10
+    absolute drift in floating values (no relative tolerance for large Elo).
+    """
+    if isinstance(expected, dict) and isinstance(stored, dict):
+        return expected.keys() == stored.keys() and all(replay_states_equal(expected[k], stored[k]) for k in expected)
+    if isinstance(expected, list) and isinstance(stored, list):
+        return len(expected) == len(stored) and all(replay_states_equal(a, b) for a, b in zip(expected, stored))
+    if isinstance(expected, float) and isinstance(stored, (int, float)):
+        return math.isclose(expected, stored, rel_tol=0, abs_tol=1e-10)
+    return expected == stored
 
 
 def audit(db_path=ROOT/'data/live/epl_2627.db'):
@@ -58,8 +75,10 @@ def audit(db_path=ROOT/'data/live/epl_2627.db'):
         engine=FeatureEngine(json.loads(metadata['base_engine']))
         baseline=replay_history(pd.read_csv(ROOT/'data/raw/epl_10_seasons_raw.csv'),before_season='2026/27')
         baseline.start_season('2026/27',active)
-        if digest(baseline.snapshot()) != digest(engine.snapshot()):
+        if not replay_states_equal(baseline.snapshot(), engine.snapshot()):
             finding('critical','baseline_replay','Season seed differs from full prior-season replay')
+        elif digest(baseline.snapshot()) != digest(engine.snapshot()):
+            finding('info','replay_float_roundoff','Historical replay differs only within 1e-10 absolute floating-point tolerance')
         for row in complete.sort_values(['match_date','home_team','away_team']).to_dict('records'):
             observation={field:row.get(column) for field,column in RESULT_COLUMNS.items()}
             observation={k:(None if pd.isna(v) else v) for k,v in observation.items()}
@@ -71,7 +90,7 @@ def audit(db_path=ROOT/'data/live/epl_2627.db'):
         for team in active:
             expected=engine.teams[team]
             stored=json.loads(states[team]['engine_state'])
-            if expected!=stored or abs(expected['elo']-states[team]['current_elo'])>1e-8:
+            if not replay_states_equal(expected, stored) or abs(expected['elo']-states[team]['current_elo'])>1e-8:
                 finding('critical','state_replay',f'{team} state differs from chronological replay')
         if len(ledger)!=len(complete):finding('critical','result_ledger_count','Applied result ledger count differs from completed fixtures')
     except Exception as exc:finding('critical','state_replay_error',str(exc))

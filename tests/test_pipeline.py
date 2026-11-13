@@ -22,6 +22,24 @@ from src.features.prematch import FeatureEngine,NDC_FEATURES,XGB_BASE_FEATURES,C
 ROOT=Path(__file__).resolve().parents[1]
 
 
+class ReplayComparisonTests(unittest.TestCase):
+    def test_platform_roundoff_is_distinct_from_state_corruption(self):
+        from scripts.audit_project import replay_states_equal
+        expected = {'elo': 1700.0, 'history': [{'date': '2026-11-01', 'goals': 2, 'proxy': 1.81}]}
+        rounded = copy.deepcopy(expected)
+        rounded['elo'] += 1e-12
+        self.assertTrue(replay_states_equal(expected, rounded))
+        for field, value in [('elo', 1700.00000001), ('history', [])]:
+            changed = {**expected, field: value}
+            self.assertFalse(replay_states_equal(expected, changed))
+        changed = copy.deepcopy(expected)
+        changed['history'][0]['date'] = '2026-11-02'
+        self.assertFalse(replay_states_equal(expected, changed))
+        changed['history'][0]['date'] = '2026-11-01'
+        changed['history'][0]['goals'] = 3
+        self.assertFalse(replay_states_equal(expected, changed))
+
+
 class FeatureTests(unittest.TestCase):
     def engine(self):
         e=FeatureEngine();e.start_season('2026/27',{'Arsenal','Chelsea'});return e
