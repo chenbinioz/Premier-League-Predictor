@@ -2,7 +2,7 @@
 
 The local database has been updated from current sources: 100 completed matches,
 zero overdue fixtures, and 110 locked forecasts. All 100 existing forecasts were
-preserved exactly. Ten new forecasts were locked for GW11. All 25 regression
+preserved exactly. Ten new forecasts were locked for GW11. All 26 regression
 tests and the strict audit passed. No model retraining was performed.
 
 Recovery backup: `data/backups/tracker_update_20261113T212755Z/`. It contains
@@ -16,31 +16,29 @@ Select Gameweek 10 to see the completed results. Model-only performance now has
 ten eligible completed forecasts. The matched bookmaker comparison remains
 unavailable because contemporaneous bookmaker quotes were not recorded.
 
-## Finish GitHub deployment
+## Deployment completed
 
-GitHub has not been updated by this recovery. Its existing updater can finish
-successfully after a collection failure and contains incorrect inferred rounds.
+The coherent repair was merged to main in [PR #1](https://github.com/chenbinioz/Premier-League-Predictor/pull/1).
+[Ubuntu validation](https://github.com/chenbinioz/Premier-League-Predictor/actions/runs/43513003358)
+passed all 26 tests and the strict audit. The cross-platform audit permits at most
+1e-10 absolute floating-point roundoff; structural and observation checks remain
+exact, and significant state corruption still fails regression tests.
 
-1. Create a review branch from the current local work. Inspect `git diff` and
-   `git status --short` before staging. Preserve the recovery backups locally.
-2. Publish the coherent November repair together: runtime requirements, app,
-   updater/prediction/audit scripts, source modules, tests, current database,
-   processed features, trained model artifacts, manifest, immutable version
-   archive, README and workflow. Review ancillary notebook and IDE changes
-   separately. Do not publish only the workflow: it depends on untracked local
-   scripts and model artifacts. Do not stage backups, secrets or bytecode.
-3. Run `venv/bin/python -m unittest discover -s tests -v` and
-   `venv/bin/python scripts/audit_project.py --strict` before committing.
-4. Push the review branch and review the complete repair before merging to main.
-   GitHub's Ubuntu/Python 3.13 dependency installation still needs validation;
-   local macOS tests do not establish that installation succeeds there.
-5. On main, open Actions → EPL 2026/27 Live Predictive Pipeline → Run workflow,
-   choose `both`. Verify update logs, audit timestamp, zero overdue fixtures,
-   and successful results/prediction publication steps. The prepared workflow
-   publishes audited results before prediction and retains audit diagnostics.
-6. Confirm the next scheduled run performs the same checks. A missing new-result
-   commit is acceptable when there are no newly completed matches; assess the
-   ingestion counts and audit timestamp, not the green badge alone.
+The [production run](https://github.com/chenbinioz/Premier-League-Predictor/actions/runs/43513466325)
+succeeded on 13 November 2026. It fetched 100 results, found zero further result
+changes, zero overdue fixtures and no missing match statistics. GW11 forecasts
+were already locked, so zero additional forecasts were created. The bot published
+results/freshness commit `8de18f2` and final audit commit `0324292`.
+
+The workflow retains the daily 04:00 UTC schedule, publishes audited results
+before prediction, and records freshness in its summary and an audit artifact.
+The next scheduled run has not occurred yet; its future outcome is unverified.
+GitHub scheduling may start later than the configured time.
+
+IDE settings, notebook edits, architecture documentation and local recovery
+backups were excluded from deployment and preserved separately. The local
+synchronization retains a complete pre-sync Git stash and database backup under
+`data/backups/deployment_2026-11-13/`.
 
 ## Subsequent local updates
 
