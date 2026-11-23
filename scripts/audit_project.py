@@ -43,7 +43,7 @@ def replay_states_equal(expected, stored):
     return expected == stored
 
 
-def audit(db_path=ROOT/'data/live/epl_2627.db'):
+def audit(db_path=ROOT/'data/live/epl_2627.db', *, snapshot=False):
     findings=[]
     def finding(severity,code,message):findings.append({'severity':severity,'code':code,'message':message})
     with closing(sqlite3.connect(f'file:{db_path}?mode=ro',uri=True)) as conn:
@@ -65,9 +65,14 @@ def audit(db_path=ROOT/'data/live/epl_2627.db'):
     if complete[['home_goals','away_goals']].isna().any().any():finding('critical','missing_result','Completed fixtures lack scores')
     now=datetime.now(timezone.utc)
     overdue=f[(f.status=='pending') & (f.schedule_status!='postponed') & (f.match_date<=(now-timedelta(days=2)).date().isoformat())]
-    if len(overdue):finding('high','overdue_results',f'{len(overdue)} overdue fixtures remain pending')
-    if not run or run['status']!='ok' or (now-datetime.fromisoformat(run['observed_at']))>timedelta(hours=36):
-        finding('medium','ingestion_freshness','Latest successful ingestion is missing, failed, or older than 36 hours')
+    if len(overdue):
+        finding('info' if snapshot else 'high', 'overdue_results',
+                f'{len(overdue)} overdue fixtures remain pending')
+    if not run or run['status'] != 'ok':
+        finding('medium', 'ingestion_freshness', 'Latest ingestion is missing or unsuccessful')
+    elif now - datetime.fromisoformat(run['observed_at']) > timedelta(hours=36):
+        finding('info' if snapshot else 'medium', 'ingestion_freshness',
+                'Latest successful ingestion is older than 36 hours')
     stats=['home_shots_on_target','away_shots_on_target','home_shots','away_shots','home_corners','away_corners','home_fouls','away_fouls']
     missing={key:int(complete[key].isna().sum()) for key in stats}
     if any(missing.values()):finding('medium','observed_stats_missing',f'Missing observations remain explicit: {missing}')
@@ -174,8 +179,10 @@ def audit(db_path=ROOT/'data/live/epl_2627.db'):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--db',type=Path,default=ROOT/'data/live/epl_2627.db');parser.add_argument('--output',type=Path);parser.add_argument('--strict',action='store_true')
+    parser.add_argument('--snapshot', action='store_true',
+                        help='Report wall-clock freshness findings without failing a static snapshot audit')
     args=parser.parse_args()
-    try:report=audit(args.db)
+    try:report=audit(args.db, snapshot=args.snapshot)
     except Exception as exc:report={'passed':False,'findings':[{'severity':'critical','code':'audit_failed','message':str(exc)}]}
     result=json.dumps(report,indent=2,allow_nan=False)+'\n'
     if args.output:args.output.parent.mkdir(exist_ok=True,parents=True);args.output.write_text(result)
