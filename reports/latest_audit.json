@@ -1,10 +1,10 @@
 {
-  "audited_at": "2026-11-22T12:26:33.925503+00:00",
+  "audited_at": "2026-11-24T14:44:11.456808+00:00",
   "feature_contract": "prematch-v2-shot-proxy",
   "sqlite_integrity": "ok",
   "fixtures": 380,
-  "completed": 100,
-  "pending": 280,
+  "completed": 110,
+  "pending": 270,
   "overdue": 0,
   "missing_observed_stats": {
     "home_shots_on_target": 0,
@@ -17,7 +17,7 @@
     "away_fouls": 0
   },
   "state_replay_checked_teams": 20,
-  "applied_results": 100,
+  "applied_results": 110,
   "locked_forecasts": 110,
   "verified_forecasts_checked": 20,
   "legacy_quarantined": 90,
@@ -51,22 +51,22 @@
   },
   "model_only_metrics": {
     "blend": {
-      "hits": 5,
-      "total": 10,
+      "hits": 10,
+      "total": 20,
       "acc": 50.0,
-      "loss": 0.9470938532530863
+      "loss": 1.0266603614273133
     },
     "ndc": {
-      "hits": 5,
-      "total": 10,
+      "hits": 10,
+      "total": 20,
       "acc": 50.0,
-      "loss": 1.0136593233251283
+      "loss": 1.0580044909666195
     },
     "xgb": {
-      "hits": 6,
-      "total": 10,
-      "acc": 60.0,
-      "loss": 0.901394547450891
+      "hits": 11,
+      "total": 20,
+      "acc": 55.0,
+      "loss": 1.0124823799643186
     }
   },
   "findings": [
