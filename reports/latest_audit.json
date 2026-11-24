@@ -1,5 +1,5 @@
 {
-  "audited_at": "2026-11-24T14:44:11.456808+00:00",
+  "audited_at": "2026-11-24T14:44:19.077468+00:00",
   "feature_contract": "prematch-v2-shot-proxy",
   "sqlite_integrity": "ok",
   "fixtures": 380,
@@ -18,8 +18,8 @@
   },
   "state_replay_checked_teams": 20,
   "applied_results": 110,
-  "locked_forecasts": 110,
-  "verified_forecasts_checked": 20,
+  "locked_forecasts": 120,
+  "verified_forecasts_checked": 30,
   "legacy_quarantined": 90,
   "legacy_payloads_unchanged": true,
   "model_version": "603f94bdcd0988c9",
@@ -78,7 +78,7 @@
     {
       "severity": "low",
       "code": "market_snapshot_coverage",
-      "message": "20 eligible forecasts have no contemporaneous bookmaker quote; excluded from the common-cohort market race"
+      "message": "30 eligible forecasts have no contemporaneous bookmaker quote; excluded from the common-cohort market race"
     },
     {
       "severity": "info",
