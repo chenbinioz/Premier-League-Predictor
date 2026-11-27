@@ -1,0 +1,126 @@
+{
+  "2026/27:116": {
+    "away_team": "Aston Villa",
+    "feature_contract": "prematch-v2-shot-proxy",
+    "features": {
+      "Adjusted_Attack_Diff_10": -0.08002885765908212,
+      "Adjusted_Defense_Diff_10": 0.16373329507323306,
+      "Elo_Diff": -136.63046803002658
+    },
+    "home_team": "Ipswich",
+    "information_cutoff": "2026-11-27T13:41:47.168632+00:00",
+    "issued_at": "2026-11-27T13:41:49.084157+00:00",
+    "kickoff_at": "2026-11-28T17:30:00+00:00",
+    "lead_hours": 27.803032178611108,
+    "match_id": 116,
+    "probabilities": {
+      "elo": {
+        "away": 0.5298751734954261,
+        "draw": 0.24544517204811955,
+        "home": 0.22467965445645424
+      },
+      "elo_form_10": {
+        "away": 0.4957376469129527,
+        "draw": 0.25376562633629274,
+        "home": 0.25049672675075446
+      }
+    },
+    "state_observed_at": "2026-11-27T13:41:28.468446+00:00",
+    "training_hash": "d5b82f456d561ae3ca49ddb29fbc59b3a8e7874f70d2be25c1ebdb0b7d45b2de",
+    "training_matches": 4180,
+    "trial": "elo-form-10-v1"
+  },
+  "2026/27:117": {
+    "away_team": "Coventry",
+    "feature_contract": "prematch-v2-shot-proxy",
+    "features": {
+      "Adjusted_Attack_Diff_10": 0.09976172532890801,
+      "Adjusted_Defense_Diff_10": -0.07807389338101414,
+      "Elo_Diff": 100.03492253036984
+    },
+    "home_team": "Leeds",
+    "information_cutoff": "2026-11-27T13:41:47.168632+00:00",
+    "issued_at": "2026-11-27T13:41:49.084157+00:00",
+    "kickoff_at": "2026-11-28T15:00:00+00:00",
+    "lead_hours": 25.303032178611108,
+    "match_id": 117,
+    "probabilities": {
+      "elo": {
+        "away": 0.16530511635853315,
+        "draw": 0.227312692356186,
+        "home": 0.6073821912852809
+      },
+      "elo_form_10": {
+        "away": 0.1779527790283014,
+        "draw": 0.2346761563423632,
+        "home": 0.5873710646293354
+      }
+    },
+    "state_observed_at": "2026-11-27T13:41:28.468446+00:00",
+    "training_hash": "d5b82f456d561ae3ca49ddb29fbc59b3a8e7874f70d2be25c1ebdb0b7d45b2de",
+    "training_matches": 4180,
+    "trial": "elo-form-10-v1"
+  },
+  "2026/27:118": {
+    "away_team": "Brentford",
+    "feature_contract": "prematch-v2-shot-proxy",
+    "features": {
+      "Adjusted_Attack_Diff_10": 0.45382118480647876,
+      "Adjusted_Defense_Diff_10": 0.2714600942845139,
+      "Elo_Diff": -5.651962943616809
+    },
+    "home_team": "Man United",
+    "information_cutoff": "2026-11-27T13:41:47.168632+00:00",
+    "issued_at": "2026-11-27T13:41:49.084157+00:00",
+    "kickoff_at": "2026-11-28T15:00:00+00:00",
+    "lead_hours": 25.303032178611108,
+    "match_id": 118,
+    "probabilities": {
+      "elo": {
+        "away": 0.3080019946125477,
+        "draw": 0.26053311419590597,
+        "home": 0.4314648911915463
+      },
+      "elo_form_10": {
+        "away": 0.28129647348066156,
+        "draw": 0.27541731361262506,
+        "home": 0.44328621290671344
+      }
+    },
+    "state_observed_at": "2026-11-27T13:41:28.468446+00:00",
+    "training_hash": "d5b82f456d561ae3ca49ddb29fbc59b3a8e7874f70d2be25c1ebdb0b7d45b2de",
+    "training_matches": 4180,
+    "trial": "elo-form-10-v1"
+  },
+  "2026/27:119": {
+    "away_team": "Chelsea",
+    "feature_contract": "prematch-v2-shot-proxy",
+    "features": {
+      "Adjusted_Attack_Diff_10": -0.3712839955595374,
+      "Adjusted_Defense_Diff_10": -0.39954420919064876,
+      "Elo_Diff": -38.195593046504655
+    },
+    "home_team": "Nott'm Forest",
+    "information_cutoff": "2026-11-27T13:41:47.168632+00:00",
+    "issued_at": "2026-11-27T13:41:49.084157+00:00",
+    "kickoff_at": "2026-11-27T20:00:00+00:00",
+    "lead_hours": 6.303032178611111,
+    "match_id": 119,
+    "probabilities": {
+      "elo": {
+        "away": 0.3611020776437556,
+        "draw": 0.2630017290827443,
+        "home": 0.37589619327350016
+      },
+      "elo_form_10": {
+        "away": 0.3440965017124667,
+        "draw": 0.2443222941095317,
+        "home": 0.4115812041780016
+      }
+    },
+    "state_observed_at": "2026-11-27T13:41:28.468446+00:00",
+    "training_hash": "d5b82f456d561ae3ca49ddb29fbc59b3a8e7874f70d2be25c1ebdb0b7d45b2de",
+    "training_matches": 4180,
+    "trial": "elo-form-10-v1"
+  }
+}
