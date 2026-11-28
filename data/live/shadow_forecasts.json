@@ -1,4 +1,159 @@
 {
+  "2026/27:111": {
+    "away_team": "Man City",
+    "feature_contract": "prematch-v2-shot-proxy",
+    "features": {
+      "Adjusted_Attack_Diff_10": -0.17927351020439258,
+      "Adjusted_Defense_Diff_10": -0.1849574940081133,
+      "Elo_Diff": 57.024369203287506
+    },
+    "home_team": "Arsenal",
+    "information_cutoff": "2026-11-28T12:52:03.490612+00:00",
+    "issued_at": "2026-11-28T12:52:06.279286+00:00",
+    "kickoff_at": "2026-11-29T16:30:00+00:00",
+    "lead_hours": 27.63158908722222,
+    "match_id": 111,
+    "probabilities": {
+      "elo": {
+        "away": 0.21691649024592732,
+        "draw": 0.2447651445642281,
+        "home": 0.5383183651898445
+      },
+      "elo_form_10": {
+        "away": 0.23390839080868062,
+        "draw": 0.24248157249271712,
+        "home": 0.5236100366986023
+      }
+    },
+    "state_observed_at": "2026-11-28T12:51:49.516804+00:00",
+    "training_hash": "d5b82f456d561ae3ca49ddb29fbc59b3a8e7874f70d2be25c1ebdb0b7d45b2de",
+    "training_matches": 4180,
+    "trial": "elo-form-10-v1"
+  },
+  "2026/27:112": {
+    "away_team": "Newcastle",
+    "feature_contract": "prematch-v2-shot-proxy",
+    "features": {
+      "Adjusted_Attack_Diff_10": 0.5145741389687597,
+      "Adjusted_Defense_Diff_10": -0.26385004471219636,
+      "Elo_Diff": 63.40273347138714
+    },
+    "home_team": "Brighton",
+    "information_cutoff": "2026-11-28T12:52:03.490612+00:00",
+    "issued_at": "2026-11-28T12:52:06.279286+00:00",
+    "kickoff_at": "2026-11-29T14:05:00+00:00",
+    "lead_hours": 25.214922420555553,
+    "match_id": 112,
+    "probabilities": {
+      "elo": {
+        "away": 0.20866550738748835,
+        "draw": 0.2424619142824972,
+        "home": 0.5488725783300145
+      },
+      "elo_form_10": {
+        "away": 0.1649078374165165,
+        "draw": 0.22882942444820945,
+        "home": 0.6062627381352741
+      }
+    },
+    "state_observed_at": "2026-11-28T12:51:49.516804+00:00",
+    "training_hash": "d5b82f456d561ae3ca49ddb29fbc59b3a8e7874f70d2be25c1ebdb0b7d45b2de",
+    "training_matches": 4180,
+    "trial": "elo-form-10-v1"
+  },
+  "2026/27:113": {
+    "away_team": "Hull",
+    "feature_contract": "prematch-v2-shot-proxy",
+    "features": {
+      "Adjusted_Attack_Diff_10": 0.19318228065077908,
+      "Adjusted_Defense_Diff_10": 0.17329781894948298,
+      "Elo_Diff": -3.279829989510745
+    },
+    "home_team": "Crystal Palace",
+    "information_cutoff": "2026-11-28T12:52:03.490612+00:00",
+    "issued_at": "2026-11-28T12:52:06.279286+00:00",
+    "kickoff_at": "2026-11-29T14:05:00+00:00",
+    "lead_hours": 25.214922420555553,
+    "match_id": 113,
+    "probabilities": {
+      "elo": {
+        "away": 0.3042604753363934,
+        "draw": 0.2601905061710851,
+        "home": 0.43554901849252164
+      },
+      "elo_form_10": {
+        "away": 0.296282748132011,
+        "draw": 0.26955394510358427,
+        "home": 0.43416330676440473
+      }
+    },
+    "state_observed_at": "2026-11-28T12:51:49.516804+00:00",
+    "training_hash": "d5b82f456d561ae3ca49ddb29fbc59b3a8e7874f70d2be25c1ebdb0b7d45b2de",
+    "training_matches": 4180,
+    "trial": "elo-form-10-v1"
+  },
+  "2026/27:114": {
+    "away_team": "Liverpool",
+    "feature_contract": "prematch-v2-shot-proxy",
+    "features": {
+      "Adjusted_Attack_Diff_10": -0.1249466856099982,
+      "Adjusted_Defense_Diff_10": 0.28156775418280844,
+      "Elo_Diff": -85.2492699556201
+    },
+    "home_team": "Everton",
+    "information_cutoff": "2026-11-28T12:52:03.490612+00:00",
+    "issued_at": "2026-11-28T12:52:06.279286+00:00",
+    "kickoff_at": "2026-11-29T12:00:00+00:00",
+    "lead_hours": 23.13158908722222,
+    "match_id": 114,
+    "probabilities": {
+      "elo": {
+        "away": 0.44164393385050965,
+        "draw": 0.2590881087220921,
+        "home": 0.29926795742739837
+      },
+      "elo_form_10": {
+        "away": 0.4457582524998734,
+        "draw": 0.26480969948628913,
+        "home": 0.28943204801383743
+      }
+    },
+    "state_observed_at": "2026-11-28T12:51:49.516804+00:00",
+    "training_hash": "d5b82f456d561ae3ca49ddb29fbc59b3a8e7874f70d2be25c1ebdb0b7d45b2de",
+    "training_matches": 4180,
+    "trial": "elo-form-10-v1"
+  },
+  "2026/27:115": {
+    "away_team": "Bournemouth",
+    "feature_contract": "prematch-v2-shot-proxy",
+    "features": {
+      "Adjusted_Attack_Diff_10": -0.2182034468741899,
+      "Adjusted_Defense_Diff_10": 0.20744568285315182,
+      "Elo_Diff": -71.78011725577994
+    },
+    "home_team": "Fulham",
+    "information_cutoff": "2026-11-28T12:52:03.490612+00:00",
+    "issued_at": "2026-11-28T12:52:06.279286+00:00",
+    "kickoff_at": "2026-11-29T14:05:00+00:00",
+    "lead_hours": 25.214922420555553,
+    "match_id": 115,
+    "probabilities": {
+      "elo": {
+        "away": 0.4183483586984724,
+        "draw": 0.2611003885818802,
+        "home": 0.32055125271964724
+      },
+      "elo_form_10": {
+        "away": 0.4318205552591217,
+        "draw": 0.26290430289090494,
+        "home": 0.3052751418499733
+      }
+    },
+    "state_observed_at": "2026-11-28T12:51:49.516804+00:00",
+    "training_hash": "d5b82f456d561ae3ca49ddb29fbc59b3a8e7874f70d2be25c1ebdb0b7d45b2de",
+    "training_matches": 4180,
+    "trial": "elo-form-10-v1"
+  },
   "2026/27:116": {
     "away_team": "Aston Villa",
     "feature_contract": "prematch-v2-shot-proxy",
@@ -119,6 +274,37 @@
       }
     },
     "state_observed_at": "2026-11-27T13:41:28.468446+00:00",
+    "training_hash": "d5b82f456d561ae3ca49ddb29fbc59b3a8e7874f70d2be25c1ebdb0b7d45b2de",
+    "training_matches": 4180,
+    "trial": "elo-form-10-v1"
+  },
+  "2026/27:120": {
+    "away_team": "Tottenham",
+    "feature_contract": "prematch-v2-shot-proxy",
+    "features": {
+      "Adjusted_Attack_Diff_10": -0.3107449512833801,
+      "Adjusted_Defense_Diff_10": 0.258207990016233,
+      "Elo_Diff": 3.9809388510923327
+    },
+    "home_team": "Sunderland",
+    "information_cutoff": "2026-11-28T12:52:03.490612+00:00",
+    "issued_at": "2026-11-28T12:52:06.279286+00:00",
+    "kickoff_at": "2026-11-29T14:05:00+00:00",
+    "lead_hours": 25.214922420555553,
+    "match_id": 120,
+    "probabilities": {
+      "elo": {
+        "away": 0.2929346105173943,
+        "draw": 0.25900871411644905,
+        "home": 0.44805667536615673
+      },
+      "elo_form_10": {
+        "away": 0.35035058612434644,
+        "draw": 0.2679688395507794,
+        "home": 0.3816805743248742
+      }
+    },
+    "state_observed_at": "2026-11-28T12:51:49.516804+00:00",
     "training_hash": "d5b82f456d561ae3ca49ddb29fbc59b3a8e7874f70d2be25c1ebdb0b7d45b2de",
     "training_matches": 4180,
     "trial": "elo-form-10-v1"
